@@ -1,0 +1,14 @@
+ToDo List:
+    Add Improved Tank Drive into MecDrive
+    Test Angles on Servo
+    Test Nebula Motor and Servo
+    See if Roadrunner Values show up on Dashboard and are changeable
+    Implement Feedforward to all Mechanisms: https://docs.ftclib.org/ftclib/features/controllers
+    Implement all Rev Sensors for use
+
+
+
+Ideas to Implement:
+    Write all Device ID Strings in 1 Location
+
+Documentation: https://docs.ftclib.org/ftclib/
