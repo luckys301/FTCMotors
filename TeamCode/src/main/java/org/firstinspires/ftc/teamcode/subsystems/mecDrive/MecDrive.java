@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.drive;
+package org.firstinspires.ftc.teamcode.subsystems.mecDrive;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -31,13 +31,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.*;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.*;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
  */
 @Config
-public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
+public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
 
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(15, 0, 0); //6,1,0
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(6, 0, 0);//0,0,0
@@ -67,7 +67,7 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
     private List<Integer> lastEncVels = new ArrayList<>();
     private double voltage;
 
-    public MecanumDrive(HardwareMap hardwareMap, Telemetry telemetry) {
+    public MecDrive(HardwareMap hardwareMap, Telemetry telemetry, boolean deprecated) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
@@ -82,7 +82,7 @@ public class MecanumDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
+                MecDriveConstants.LOGO_FACING_DIR, MecDriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");

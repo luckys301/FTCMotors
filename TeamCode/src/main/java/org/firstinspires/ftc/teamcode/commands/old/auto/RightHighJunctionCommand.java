@@ -18,23 +18,23 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 
 @Deprecated
 public class RightHighJunctionCommand extends SequentialCommandGroup{
-    public RightHighJunctionCommand(Drivetrain drivetrain, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo){
+    public RightHighJunctionCommand(MecDrivetrainSubsystem mecDrivetrainSubsystem, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo){
         /*Turn is Counterclockwise*/
         addCommands(
                 new ParallelCommandGroup(
                         new ArmMidFrontCommand(slide, pivot, claw, turnServo, true),
-                        new StrafeRightCommand(drivetrain, 52.51)
+                        new StrafeRightCommand(mecDrivetrainSubsystem, 52.51)
                 ),
                 new AutoDropConeCommand(claw, slide, pivot,true),
                 new ParallelCommandGroup(
-                        new StrafeRightCommand(drivetrain, 20.15),
+                        new StrafeRightCommand(mecDrivetrainSubsystem, 20.15),
                         new ArmCone5BackCommand(slide, claw, pivot, turnServo)
                 ),
-                new DriveForwardCommand(drivetrain, -26.6),
+                new DriveForwardCommand(mecDrivetrainSubsystem, -26.6),
 
 
 
@@ -42,19 +42,19 @@ public class RightHighJunctionCommand extends SequentialCommandGroup{
                 new AutoPickConeCommand(slide, claw),
                 new ParallelCommandGroup(
                         new ArmHighFrontCommand(slide, pivot, claw, turnServo, true),
-                        new DriveForwardCommand(drivetrain, 29.9)
+                        new DriveForwardCommand(mecDrivetrainSubsystem, 29.9)
                 ),
                 new SequentialCommandGroup(
-                        new TurnCommand(drivetrain, -58.76),//61 ish
-                        new DriveForwardCommand(drivetrain, 5.2),
+                        new TurnCommand(mecDrivetrainSubsystem, -58.76),//61 ish
+                        new DriveForwardCommand(mecDrivetrainSubsystem, 5.2),
                         new AutoDropConeCommand(claw, slide, pivot,true),
-                        new DriveForwardCommand(drivetrain, -5)
+                        new DriveForwardCommand(mecDrivetrainSubsystem, -5)
                 ),
                 new ParallelCommandGroup(
-                        new TurnToCommand(drivetrain, 1, true),
+                        new TurnToCommand(mecDrivetrainSubsystem, 1, true),
                         new ArmCone4BackCommand(slide, claw, pivot, turnServo)
                 ),
-                new DriveForwardCommand(drivetrain, -31.7),
+                new DriveForwardCommand(mecDrivetrainSubsystem, -31.7),
 
 
 
@@ -62,19 +62,19 @@ public class RightHighJunctionCommand extends SequentialCommandGroup{
                 new AutoPickConeCommand(slide, claw),
                 new ParallelCommandGroup(
                         new ArmHighFrontCommand(slide, pivot, claw, turnServo, true),
-                        new DriveForwardCommand(drivetrain, 30.9)
+                        new DriveForwardCommand(mecDrivetrainSubsystem, 30.9)
                 ),
                 new SequentialCommandGroup(
-                        new TurnCommand(drivetrain, -56.91),//oprg:300 to -60
-                        new DriveForwardCommand(drivetrain, 5.1),
+                        new TurnCommand(mecDrivetrainSubsystem, -56.91),//oprg:300 to -60
+                        new DriveForwardCommand(mecDrivetrainSubsystem, 5.1),
                         new AutoDropConeCommand(claw, slide, pivot,true),
-                        new DriveForwardCommand(drivetrain, -3.7)
+                        new DriveForwardCommand(mecDrivetrainSubsystem, -3.7)
                 ),
                 new ParallelCommandGroup(
-                        new TurnToCommand(drivetrain, 1.3, true),
+                        new TurnToCommand(mecDrivetrainSubsystem, 1.3, true),
                         new ArmCone3BackCommand(slide, claw, pivot, turnServo)
                 ),
-                new DriveForwardCommand(drivetrain, -31.)
+                new DriveForwardCommand(mecDrivetrainSubsystem, -31.)
 
 
 
@@ -82,10 +82,10 @@ public class RightHighJunctionCommand extends SequentialCommandGroup{
 //                new PickConeCommand(slide, claw),
 //                new ParallelCommandGroup(
 //                        new SlideHighFCommand(slide, arm, claw, true),
-//                        new DriveForwardCommand(drivetrain, 29.3)
+//                        new DriveForwardCommand(mecDrivetrainSubsystem, 29.3)
 //                ),
-//                new TurnCommand(drivetrain, -53.5),//oprg:300 to -60
-//                new DriveForwardCommand(drivetrain, 5.95),
+//                new TurnCommand(mecDrivetrainSubsystem, -53.5),//oprg:300 to -60
+//                new DriveForwardCommand(mecDrivetrainSubsystem, 5.95),
 //                new DropAutoConeCommand(claw, slide, arm,true),
 //
 //
@@ -94,10 +94,10 @@ public class RightHighJunctionCommand extends SequentialCommandGroup{
 //                //Parking
 //                new ParallelCommandGroup(
 //                        new SlideResetUpAutonCommand(slide, arm, claw),
-//                        new TurnToCommand(drivetrain, 270)
+//                        new TurnToCommand(mecDrivetrainSubsystem, 270)
 //                ),
-//                new DriveForwardCommand(drivetrain, -4)
-//                new StrafeRightCommand(drivetrain, 40)
+//                new DriveForwardCommand(mecDrivetrainSubsystem, -4)
+//                new StrafeRightCommand(mecDrivetrainSubsystem, 40)
         );
     }
 }

@@ -9,12 +9,13 @@ import org.firstinspires.ftc.teamcode.commands.drive.trajectory.DriveForwardComm
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.SensorColor;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+
 @Deprecated
 public class IntakeAutoCommand extends SequentialCommandGroup {
 
-    public IntakeAutoCommand(Drivetrain drivetrain, Slide slide, Claw claw, SensorColor sensorColor, boolean isBack) {
-        addRequirements(claw, sensorColor, slide, drivetrain);
+    public IntakeAutoCommand(MecDrivetrainSubsystem mecDrivetrainSubsystem, Slide slide, Claw claw, SensorColor sensorColor, boolean isBack) {
+        addRequirements(claw, sensorColor, slide, mecDrivetrainSubsystem);
         if (isBack){
             addCommands(
                     new WaitUntilCommand(sensorColor::grabbedBlueCone).withTimeout(9),
@@ -23,7 +24,7 @@ public class IntakeAutoCommand extends SequentialCommandGroup {
 //                                new InstantCommand(claw::clawClose)
                             ),
                             new SequentialCommandGroup( //When False
-                                    new DriveForwardCommand(drivetrain, -0.6)
+                                    new DriveForwardCommand(mecDrivetrainSubsystem, -0.6)
                             ),
                             ()-> ((sensorColor.grabbedBlueCone()||sensorColor.grabbedRedCone()) && claw.isClawOpen())
                     ),
@@ -37,7 +38,7 @@ public class IntakeAutoCommand extends SequentialCommandGroup {
 //                                new InstantCommand(claw::clawClose)
                             ),
                             new SequentialCommandGroup( //When False
-                                    new DriveForwardCommand(drivetrain, -0.6)
+                                    new DriveForwardCommand(mecDrivetrainSubsystem, -0.6)
                             ),
                             ()-> ((sensorColor.grabbedBlueCone()||sensorColor.grabbedRedCone()) && claw.isClawOpen())
                     ),

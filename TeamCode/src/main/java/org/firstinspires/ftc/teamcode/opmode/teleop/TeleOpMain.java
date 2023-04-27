@@ -22,8 +22,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.GamepadTrigger;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 
@@ -39,7 +39,7 @@ public class TeleOpMain extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private Drivetrain drivetrain;
+    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
     private TurnServo turnServo;
 
@@ -51,8 +51,8 @@ public class TeleOpMain extends MatchOpMode {
         pivot = new Pivot(telemetry, hardwareMap);
         claw = new Claw(telemetry, hardwareMap);
         turnServo = new TurnServo(telemetry, hardwareMap);
-        drivetrain = new Drivetrain(new MecanumDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
-        drivetrain.init();
+        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
+        mecDrivetrainSubsystem.init();
         slide = new Slide(telemetry, hardwareMap);
 //        pivot.resetOffset();
         pivot.moveInitializationPosition();
@@ -64,16 +64,16 @@ public class TeleOpMain extends MatchOpMode {
         /*
          *  DRIVER
          */
-        drivetrain.setDefaultCommand(new DefaultDriveCommand(drivetrain, driverGamepad, true));
+        mecDrivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
 
         Button recenterIMU = (new GamepadButton(driverGamepad, GamepadKeys.Button.A))
-                .whenPressed(new InstantCommand(drivetrain::reInitializeIMU));
+                .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
 
         Button recenterIMU2 = (new GamepadButton(driverGamepad, GamepadKeys.Button.START))
-                .whenPressed(new InstantCommand(drivetrain::reInitializeIMU));
+                .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
 
         Button slowMode = (new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER))
-                .whileHeld(new SlowDriveCommand(drivetrain, driverGamepad, true));
+                .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
 
         /*
          * OPERATOR

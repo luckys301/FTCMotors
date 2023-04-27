@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.misc.TagVision;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 @Disabled
@@ -36,7 +36,7 @@ public class RightJunctionNEWAuton extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private Drivetrain drivetrain;
+    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
     private TagVision tagVision;
     private TurnServo turnServo;
@@ -46,8 +46,8 @@ public class RightJunctionNEWAuton extends MatchOpMode {
     public void robotInit() {
         claw = new Claw( telemetry, hardwareMap);
         pivot = new Pivot( telemetry, hardwareMap);
-        drivetrain = new Drivetrain(new MecanumDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        drivetrain.init();
+        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDrivetrainSubsystem.init();
         slide = new Slide(telemetry, hardwareMap);
         turnServo = new TurnServo(telemetry, hardwareMap);
 
@@ -68,17 +68,17 @@ public class RightJunctionNEWAuton extends MatchOpMode {
             case 1: { //Left
                 schedule(
                         new SequentialCommandGroup(
-                                new RightHighJunctionCommand(drivetrain, slide, pivot, claw, turnServo),
+                                new RightHighJunctionCommand(mecDrivetrainSubsystem, slide, pivot, claw, turnServo),
                                 /***Cone 3***/
                                 new AutoPickConeCommand(slide, claw),
-                                new DriveForwardCommand(drivetrain, 51),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 51),
 
 //                                new ParallelCommandGroup(
 //                                        new SlideHighFCommand(slide, arm, claw, true),
-//                                        new DriveForwardCommand(drivetrain, 29.3)
+//                                        new DriveForwardCommand(mecDrivetrainSubsystem, 29.3)
 //                                ),
-//                                new TurnCommand(drivetrain, -52.47),//oprg:300 to -60
-//                                new DriveForwardCommand(drivetrain, 5.95),
+//                                new TurnCommand(mecDrivetrainSubsystem, -52.47),//oprg:300 to -60
+//                                new DriveForwardCommand(mecDrivetrainSubsystem, 5.95),
 //                                new DropAutoConeCommand(claw, slide, arm,true),
 
 
@@ -87,11 +87,11 @@ public class RightJunctionNEWAuton extends MatchOpMode {
                                 //Parking
                                 new ParallelCommandGroup(
                                         new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                        new TurnToCommand(drivetrain, 270, true)
+                                        new TurnToCommand(mecDrivetrainSubsystem, 270, true)
                                 )
-//                                new DriveForwardCommand(drivetrain, -4),
+//                                new DriveForwardCommand(mecDrivetrainSubsystem, -4),
 //
-//                                new StrafeLeftCommand(drivetrain, 22.5)
+//                                new StrafeLeftCommand(mecDrivetrainSubsystem, 22.5)
                         )
                 );
                 return;
@@ -99,15 +99,15 @@ public class RightJunctionNEWAuton extends MatchOpMode {
             case 2: { //Mid
                 schedule(
                         new SequentialCommandGroup(
-                                new RightHighJunctionCommand(drivetrain, slide, pivot, claw, turnServo),
+                                new RightHighJunctionCommand(mecDrivetrainSubsystem, slide, pivot, claw, turnServo),
                                 /***Cone 3***/
                                 new AutoPickConeCommand(slide, claw),
                                 new ParallelCommandGroup(
                                         new ArmHighFrontCommand(slide, pivot, claw, turnServo, true),
-                                        new DriveForwardCommand(drivetrain, 29.5)
+                                        new DriveForwardCommand(mecDrivetrainSubsystem, 29.5)
                                 ),
-                                new TurnCommand(drivetrain, -54.8),//oprg:300 to -60
-                                new DriveForwardCommand(drivetrain, 6),
+                                new TurnCommand(mecDrivetrainSubsystem, -54.8),//oprg:300 to -60
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 6),
                                 new AutoDropConeCommand(claw, slide, pivot,true),
 
 
@@ -116,11 +116,11 @@ public class RightJunctionNEWAuton extends MatchOpMode {
                                 //Parking
                                 new ParallelCommandGroup(
                                         new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                        new TurnToCommand(drivetrain, 270)
+                                        new TurnToCommand(mecDrivetrainSubsystem, 270)
                                 ),
-                                new DriveForwardCommand(drivetrain, -4),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, -4),
 
-                                new StrafeRightCommand(drivetrain, 12.7)
+                                new StrafeRightCommand(mecDrivetrainSubsystem, 12.7)
                         )
                 );
                 return;
@@ -128,7 +128,7 @@ public class RightJunctionNEWAuton extends MatchOpMode {
             default: { //High
                 schedule(
                         new SequentialCommandGroup(
-                                new RightHighJunctionCommand(drivetrain, slide, pivot, claw, turnServo),
+                                new RightHighJunctionCommand(mecDrivetrainSubsystem, slide, pivot, claw, turnServo),
                                 new AutoPickConeCommand(slide, claw),
                                 new WaitCommand(1000),
 
@@ -136,10 +136,10 @@ public class RightJunctionNEWAuton extends MatchOpMode {
 //                                new PickConeCommand(slide, claw),
 //                                new ParallelCommandGroup(
 //                                        new SlideHighFCommand(slide, arm, claw, true),
-//                                        new DriveForwardCommand(drivetrain, 29.3)
+//                                        new DriveForwardCommand(mecDrivetrainSubsystem, 29.3)
 //                                ),
-//                                new TurnCommand(drivetrain, -53.5),//oprg:300 to -60
-//                                new DriveForwardCommand(drivetrain, 5.95),
+//                                new TurnCommand(mecDrivetrainSubsystem, -53.5),//oprg:300 to -60
+//                                new DriveForwardCommand(mecDrivetrainSubsystem, 5.95),
 //                                new DropAutoConeCommand(claw, slide, arm,true),
 
 
@@ -148,10 +148,10 @@ public class RightJunctionNEWAuton extends MatchOpMode {
                                 //Parking
                                 new ParallelCommandGroup(
                                         new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                        new TurnToCommand(drivetrain, 270, true)
+                                        new TurnToCommand(mecDrivetrainSubsystem, 270, true)
                                 )
-//                                new DriveForwardCommand(drivetrain, -4),
-//                                new StrafeRightCommand(drivetrain, 41)
+//                                new DriveForwardCommand(mecDrivetrainSubsystem, -4),
+//                                new StrafeRightCommand(mecDrivetrainSubsystem, 41)
                         )
                 );
                 return;

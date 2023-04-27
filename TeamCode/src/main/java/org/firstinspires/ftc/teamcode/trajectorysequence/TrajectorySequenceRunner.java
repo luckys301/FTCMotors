@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.trajectorysequence;
 
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.NOMINAL_VOLTAGE;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.NOMINAL_VOLTAGE;
 
 import androidx.annotation.Nullable;
 
@@ -19,7 +19,7 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
@@ -204,7 +204,7 @@ public class TrajectorySequenceRunner {
         }
 
         double voltage = voltageSensor.getVoltage();
-        if (driveSignal != null && !DriveConstants.RUN_USING_ENCODER) {
+        if (driveSignal != null && !MecDriveConstants.RUN_USING_ENCODER) {
             driveSignal = new DriveSignal(
                     driveSignal.getVel().times(NOMINAL_VOLTAGE / voltage),
                     driveSignal.getAccel().times(NOMINAL_VOLTAGE / voltage)

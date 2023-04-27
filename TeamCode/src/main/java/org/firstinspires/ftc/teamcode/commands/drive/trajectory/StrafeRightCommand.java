@@ -5,25 +5,25 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
 @Config
 public class StrafeRightCommand extends CommandBase{
 
-    Drivetrain drive;
+    MecDrivetrainSubsystem drive;
     double distance;
     Trajectory trajectory;
     MinVelocityConstraint constraint;
-    public StrafeRightCommand(Drivetrain drive, double distance) {
+    public StrafeRightCommand(MecDrivetrainSubsystem drive, double distance) {
         this.drive = drive;
         this.distance = distance;
         constraint = Trajectories.velConstraint;
         this.addRequirements(drive);
     }
 
-    public StrafeRightCommand(Drivetrain drive, double distance, MinVelocityConstraint constraint) {
+    public StrafeRightCommand(MecDrivetrainSubsystem drive, double distance, MinVelocityConstraint constraint) {
         this.drive = drive;
         this.distance = distance;
         this.constraint = constraint;

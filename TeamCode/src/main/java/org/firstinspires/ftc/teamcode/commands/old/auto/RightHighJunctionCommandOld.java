@@ -21,76 +21,76 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 
 @Deprecated
 public class RightHighJunctionCommandOld extends SequentialCommandGroup{
-    public RightHighJunctionCommandOld(Drivetrain drivetrain, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo){
+    public RightHighJunctionCommandOld(MecDrivetrainSubsystem mecDrivetrainSubsystem, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo){
         /*
 Turn is Counterclockwise*/
         addCommands(
                 new ParallelCommandGroup(
                         new ArmMidFrontCommand(slide, pivot, claw, turnServo, true),
-                        new StrafeRightCommand(drivetrain, 52)
+                        new StrafeRightCommand(mecDrivetrainSubsystem, 52)
                 ),
                 new ParallelCommandGroup(
-                        new SlowDriveForwardCommand(drivetrain, 1),
+                        new SlowDriveForwardCommand(mecDrivetrainSubsystem, 1),
                         new AutoDropConeCommand(claw, slide, pivot,true)
                         ),
                 new ParallelCommandGroup(
-                        new StrafeRightCommand(drivetrain, 17.8),
+                        new StrafeRightCommand(mecDrivetrainSubsystem, 17.8),
                         new ArmCone5BackCommand(slide, claw, pivot, turnServo)
                 ),
-                new DriveForwardCommand(drivetrain, -24.4),
-//                new TurnToCommand(drivetrain, 0),
+                new DriveForwardCommand(mecDrivetrainSubsystem, -24.4),
+//                new TurnToCommand(mecDrivetrainSubsystem, 0),
 
 
 
                 new AutoPickConeCommand(slide, claw),
                 new ParallelCommandGroup(
                         new ArmLowFrontCommand(slide, pivot, claw, turnServo, true),
-                        new TurnToCommand(drivetrain, 61, true)
+                        new TurnToCommand(mecDrivetrainSubsystem, 61, true)
                 ),
                 new ParallelCommandGroup(
-                        new SlowDriveForwardCommand(drivetrain, 3.47),
+                        new SlowDriveForwardCommand(mecDrivetrainSubsystem, 3.47),
                         new WaitCommand(200),
                         new AutoDropConeCommand(claw, slide, pivot,true)
                         ),
                 new ParallelCommandGroup(
-                        new SlowDriveForwardCommand(drivetrain, -1.77),
+                        new SlowDriveForwardCommand(mecDrivetrainSubsystem, -1.77),
                         new ArmCone5BackCommand(slide, claw, pivot, turnServo)
                 ),
-                new TurnToCommand(drivetrain, 0),
+                new TurnToCommand(mecDrivetrainSubsystem, 0),
                 new ParallelCommandGroup(
-                        new SlowDriveForwardCommand(drivetrain, -2.6),
+                        new SlowDriveForwardCommand(mecDrivetrainSubsystem, -2.6),
                         new InstantCommand(slide::slideCone4)
                 ),
 
 
                 new AutoPickConeCommand(slide, claw),
                 new ParallelCommandGroup(
-                        new TurnToCommand(drivetrain, 0),   //or remove
+                        new TurnToCommand(mecDrivetrainSubsystem, 0),   //or remove
                         new ArmHighFrontCommand(slide, pivot, claw, turnServo, true)
                 ),
                 new InstantCommand(pivot::moveInitializationPosition),
 
-                new DriveForwardCommand(drivetrain, 28),
-//                new StrafeLeftCommand(drivetrain, 1.51),
-                new TurnToCommand(drivetrain, 271.2, true),
-                new StrafeLeftCommand(drivetrain, 10.8),
+                new DriveForwardCommand(mecDrivetrainSubsystem, 28),
+//                new StrafeLeftCommand(mecDrivetrainSubsystem, 1.51),
+                new TurnToCommand(mecDrivetrainSubsystem, 271.2, true),
+                new StrafeLeftCommand(mecDrivetrainSubsystem, 10.8),
                 new WaitCommand(300),   //Just in case the pole is w0bbling
 
 
 
-//                new SlowDriveForwardCommand(drivetrain, 0.85),
+//                new SlowDriveForwardCommand(mecDrivetrainSubsystem, 0.85),
                 new ParallelCommandGroup(
-                        new SlowDriveForwardCommand(drivetrain, -1.43),
+                        new SlowDriveForwardCommand(mecDrivetrainSubsystem, -1.43),
                         new AutoDropConeCommand(claw, slide, pivot,true)
                         ),
 
-                new SlowDriveForwardCommand(drivetrain, -3),
+                new SlowDriveForwardCommand(mecDrivetrainSubsystem, -3),
                 new ParallelCommandGroup(
-                        new TurnToCommand(drivetrain, 271),
+                        new TurnToCommand(mecDrivetrainSubsystem, 271),
                         new SlideResetUpAutonCommand(slide, pivot, claw, turnServo)
                 )
         );

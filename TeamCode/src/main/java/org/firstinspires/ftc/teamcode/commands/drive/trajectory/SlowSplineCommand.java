@@ -8,7 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.util.Trajectories;
 public class SlowSplineCommand extends CommandBase {
 //    private static int num = 1;//BAD BAD BAD
 
-    Drivetrain drive;
+    MecDrivetrainSubsystem drive;
     Trajectory trajectory;
     boolean reverse = false;
     Vector2d splinePos;
@@ -25,7 +25,7 @@ public class SlowSplineCommand extends CommandBase {
 
     MinVelocityConstraint maxVelConstraint;
 
-    public SlowSplineCommand(Drivetrain drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public SlowSplineCommand(MecDrivetrainSubsystem drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this.drive = drive;
         this.reverse = reverse;
         this.splinePos = splinePos;
@@ -36,19 +36,19 @@ public class SlowSplineCommand extends CommandBase {
 
     }
 
-    public SlowSplineCommand(Drivetrain drive, Vector2d splinePos, double endHeading) {
+    public SlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading) {
         this(drive, Trajectories.slowVelConstraint, false, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public SlowSplineCommand(Drivetrain drive, Vector2d splinePos, double endHeading, boolean reverse) {
+    public SlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, boolean reverse) {
         this(drive, Trajectories.slowVelConstraint, reverse, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public SlowSplineCommand(Drivetrain drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public SlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this(drive, Trajectories.slowVelConstraint, false, splinePos, endHeading, poseToUse);
     }
 
-    public SlowSplineCommand(Drivetrain drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
+    public SlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
         this(drive, Trajectories.slowVelConstraint, reverse, splinePos, endHeading, poseToUse);
     }
 

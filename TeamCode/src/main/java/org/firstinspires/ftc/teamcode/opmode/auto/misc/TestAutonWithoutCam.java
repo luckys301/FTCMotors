@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.SensorColor;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 
 @Autonomous(group = "RED/BLUE")
@@ -19,12 +19,12 @@ public class TestAutonWithoutCam extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private Drivetrain drivetrain;
+    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
     private TurnServo turnServo;
     private SensorColor sensorColor;
 
-//    public MecanumDrive mecanumDrive;
+//    public MecDrive mecanumDrive;
 
 
     @Override
@@ -34,8 +34,8 @@ public class TestAutonWithoutCam extends MatchOpMode {
         slide = new Slide(telemetry, hardwareMap);
         turnServo = new TurnServo(telemetry, hardwareMap);
         sensorColor = new SensorColor(hardwareMap, telemetry);
-        drivetrain = new Drivetrain(new MecanumDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        drivetrain.init();
+        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDrivetrainSubsystem.init();
     }
 
 
@@ -43,14 +43,14 @@ public class TestAutonWithoutCam extends MatchOpMode {
 //        waitForStart();
         schedule(
                 new SequentialCommandGroup(
-                        new JustONECone(drivetrain, slide, pivot, claw, turnServo, sensorColor)
-//                        new LeftStrafe(drivetrain, slide, arm, turnServo, sensorColor, claw)
-//                        new RightSpline(drivetrain, slide, arm, claw)
-//                      new LeftSplineValues(drivetrain, slide, arm, claw, turnServo, sensorColor)
-//                        new Test(drivetrain, slide, arm, claw, turnServo)
+                        new JustONECone(mecDrivetrainSubsystem, slide, pivot, claw, turnServo, sensorColor)
+//                        new LeftStrafe(mecDrivetrainSubsystem, slide, arm, turnServo, sensorColor, claw)
+//                        new RightSpline(mecDrivetrainSubsystem, slide, arm, claw)
+//                      new LeftSplineValues(mecDrivetrainSubsystem, slide, arm, claw, turnServo, sensorColor)
+//                        new Test(mecDrivetrainSubsystem, slide, arm, claw, turnServo)
                 )
         );
-//        PoseStorage.currentPose = drivetrain.getPoseEstimate();
+//        PoseStorage.currentPose = mecDrivetrainSubsystem.getPoseEstimate();
     }
 
 

@@ -4,16 +4,16 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 
 public class DefaultDriveCommand extends CommandBase {
-    private Drivetrain drive;
+    private MecDrivetrainSubsystem drive;
     private GamepadEx driverGamepad;
 
     protected double multiplier;
     boolean isFieldCentric;
 
-    public DefaultDriveCommand(Drivetrain drive, GamepadEx driverGamepad, boolean isFieldCentric) {
+    public DefaultDriveCommand(MecDrivetrainSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
 
         this.drive = drive;
         this.driverGamepad = driverGamepad;

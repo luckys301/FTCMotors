@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.misc.TagVision;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 
@@ -24,7 +24,7 @@ public class JustPark extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private Drivetrain drivetrain;
+    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
     private TagVision tagVision;
     private TurnServo turnServo;
@@ -34,8 +34,8 @@ public class JustPark extends MatchOpMode {
     public void robotInit() {
         claw = new Claw( telemetry, hardwareMap);
         pivot = new Pivot( telemetry, hardwareMap);
-        drivetrain = new Drivetrain(new MecanumDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        drivetrain.init();
+        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDrivetrainSubsystem.init();
         slide = new Slide(telemetry, hardwareMap);
         turnServo = new TurnServo(telemetry, hardwareMap);
 
@@ -56,12 +56,12 @@ public class JustPark extends MatchOpMode {
             case 1: { //Left
                 schedule(
                         new SequentialCommandGroup(
-                                new DriveForwardCommand(drivetrain, 20),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 20),
                                 new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                new DriveForwardCommand(drivetrain, 12.25),
-                                new StrafeLeftCommand(drivetrain, 29),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 12.25),
+                                new StrafeLeftCommand(mecDrivetrainSubsystem, 29),
                                 new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                new DriveForwardCommand(drivetrain, 6)
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 6)
                         )
                 );
                 return;
@@ -69,7 +69,7 @@ public class JustPark extends MatchOpMode {
             case 2: { //Mid
                 schedule(
                         new SequentialCommandGroup(
-                                new DriveForwardCommand(drivetrain, 35),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 35),
                                 new SlideResetUpAutonCommand(slide, pivot, claw, turnServo)
                         )
                 );
@@ -79,11 +79,11 @@ public class JustPark extends MatchOpMode {
             default: { //Right
                 schedule(
                         new SequentialCommandGroup(
-                                new DriveForwardCommand(drivetrain, 20),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 20),
                                 new SlideResetUpAutonCommand(slide, pivot, claw, turnServo),
-                                new DriveForwardCommand(drivetrain, 12.25),
-                                new StrafeRightCommand(drivetrain, 29),
-                                new DriveForwardCommand(drivetrain, 6)
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 12.25),
+                                new StrafeRightCommand(mecDrivetrainSubsystem, 29),
+                                new DriveForwardCommand(mecDrivetrainSubsystem, 6)
                         )
                 );
                 return;

@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.teamcode.subsystems.drive;
+package org.firstinspires.ftc.teamcode.subsystems.mecDrive;
 
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -18,9 +18,9 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import java.util.List;
 
 
-public class Drivetrain extends SubsystemBase {
+public class MecDrivetrainSubsystem extends SubsystemBase {
 
-    private final MecanumDrive drive;
+    private final MecDrive drive;
     private Telemetry telemetry;
 //    private BNO055IMU imu;
     private final int LFVal = 0,
@@ -31,7 +31,7 @@ public class Drivetrain extends SubsystemBase {
 
 
 
-    public Drivetrain(MecanumDrive drive, Telemetry tl, HardwareMap hardwareMap) {
+    public MecDrivetrainSubsystem(MecDrive drive, Telemetry tl, HardwareMap hardwareMap) {
         this.drive = drive;
         this.telemetry = tl;
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");

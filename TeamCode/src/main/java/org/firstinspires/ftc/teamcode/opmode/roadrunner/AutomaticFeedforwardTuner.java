@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmode.roadrunner;
 
 
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.MAX_RPM;
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.NOMINAL_VOLTAGE;
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.subsystems.drive.DriveConstants.rpmToVelocity;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.MAX_RPM;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.NOMINAL_VOLTAGE;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.rpmToVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.LoggingUtil;
 import org.firstinspires.ftc.teamcode.util.RegressionUtil;
 
@@ -52,7 +52,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
 
         NanoClock clock = NanoClock.system();
 

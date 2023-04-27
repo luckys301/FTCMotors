@@ -30,8 +30,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.misc.TagVision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
@@ -45,7 +45,7 @@ public class LeftSplineAuto extends MatchOpMode
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private Drivetrain drivetrain;
+    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
     private TagVision tagVision;
     private TurnServo turnServo;
@@ -57,8 +57,8 @@ public class LeftSplineAuto extends MatchOpMode
     public void robotInit() {
         claw = new Claw(telemetry, hardwareMap);
         pivot = new Pivot( telemetry, hardwareMap);
-        drivetrain = new Drivetrain(new MecanumDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        drivetrain.init();
+        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDrivetrainSubsystem.init();
         slide = new Slide( telemetry, hardwareMap);
         turnServo = new TurnServo(telemetry, hardwareMap);
         tagVision = new TagVision(hardwareMap, telemetry);;
@@ -80,26 +80,26 @@ public class LeftSplineAuto extends MatchOpMode
         switch (tagNum) {
             case 1: { //Left
                 autonGroup = new SequentialCommandGroup(
-                        new LeftSpline(drivetrain, slide, pivot, claw, turnServo)
+                        new LeftSpline(mecDrivetrainSubsystem, slide, pivot, claw, turnServo)
                 );
             }
             case 2: { //Mid
                 autonGroup = new SequentialCommandGroup(
-                        new LeftSpline(drivetrain, slide, pivot, claw, turnServo)
-//                        new DriveForwardCommand(drivetrain, 12)
+                        new LeftSpline(mecDrivetrainSubsystem, slide, pivot, claw, turnServo)
+//                        new DriveForwardCommand(mecDrivetrainSubsystem, 12)
                 );
 
             }
             case 3: { //High
                 autonGroup =new SequentialCommandGroup(
-                        new LeftSpline(drivetrain, slide, pivot, claw, turnServo)
-//                        new DriveForwardCommand(drivetrain, 32)
+                        new LeftSpline(mecDrivetrainSubsystem, slide, pivot, claw, turnServo)
+//                        new DriveForwardCommand(mecDrivetrainSubsystem, 32)
                 );
             }
             default: {
                 autonGroup = new SequentialCommandGroup(
-                        new LeftSpline(drivetrain, slide, pivot, claw, turnServo)
-//                        new DriveForwardCommand(drivetrain, 32)
+                        new LeftSpline(mecDrivetrainSubsystem, slide, pivot, claw, turnServo)
+//                        new DriveForwardCommand(mecDrivetrainSubsystem, 32)
                 );
             }
         }

@@ -14,18 +14,18 @@ import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.SensorColor;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.drive.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 
 @Deprecated
 public class JustONECone extends SequentialCommandGroup{
-    public JustONECone(Drivetrain drivetrain, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo, SensorColor sensorColor){
+    public JustONECone(MecDrivetrainSubsystem mecDrivetrainSubsystem, Slide slide, Pivot pivot, Claw claw, TurnServo turnServo, SensorColor sensorColor){
         /*Turn is Counterclockwise*/
         addCommands(
                 new ParallelCommandGroup(
-                        new DriveForwardCommand(drivetrain, 53.91),
+                        new DriveForwardCommand(mecDrivetrainSubsystem, 53.91),
                         new ArmHighFrontCommand(slide, pivot, claw, turnServo, true)
                         ),
-                new StrafeLeftCommand(drivetrain, 7.52),
+                new StrafeLeftCommand(mecDrivetrainSubsystem, 7.52),
 
                 new AutoDropConeCommand(claw, slide, pivot, true),
                 new WaitCommand(200),
