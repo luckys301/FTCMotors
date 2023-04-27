@@ -11,7 +11,5 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 @Config
 public class PoseStorage {
     public static Pose2d currentPose = new Pose2d();
-    public static Pose2d load = new Pose2d();
-    public static Pose2d cycle = new Pose2d();
     public static Pose2d trajectoryPose = new Pose2d();
 }

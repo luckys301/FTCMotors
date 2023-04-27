@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
-import org.firstinspires.ftc.teamcode.util.MatchOpMode;
+import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 @Disabled
 @Config
 @TeleOp(name = "Test")

@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceConstraints;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Turn;
-import org.firstinspires.ftc.teamcode.util.MatchOpMode;
+import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 //438247
 

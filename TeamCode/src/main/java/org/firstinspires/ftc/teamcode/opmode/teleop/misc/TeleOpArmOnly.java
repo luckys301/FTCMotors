@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
-import org.firstinspires.ftc.teamcode.util.MatchOpMode;
+import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
 //@Disabled
 @Config
