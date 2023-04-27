@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Slide;
 import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
-import org.firstinspires.ftc.teamcode.subsystems.misc.TagVision;
+import org.firstinspires.ftc.teamcode.subsystems.pipelines.aprilTagPipeline.TagVision;
 import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 
 @Autonomous

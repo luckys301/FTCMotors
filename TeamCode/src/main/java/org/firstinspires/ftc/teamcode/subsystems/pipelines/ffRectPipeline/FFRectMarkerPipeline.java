@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.pipelines;
+package org.firstinspires.ftc.teamcode.subsystems.pipelines.ffRectPipeline;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;

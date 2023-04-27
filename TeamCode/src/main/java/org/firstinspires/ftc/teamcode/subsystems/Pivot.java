@@ -76,7 +76,6 @@ public class Pivot extends SubsystemBase {
         //Reverse claw motor
         armMotor.setInverted(true);
         armMotor.resetEncoder();
-//        this.armMotor.setZeroPowerBehavior(BRAKE); // TODO: FOR COMP
         armMotor.setDistancePerPulse(360 / CPR);
 
         armMotor.set(0);
@@ -88,11 +87,7 @@ public class Pivot extends SubsystemBase {
         armAutomatic = false;
 //        setOffset();
         //TODO: isAuto for Brake Mode
-        armMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE); //Remove for practice and stuff
-//        armPos = ArmPos.RESET;
-
-//        potentiometer = hw.get(AnalogInput.class, "Potentiometer");
-//        potentiometer = new AnalogInput(null, 0);
+        armMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -103,10 +98,6 @@ public class Pivot extends SubsystemBase {
 
             double output = controller.calculate(getAngle());
             telemetry.addData("CLaw Motor Output:", output);
-
-//            if (output >= 1) output = 1;
-//            if (output <= -1) output = -1;
-//            armMotor.set(output);
 
             armMotor.set(output * POWER);
         }
@@ -128,22 +119,10 @@ public class Pivot extends SubsystemBase {
     public void raiseClawManual() {
         armAutomatic = false;
         armMotor.set(UP_SPEED);
-
-//        armAutomatic = true;
-////        if((armMotor.getCurrentPosition()<275)){
-//            controller.setSetPoint(armMotor.getCurrentPosition()+5);
-////        }
-////        else return;
     }
     public void lowerClawManual() {
         armAutomatic = false;
         armMotor.set(DOWN_SPEED);
-
-//        armAutomatic = true;
-//        if((armMotor.getCurrentPosition()>-275)){
-//            controller.setSetPoint(armMotor.getCurrentPosition()-5);
-//        }
-//        else return;
     }
 
     public void stopArm() {
