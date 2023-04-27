@@ -38,7 +38,7 @@ import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 //438247 - Justin's Password bn
 
-@Autonomous
+//@Autonomous
 public class RightRegionalAuto extends MatchOpMode {
     // Subsystems
     private Pivot pivot;

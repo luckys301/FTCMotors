@@ -38,7 +38,7 @@ import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 //438247
 
-@Autonomous
+//@Autonomous
 public class LeftRegionalAuto extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
