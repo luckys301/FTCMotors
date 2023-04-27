@@ -4,16 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.commands.arm.backside.auto.cone.ArmCone3BackCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.backside.auto.cone.ArmCone4BackCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.backside.auto.cone.ArmCone5BackCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.frontside.ArmHighFrontCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.frontside.ArmMidFrontCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.intake.AutoPickConeCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.outtake.AutoDropConeCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.slide.SlideResetUpAutonCommand;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.DisplacementCommand;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.TrajectorySequenceContainerFollowCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
@@ -291,101 +281,42 @@ public class RightRegionalAuto extends MatchOpMode {
         }
         mecDrivetrainSubsystem.setPoseEstimate(RightRegionalAutoConstants.Path.PreLoad.startPose.getPose());
         PoseStorage.trajectoryPose = RightRegionalAutoConstants.Path.PreLoad.startPose.getPose();
+
         schedule(
                 new SequentialCommandGroup(
-                        /* Preload */
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.PreLoad.preload),
-                                new ArmHighFrontCommand(slide, pivot, claw, turnServo, true)
+                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.PreLoad.preload)
                         ),
                         new WaitCommand(100),
-                        new AutoDropConeCommand(claw, slide, pivot, true),
-
-
-
-                        /* Cycle 1 Pickup */
-                        new ParallelCommandGroup(
-                                new ArmCone5BackCommand(slide, claw, pivot, turnServo),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle1Pickup.cycle1Pickup,
-                                        new DisplacementCommand(30, new AutoPickConeCommand(slide, claw)))
+                                        new DisplacementCommand(30, new SequentialCommandGroup()))
                         ),
-//                        new ParallelCommandGroup(
-//                                new InstantCommand(claw::clawClose),
-//                                new DriveForwardCommand(mecDrivetrainSubsystem, 0.1)
-//                        ),
-//                        new AutoPickConeCommand(slide, claw),
-
-
-
-                        /* Cycle 1 Drop */
                         new ParallelCommandGroup(
-                                new ArmMidFrontCommand(slide, pivot, claw, turnServo,true),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle1Drop.cycle1Drop)
                         ),
-                        new AutoDropConeCommand(claw, slide, pivot, true),
-
-                        /* Cycle 2 Pickup */
                         new ParallelCommandGroup(
-                                new ArmCone4BackCommand(slide, claw, pivot, turnServo),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle2Pickup.cycle2Pickup,
-                                        new DisplacementCommand(28.5, new AutoPickConeCommand(slide, claw)))
+                                        new DisplacementCommand(28.5, new SequentialCommandGroup()))
                         ),
-//                        new AutoPickConeCommand(slide, claw),
-
-                        /* Cycle 2 Drop */
                         new ParallelCommandGroup(
-                                new ArmMidFrontCommand(slide, pivot, claw, turnServo,true),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle2Drop.cycle2Drop)
                         ),
-                        new AutoDropConeCommand(claw, slide, pivot, true),
 
-                        /* Cycle 3 Pickup */
                         new ParallelCommandGroup(
-                                new ArmCone3BackCommand(slide, claw, pivot, turnServo),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle3Pickup.cycle3Pickup,
-                                        new DisplacementCommand(28.5, new AutoPickConeCommand(slide, claw)))
+                                        new DisplacementCommand(28.5, new SequentialCommandGroup()))
                         ),
-//                        new AutoPickConeCommand(slide, claw),
-
-                        /* Cycle 3 Drop */
                         new ParallelCommandGroup(
-                                new ArmMidFrontCommand(slide, pivot, claw, turnServo,true),
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle3Drop.cycle3Drop)
                         ),
-                        new AutoDropConeCommand(claw, slide, pivot, true),
-
-
-//                        /* Cycle 4 Pickup */
-//                        new ParallelCommandGroup(
-//                                new ArmCone2BackCommand(slide, claw, pivot, turnServo),
-//                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle4Pickup.cycle4Pickup,
-//                                        new DisplacementCommand(27, new AutoPickConeCommand(slide, claw)))
-//                        ),
-////                        new AutoPickConeCommand(slide, claw),
-//
-//                        /* Cycle 4 Drop */
-//                        new ParallelCommandGroup(
-//                                new ArmHighFrontCommand(slide, pivot, claw, turnServo,true),
-////                                new ArmMidFrontCommand(slide, pivot, claw, turnServo,true),
-//                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle4Drop.cycle4Drop)
-//                        ),
-//                        new AutoDropConeCommand(claw, slide, pivot, true),
-
-                        /* Park */
                         new SequentialCommandGroup(//Y is this not working...
                                 new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Park.getPark(finalX))
-                        ),
-                        new SequentialCommandGroup(
-                                new SlideResetUpAutonCommand(slide, pivot, claw, turnServo)
-//                                new WaitCommand(1000),
-//                                run(pivot::stopArm)
                         ),
                         run(() -> PoseStorage.currentPose = mecDrivetrainSubsystem.getPoseEstimate()),
 
                         /* Save Pose and end opmode*/
 
                         run(this::stop)
-                )
-        );
+                );
     }
 }

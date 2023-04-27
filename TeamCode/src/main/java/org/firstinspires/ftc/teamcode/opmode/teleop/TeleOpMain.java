@@ -2,18 +2,12 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.commands.arm.backside.ArmIntakeBackCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.frontside.ArmHighFrontCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.frontside.ArmLowFrontCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.frontside.ArmMidFrontCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.intake.PickConeCommand;
-import org.firstinspires.ftc.teamcode.commands.arm.outtake.DropConeCommand;
 import org.firstinspires.ftc.teamcode.commands.arm.pivot.PivotMoveManual;
 import org.firstinspires.ftc.teamcode.commands.arm.slide.SlideMoveManual;
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
@@ -30,11 +24,9 @@ import org.firstinspires.ftc.teamcode.util.MatchOpMode;
 @Config
 @TeleOp
 public class TeleOpMain extends MatchOpMode {
-
     // Gamepad
     private GamepadEx driverGamepad;
     private GamepadEx operatorGamepad;
-
 
     // Subsystems
     private Pivot pivot;
@@ -84,25 +76,25 @@ public class TeleOpMain extends MatchOpMode {
         pivot.setDefaultCommand(new PivotMoveManual(pivot, operatorGamepad::getLeftY));
 
         Button armIntake = (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
-                .whenPressed(new PickConeCommand(claw));
+                .whenPressed(new SequentialCommandGroup());
 
         Button armOuttake = (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.RIGHT_TRIGGER))
-                .whenPressed(new DropConeCommand(claw, slide, pivot));
+                .whenPressed(new SequentialCommandGroup());
 
 //        Button armGroundFront = (new GamepadButton(operatorGamepad, GamepadKeys.Button.X)
 //                .whenPressed(new ArmGroundFrontCommand(slide, pivot, claw, turnServo, false)));
 
         Button armLowFront = (new GamepadButton(operatorGamepad, GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new ArmLowFrontCommand(slide, pivot, claw, turnServo, false)));
+                .whenPressed(new SequentialCommandGroup()));
 
         Button armMidFront = (new GamepadButton(operatorGamepad, GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new ArmMidFrontCommand(slide, pivot, claw, turnServo, false)));
+                .whenPressed(new SequentialCommandGroup()));
 
         Button armHighFront = (new GamepadButton(operatorGamepad, GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new ArmHighFrontCommand(slide, pivot, claw, turnServo, false)));
+                .whenPressed(new SequentialCommandGroup()));
 
         Button armIntakeBack = (new GamepadButton(operatorGamepad, GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(new ArmIntakeBackCommand(slide, pivot, claw, turnServo)));
+                .whenPressed(new SequentialCommandGroup()));
 
         Button pivotInitializationPosition = (new GamepadButton(operatorGamepad, GamepadKeys.Button.A)
                 .whenPressed(pivot::encoderReset));
