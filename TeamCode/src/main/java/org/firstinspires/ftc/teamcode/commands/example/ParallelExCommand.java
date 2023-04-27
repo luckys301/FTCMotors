@@ -8,12 +8,11 @@ public class ParallelExCommand extends ParallelCommandGroup{
     public ParallelExCommand(MecDrivetrainSubsystem mecDrivetrainSubsystem){
         addRequirements(mecDrivetrainSubsystem);    //Add Subsystems that you need to run this Command
         addCommands(
-                //Commands that will run automatically - Each subsystem can only be used once
-                //Can also be implemented like below
-                new ParallelCommandGroup(
-                        //Commands
-                )
-
+            //Commands that will run automatically - Each subsystem can only be used once
+            //Can also be implemented like below and/or by extending ParallelCommandGroup
+            new ParallelCommandGroup(
+                    //Commands
+            )
         );
     }
 }
