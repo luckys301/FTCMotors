@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 @Config
 @Autonomous(group = "drive")
 public class StrafeTest extends LinearOpMode {
-    public static double DISTANCE = 60; // in
+    public static double DISTANCE = RoadrunnerValues.StrafeTest.DISTANCE; // in
 
     @Override
     public void runOpMode() throws InterruptedException {
