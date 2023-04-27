@@ -21,8 +21,6 @@ import java.util.List;
 public class MecDrivetrainSubsystem extends SubsystemBase {
 
     private final MecDrive drive;
-    private Telemetry telemetry;
-//    private BNO055IMU imu;
     private final int LFVal = 0,
             LRVal = 1,
             RFVal = 2,
@@ -33,8 +31,7 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
 
     public MecDrivetrainSubsystem(MecDrive drive, Telemetry tl, HardwareMap hardwareMap) {
         this.drive = drive;
-        this.telemetry = tl;
-//        imu = hardwareMap.get(BNO055IMU.class, "imu");
+//        this.telemetry = tl;
     }
 
     public void init() {
@@ -100,49 +97,7 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
     public double getHeading() {
         return Math.toDegrees(drive.getExternalHeading());
     }
-    /**
-     * Returns minimum range value if the given value is less than
-     * the set minimum. If the value is greater than the set maximum,
-     * then the method returns the maximum value.
-     *
-     * value - The value to clip.
-     */
-//    public double clipRange(double value) {
-//        return value <= -1 ? -1
-//                : value >= 1 ? 1
-//                : value;
-//    }
 
-    /*protected void normalize(double[] wheelSpeeds, double magnitude) {
-        double maxMagnitude = Math.abs(wheelSpeeds[0]);
-        for (int i = 1; i < wheelSpeeds.length; i++) {
-            double temp = Math.abs(wheelSpeeds[i]);
-            if (maxMagnitude < temp) {
-                maxMagnitude = temp;
-            }
-        }
-        for (int i = 0; i < wheelSpeeds.length; i++) {
-            wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude) * magnitude;
-        }
-
-    }
-
-//     Normalize the wheel speeds
-
-    protected void normalize(double[] wheelSpeeds) {
-        double maxMagnitude = Math.abs(wheelSpeeds[0]);
-        for (int i = 1; i < wheelSpeeds.length; i++) {
-            double temp = Math.abs(wheelSpeeds[i]);
-            if (maxMagnitude < temp) {
-                maxMagnitude = temp;
-            }
-        }
-        if(maxMagnitude > 1) {
-            for (int i = 0; i < wheelSpeeds.length; i++) {
-                wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude);
-            }
-        }
-    }*/
 
     @Override
     public void periodic() {
@@ -155,27 +110,12 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
         drive.setMode(mode);
     }
 
-    public void setPIDFCoefficients(DcMotor.RunMode mode, PIDFCoefficients coefficients) {
-        drive.setPIDFCoefficients(mode, coefficients);
-    }
-
     public void setPoseEstimate(Pose2d pose) {
         drive.setPoseEstimate(pose);
     }
 
     public void update() {
         drive.update();
-    }
-
-
-
-
-    public void setDrivePower(Pose2d drivePower) {
-        drive.setDrivePower(drivePower);
-    }
-
-    public void setWeightedDrivePower(Pose2d drivePower) {
-        drive.setWeightedDrivePower(drivePower);
     }
 
     public Pose2d getPoseEstimate() {
