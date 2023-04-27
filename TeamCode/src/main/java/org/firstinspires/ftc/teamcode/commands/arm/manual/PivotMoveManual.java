@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands.arm.pivot;
+package org.firstinspires.ftc.teamcode.commands.arm.manual;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
