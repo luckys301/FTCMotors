@@ -2,32 +2,25 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.Util;
 
 import java.util.logging.Level;
 
 @Config
 public class Pivot extends SubsystemBase {
-
-    public static PIDFCoefficients pidfCoefficients = new PIDFCoefficients(.005, 0.00, 0.0,0);
-    private final PIDFController controller;
+private final PIDFController controller;
     private boolean armAutomatic;
     public boolean shouldSensorWork = true;
 
-
-    public static double CPR = 384.5;
-    public static double UP_SPEED = -0.55;
-    public static double DOWN_SPEED = 0.55;
-
-    public int INIT_POS = 0;
     public int TELE_OP_START_POS = -350;
 
     public static int INTAKE_POS_BACK = -0,
@@ -49,60 +42,99 @@ public class Pivot extends SubsystemBase {
                         INTAKE_POS_AUTO_FRONT = -INTAKE_POS_AUTO_BACK,
                         POS_AUTO_FRONT = -POS_AUTO_BACK,
                         DROP_AUTO_FRONT = -DROP_AUTO_BACK;
-    public enum ArmPos{
-        RESET,
-        INTAKE_BACK, BACK, HIGH_BACK, GROUND_BACK, DROP_BACK,
-        INTAKE_FRONT, FRONT, HIGH_FRONT, GROUND_FRONT, DROP_FRONT,
-        AUTO_INTAKE_BACK, AUTO_BACK, AUTO_HIGH_BACK, AUTO_DROP_BACK,
-        AUTO_INTAKE_FRONT, AUTO_FRONT, AUTO_HIGH_FRONT,AUTO_DROP_FRONT,
-//        public double ArmPos(int rt){
-//            int fsr =rt;
+//    public enum PivotPos {
+//        RESET(0), TELE_OP_START_POS(-350),
+//        INTAKE_BACK(0), BACK(-455), HIGH_BACK(-455), GROUND_BACK(-480), DROP_BACK(-700),
+//
+//        INTAKE_FRONT(-PivotPos.INTAKE_BACK.pivotPosition),
+//        FRONT(-PivotPos.BACK.pivotPosition),
+//        HIGH_FRONT(-PivotPos.HIGH_BACK.pivotPosition),
+//        GROUND_FRONT(-PivotPos.GROUND_BACK.pivotPosition),
+//        DROP_FRONT(-PivotPos.DROP_BACK.pivotPosition),
+//
+//        AUTO_INTAKE_BACK(-150), AUTO_BACK(-233), AUTO_HIGH_BACK(-150), AUTO_DROP_BACK(-390),
+//
+//        AUTO_INTAKE_FRONT(-PivotPos.AUTO_INTAKE_BACK.pivotPosition),
+//        AUTO_FRONT(-PivotPos.AUTO_BACK.pivotPosition),
+//        AUTO_HIGH_FRONT(-PivotPos.AUTO_HIGH_BACK.pivotPosition),
+//        AUTO_DROP_FRONT(-PivotPos.AUTO_DROP_BACK.pivotPosition);
+//
+//        public final double pivotPosition;
+//        PivotPos(double pivotPosition) {
+//            this.pivotPosition = pivotPosition;
 //        }
+//    }
+    public enum PivotPos {
+        RESET(0),
+        TELE_OP_START_POS(-350),
+
+        INTAKE_BACK(0, true),
+        BACK(-455),
+        HIGH_BACK(-455),
+        GROUND_BACK(-480),
+        DROP_BACK(-700),
+
+        INTAKE_FRONT(-PivotPos.INTAKE_BACK.pivotPosition, true),
+        FRONT(-PivotPos.BACK.pivotPosition),
+        HIGH_FRONT(-PivotPos.HIGH_BACK.pivotPosition),
+        GROUND_FRONT(-PivotPos.GROUND_BACK.pivotPosition),
+        DROP_FRONT(-PivotPos.DROP_BACK.pivotPosition),
+
+
+        AUTO_INTAKE_BACK(-150, true),
+        AUTO_BACK(-233),
+        AUTO_HIGH_BACK(-150),
+        AUTO_DROP_BACK(-390),
+
+        AUTO_INTAKE_FRONT(-PivotPos.AUTO_INTAKE_BACK.pivotPosition, true),
+        AUTO_FRONT(-PivotPos.AUTO_BACK.pivotPosition),
+        AUTO_HIGH_FRONT(-PivotPos.AUTO_HIGH_BACK.pivotPosition),
+        AUTO_DROP_FRONT(-PivotPos.AUTO_DROP_BACK.pivotPosition);
+
+        public final double pivotPosition;
+        public final boolean shouldSensorWork;
+        PivotPos(double pivotPosition) {
+            this.pivotPosition = pivotPosition;
+            this.shouldSensorWork = false;
+        }
+        PivotPos(double pivotPosition, boolean shouldSensorWork) {
+            this.pivotPosition = pivotPosition;
+            this.shouldSensorWork = shouldSensorWork;
+        }
     }
-    ArmPos armPos = ArmPos.RESET;
+    PivotPos pivotPos = PivotPos.RESET;
 
 
 
     private final static double POWER = 0.93;
     private double encoderOffset = 0;
-//    private static int armPos = 0;
+//    private static int pivotPos = 0;
 
     Telemetry telemetry;
     private final MotorEx armMotor;
 
     public Pivot(Telemetry tl, HardwareMap hw) {
-        armMotor = new MotorEx(hw, "clawM");
-
-        //Reverse claw motor
-        armMotor.setInverted(true);
-        armMotor.resetEncoder();
-        armMotor.setDistancePerPulse(360 / CPR);
-
-        armMotor.set(0);
-
-        controller = new PIDFController(pidfCoefficients.p, pidfCoefficients.i, pidfCoefficients.d, pidfCoefficients.f, getAngle(), getAngle());
-        controller.setTolerance(10);
+        armMotor = new MotorEx(hw, NebulaConstants.Pivot.pivotMName);
+        controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p, NebulaConstants.Pivot.pivotPID.i, NebulaConstants.Pivot.pivotPID.d, NebulaConstants.Pivot.pivotPID.f, getEncoderDistance(), getEncoderDistance());
+        controller.setTolerance(NebulaConstants.Pivot.controllerTolerance);
 
         this.telemetry = tl;
         armAutomatic = false;
-//        setOffset();
-        //TODO: isAuto for Brake Mode
-        armMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
     public void periodic() {
         if (armAutomatic) {
 
-            controller.setF(pidfCoefficients.f * Math.cos(Math.toRadians(controller.getSetPoint())));
+            controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
 
-            double output = controller.calculate(getAngle());
+            double output = controller.calculate(getEncoderDistance());
             telemetry.addData("CLaw Motor Output:", output);
 
             armMotor.set(output * POWER);
         }
         Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
-        Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", armPos);
+        Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", pivotPos);
 
     }
 
@@ -116,15 +148,6 @@ public class Pivot extends SubsystemBase {
 
     /****************************************************************************************/
 
-    public void raiseClawManual() {
-        armAutomatic = false;
-        armMotor.set(UP_SPEED);
-    }
-    public void lowerClawManual() {
-        armAutomatic = false;
-        armMotor.set(DOWN_SPEED);
-    }
-
     public void stopArm() {
         armMotor.stopMotor();
         armAutomatic = false;
@@ -132,168 +155,136 @@ public class Pivot extends SubsystemBase {
 
     /****************************************************************************************/
 
-    public void moveTeleOpAutoStart() {
-        armAutomatic = true;
-        setSetPoint(TELE_OP_START_POS);
-        armPos = ArmPos.RESET;
-        shouldSensorWork = true;
-    }
     public void moveInitializationPosition() {
         armAutomatic = true;
-        setSetPoint(INIT_POS - encoderOffset - 10);
-        armPos = ArmPos.RESET;
-        shouldSensorWork = true;
-//        resetOffset();
+        setSetPoint(PivotPos.RESET.pivotPosition - encoderOffset - 10, true);
+        pivotPos = PivotPos.RESET;
     }
-    public void moveIntakeF() {
-        armAutomatic = true;
-        setSetPoint(INTAKE_POS_FRONT);
-        armPos = ArmPos.INTAKE_FRONT;
-        shouldSensorWork = true;
-    }
+//    public void moveIntakeF() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.INTAKE_FRONT.pivotPosition, true);
+//    }
     public void moveIntakeB() {
         armAutomatic = true;
-        setSetPoint(INTAKE_POS_BACK);
-        armPos = ArmPos.INTAKE_BACK;
-        shouldSensorWork = true;
+        setSetPoint(PivotPos.INTAKE_BACK);
     }
     public void moveGroundB(){
         armAutomatic = true;
-        setSetPoint(GROUND_POS_BACK);
-        armPos = ArmPos.GROUND_BACK;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.GROUND_BACK);
     }
     public void moveGroundF(){
         armAutomatic = true;
-        setSetPoint(GROUND_POS_FRONT);
-        armPos = ArmPos.GROUND_FRONT;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.GROUND_FRONT);
     }
     public void moveF() {
         armAutomatic = true;
-        setSetPoint(POS_FRONT);
-        armPos = ArmPos.FRONT;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.FRONT);
     }
     public void moveB() {
         armAutomatic = true;
-        setSetPoint(POS_BACK);
-        armPos = ArmPos.BACK;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.BACK);
     }
-    public void moveHighF() {
-        armAutomatic = true;
-        setSetPoint(HIGH_POS_FRONT);
-        armPos = ArmPos.HIGH_FRONT;
-        shouldSensorWork = false;
-    }
+//    public void moveHighF() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.HIGH_FRONT, false);
+//    }
     public void moveHighB() {
         armAutomatic = true;
-        setSetPoint(HIGH_POS_BACK);
-        armPos = ArmPos.HIGH_BACK;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.HIGH_BACK);
     }
 
 
 
     public void moveHighBAuto(){
         armAutomatic = true;
-        setSetPoint(HIGH_POS_AUTO_BACK);
-        armPos = ArmPos.AUTO_HIGH_BACK;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.AUTO_HIGH_BACK);
     }
-    public void moveHighFAuto(){
-        armAutomatic = true;
-        setSetPoint(HIGH_POS_AUTO_FRONT);
-        armPos = ArmPos.AUTO_HIGH_FRONT;
-        shouldSensorWork = false;
-    }
-    public void moveIntakeFAuto() {
-        armAutomatic = true;
-        setSetPoint(INTAKE_POS_AUTO_FRONT);
-        armPos = ArmPos.AUTO_INTAKE_FRONT;
-        shouldSensorWork = true;
-    }
+//    public void moveHighFAuto(){
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.AUTO_HIGH_FRONT, false);
+//    }
+//    public void moveIntakeFAuto() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.AUTO_INTAKE_FRONT, true);
+//    }
     public void moveIntakeBAuto() {
         armAutomatic = true;
-        setSetPoint(INTAKE_POS_AUTO_BACK);
-        armPos = ArmPos.AUTO_INTAKE_BACK;
-        shouldSensorWork = true;
+        setSetPoint(PivotPos.AUTO_INTAKE_BACK);
     }
     public void moveBAuto() {
         armAutomatic = true;
-        setSetPoint(POS_AUTO_BACK);
-        armPos = ArmPos.AUTO_BACK;
-        shouldSensorWork = false;
+        setSetPoint(PivotPos.AUTO_BACK);
     }
-    public void moveFAuto() {
-        armAutomatic = true;
-        setSetPoint(POS_AUTO_FRONT);
-        armPos = ArmPos.AUTO_FRONT;
-        shouldSensorWork = false;
-    }
-    public void moveBDrop() {
-        armAutomatic = true;
-        setSetPoint(DROP_BACK);
-        armPos = ArmPos.DROP_BACK;
-        shouldSensorWork = false;
-    }
-    public void moveFDrop() {
-        armAutomatic = true;
-        setSetPoint(DROP_FRONT);
-        armPos = ArmPos.AUTO_DROP_FRONT;
-        shouldSensorWork = false;
-    }
-
-    public void moveBDropAuto() {
-        armAutomatic = true;
-        setSetPoint(DROP_AUTO_BACK);
-        armPos = ArmPos.DROP_BACK;
-        shouldSensorWork = false;
-    }
-    public void moveFDropAuto() {
-        armAutomatic = true;
-        setSetPoint(DROP_AUTO_FRONT);
-        armPos = ArmPos.AUTO_DROP_FRONT;
-        shouldSensorWork = false;
-    }
+//    public void moveFAuto() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.AUTO_FRONT, false);
+//    }
+//    public void moveBDrop() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.DROP_BACK, false);
+//    }
+//    public void moveFDrop() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.AUTO_DROP_FRONT, false);
+//    }
+//
+//    public void moveBDropAuto() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.DROP_BACK, false);
+//    }
+//    public void moveFDropAuto() {
+//        armAutomatic = true;
+//        setSetPoint(PivotPos.AUTO_DROP_FRONT, false);
+//    }
 
     public void dropArmTeleop(){
-        switch (armPos){
+        switch (pivotPos){
             case FRONT:
             case HIGH_FRONT:
-                setSetPoint(DROP_FRONT);
+                setSetPoint(PivotPos.DROP_FRONT);
                 break;
             case BACK:
             case HIGH_BACK:
-                setSetPoint(DROP_BACK);
+                setSetPoint(PivotPos.DROP_BACK);
                 break;
         }
     }
 
     public void dropArmAuto(){
-        switch (armPos){
+        switch (pivotPos){
             case AUTO_HIGH_BACK:
             case AUTO_BACK:
-                setSetPoint(DROP_AUTO_BACK);
+                setSetPoint(DROP_AUTO_BACK, false);
                 break;
             case AUTO_HIGH_FRONT:
             case AUTO_FRONT:
-                setSetPoint(DROP_AUTO_FRONT);
+                setSetPoint(DROP_AUTO_FRONT,false);
                 break;
             case AUTO_INTAKE_FRONT:
-                setSetPoint(INTAKE_POS_AUTO_FRONT+25);
-                shouldSensorWork = true;
+                setSetPoint(INTAKE_POS_AUTO_FRONT+25, true);
                 break;
             case AUTO_INTAKE_BACK:
-                setSetPoint(INTAKE_POS_AUTO_BACK-25);
-                shouldSensorWork = true;
+                setSetPoint(INTAKE_POS_AUTO_BACK-25, true);
                 break;
         }
     }
 
-    public void setSetPoint(double setPoint) {
+    public void setSetPoint(PivotPos pos) {
+        controller.setSetPoint(pos.pivotPosition + encoderOffset);
+        pivotPos = pos;
+        this.shouldSensorWork = pos.shouldSensorWork;
+    }
+    public void setSetPoint(double setPoint, boolean shouldSensorWork) {
         controller.setSetPoint(setPoint + encoderOffset);
+        this.shouldSensorWork = shouldSensorWork;
+    }
+
+    //TODO: Test!
+    public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
+        return new InstantCommand(()->{this.setSetPoint(setPoint, shouldSensorWork);});
+    }
+    public Command setSetPointCommand(PivotPos pos) {
+        return new InstantCommand(()->{this.setSetPoint(pos);});
     }
 
     public void encoderReset() {
@@ -310,7 +301,7 @@ public class Pivot extends SubsystemBase {
 //        armAutomatic = true;
 //    }
 //    public void clawEncoderReset() {
-//        armPos = ArmPos.RESET;
+//        pivotPos = PivotPos.RESET;
 //    }
 //    public void resetEncoder() {
 //        clawEncoderReset();
