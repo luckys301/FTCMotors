@@ -1,14 +1,10 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.regional.left;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.DisplacementCommand;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.TrajectorySequenceContainerFollowCommand;
-import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Pivot;
-import org.firstinspires.ftc.teamcode.subsystems.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
@@ -28,14 +24,10 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 //438247
 
 //@Autonomous
-public class LeftRegionalAuto extends MatchOpMode {
+public class ComplexAutoImplementation extends MatchOpMode {
     // Subsystems
-    private Pivot pivot;
-    private Claw claw;
     private MecDrivetrainSubsystem mecDrivetrainSubsystem;
-    private Slide slide;
     private TagVision tagVision;
-    private TurnServo turnServo;
     @Config
     public static class RightRegionalAutoConstants {
 
@@ -245,12 +237,8 @@ public class LeftRegionalAuto extends MatchOpMode {
 
     @Override
     public void robotInit() {
-        claw = new Claw(telemetry, hardwareMap);
-        pivot = new Pivot(telemetry, hardwareMap);
         mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
         mecDrivetrainSubsystem.init();
-        slide = new Slide( telemetry, hardwareMap);
-        turnServo = new TurnServo(telemetry, hardwareMap);
         tagVision = new TagVision(hardwareMap, telemetry);
         while (!isStarted() && !isStopRequested()) {
             tagVision.updateTagOfInterest();
@@ -310,10 +298,9 @@ public class LeftRegionalAuto extends MatchOpMode {
                         ),
                         new SequentialCommandGroup(
                         ),
-                        run(() -> PoseStorage.currentPose = mecDrivetrainSubsystem.getPoseEstimate()),
 
                         /* Save Pose and end opmode*/
-
+                        run(() -> PoseStorage.currentPose = mecDrivetrainSubsystem.getPoseEstimate()),
                         run(this::stop)
                 )
         );
