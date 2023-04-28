@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
 
-import static org.firstinspires.ftc.teamcode.subsystems.Claw.CLOSE_POS_S1;
-import static org.firstinspires.ftc.teamcode.subsystems.Claw.OPEN_POS_S1;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
+
 //@Disabled
 @TeleOp(group = "Subsystem test")
 public class ClawServoTest extends OpMode {
     Servo servo2;
-    double pos = OPEN_POS_S1, pos2 = CLOSE_POS_S1;
+    double pos = Claw.ClawPos.OPEN_POS_S1.clawPosition, pos2 = Claw.ClawPos.CLOSE_POS_S1.clawPosition;
 
     /**
      * User defined init method
@@ -38,17 +39,17 @@ public class ClawServoTest extends OpMode {
 
         if(gamepad1.right_bumper){
 //            pos = CLOSE_POS_S1;
-            pos2  = CLOSE_POS_S1;
+            pos2  = Claw.ClawPos.CLOSE_POS_S1.clawPosition;
         }
         else if(gamepad1.left_bumper){
 //            pos = OPEN_POS_S1;
-            pos2  = OPEN_POS_S1;
+            pos2  = Claw.ClawPos.OPEN_POS_S1.clawPosition;
         }
 
         pos2 = Math.min(Math.max(pos2, 0), 1);
         servo2.setPosition(pos2);
-        telemetry.addData("Servo pos2: ",servo2.getPosition());
-        telemetry.addData("Desired pos2: ", pos2);
+        telemetry.addData("Servo Pos: ",servo2.getPosition());
+        telemetry.addData("Desired Pos: ", pos2);
         telemetry.update();
 
     }
