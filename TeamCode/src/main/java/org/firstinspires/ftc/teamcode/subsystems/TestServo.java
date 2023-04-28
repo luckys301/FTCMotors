@@ -33,7 +33,7 @@ public class TestServo extends SubsystemBase {
     private final NebulaServo clawS1;     //Claw
 
     public TestServo(Telemetry tl, HardwareMap hw) {
-        this.clawS1 = new NebulaServo(hw, "clawS2", 0, 360, true);
+        this.clawS1 = new NebulaServo(hw, "clawS2", NebulaServo.Direction.Forward, 0, 360, true);
         this.clawS1.setPosition(positions.CLOSE_POS_S1.position);  //Port 3
 
         this.telemetry = tl;
