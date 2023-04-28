@@ -50,11 +50,11 @@ public abstract class MatchOpMode extends CommandOpMode {
     }
 
     public abstract void robotInit();
-    public void configureButtons() {};
-    public void disabledPeriodic() {};
+    public void configureButtons() {}
+    public void disabledPeriodic() {}
     public abstract void matchStart();
-    public void matchLoop() {};
-    public void robotPeriodic() {};
+    public void matchLoop() {}
+    public void robotPeriodic() {}
     protected Command run(Runnable runnable) {
         return new InstantCommand(runnable);
     }
