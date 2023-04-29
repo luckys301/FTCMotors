@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.commands.drive.teleop.SlowDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.teleop.GamepadTrigger;
@@ -33,7 +32,6 @@ public class TeleOpMain extends MatchOpMode {
     private Claw claw;
     private MecDrivetrainSubsystem mecDrivetrainSubsystem;
     private Slide slide;
-    private TurnServo turnServo;
 
     @Override
     public void robotInit() {
@@ -42,7 +40,6 @@ public class TeleOpMain extends MatchOpMode {
 
         pivot = new Pivot(telemetry, hardwareMap);
         claw = new Claw(telemetry, hardwareMap);
-        turnServo = new TurnServo(telemetry, hardwareMap);
         mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
         mecDrivetrainSubsystem.init();
         slide = new Slide(telemetry, hardwareMap);
@@ -53,19 +50,25 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void configureButtons() {
+        //Ways to use buttons
+//        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and()
+//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+//        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).or()
+//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+//        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and().negate()
+//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
         /*
          *  DRIVER
          */
         mecDrivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
 
-        Button recenterIMU = (new GamepadButton(driverGamepad, GamepadKeys.Button.A))
-                .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
+        new GamepadButton(driverGamepad, GamepadKeys.Button.A)
+            .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
+        new GamepadButton(driverGamepad, GamepadKeys.Button.START)
+            .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
 
-        Button recenterIMU2 = (new GamepadButton(driverGamepad, GamepadKeys.Button.START))
-                .whenPressed(new InstantCommand(mecDrivetrainSubsystem::reInitializeIMU));
-
-        Button slowMode = (new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER))
-                .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
+            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
 
         /*
          * OPERATOR

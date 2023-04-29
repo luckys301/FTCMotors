@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.commands.example;
 
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
-import org.firstinspires.ftc.teamcode.subsystems.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.TurnServo;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 
 //nowadays lance isnt a very common name, but in older times people were named lance a lot
 //List of Commands: https://docs.ftclib.org/ftclib/v/v2.0.0/command-base/command-system/convenience-commands
