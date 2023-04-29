@@ -21,27 +21,6 @@ private final PIDFController controller;
     private boolean armAutomatic;
     public boolean shouldSensorWork = true;
 
-    public int TELE_OP_START_POS = -350;
-
-    public static int INTAKE_POS_BACK = -0,
-                        POS_BACK = -455,
-                        HIGH_POS_BACK = -455 ,
-                        GROUND_POS_BACK = -480,
-                        DROP_BACK = -700;
-    public static int HIGH_POS_AUTO_BACK = -150,
-                        INTAKE_POS_AUTO_BACK = -275,
-                        POS_AUTO_BACK = -233,
-                        DROP_AUTO_BACK = -390;
-
-    public static int INTAKE_POS_FRONT = -INTAKE_POS_BACK,
-                        POS_FRONT = -POS_BACK,
-                        HIGH_POS_FRONT = -HIGH_POS_BACK,
-                        GROUND_POS_FRONT = -GROUND_POS_BACK,
-    DROP_FRONT = -DROP_BACK;
-    public static int HIGH_POS_AUTO_FRONT = -HIGH_POS_AUTO_BACK,
-                        INTAKE_POS_AUTO_FRONT = -INTAKE_POS_AUTO_BACK,
-                        POS_AUTO_FRONT = -POS_AUTO_BACK,
-                        DROP_AUTO_FRONT = -DROP_AUTO_BACK;
     public enum PivotPos {
         RESET(0),
         TELE_OP_START_POS(-350),
@@ -159,17 +138,17 @@ private final PIDFController controller;
         switch (pivotPos){
             case AUTO_HIGH_BACK:
             case AUTO_BACK:
-                setSetPoint(DROP_AUTO_BACK, false);
+                setSetPoint(PivotPos.AUTO_DROP_BACK.pivotPosition, false);
                 break;
             case AUTO_HIGH_FRONT:
             case AUTO_FRONT:
-                setSetPoint(DROP_AUTO_FRONT,false);
+                setSetPoint(PivotPos.AUTO_INTAKE_FRONT.pivotPosition,false);
                 break;
             case AUTO_INTAKE_FRONT:
-                setSetPoint(INTAKE_POS_AUTO_FRONT+25, true);
+                setSetPoint(PivotPos.AUTO_INTAKE_FRONT.pivotPosition+25, true);
                 break;
             case AUTO_INTAKE_BACK:
-                setSetPoint(INTAKE_POS_AUTO_BACK-25, true);
+                setSetPoint(PivotPos.AUTO_INTAKE_BACK.pivotPosition-25, true);
                 break;
         }
     }
