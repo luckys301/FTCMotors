@@ -42,28 +42,6 @@ private final PIDFController controller;
                         INTAKE_POS_AUTO_FRONT = -INTAKE_POS_AUTO_BACK,
                         POS_AUTO_FRONT = -POS_AUTO_BACK,
                         DROP_AUTO_FRONT = -DROP_AUTO_BACK;
-//    public enum PivotPos {
-//        RESET(0), TELE_OP_START_POS(-350),
-//        INTAKE_BACK(0), BACK(-455), HIGH_BACK(-455), GROUND_BACK(-480), DROP_BACK(-700),
-//
-//        INTAKE_FRONT(-PivotPos.INTAKE_BACK.pivotPosition),
-//        FRONT(-PivotPos.BACK.pivotPosition),
-//        HIGH_FRONT(-PivotPos.HIGH_BACK.pivotPosition),
-//        GROUND_FRONT(-PivotPos.GROUND_BACK.pivotPosition),
-//        DROP_FRONT(-PivotPos.DROP_BACK.pivotPosition),
-//
-//        AUTO_INTAKE_BACK(-150), AUTO_BACK(-233), AUTO_HIGH_BACK(-150), AUTO_DROP_BACK(-390),
-//
-//        AUTO_INTAKE_FRONT(-PivotPos.AUTO_INTAKE_BACK.pivotPosition),
-//        AUTO_FRONT(-PivotPos.AUTO_BACK.pivotPosition),
-//        AUTO_HIGH_FRONT(-PivotPos.AUTO_HIGH_BACK.pivotPosition),
-//        AUTO_DROP_FRONT(-PivotPos.AUTO_DROP_BACK.pivotPosition);
-//
-//        public final double pivotPosition;
-//        PivotPos(double pivotPosition) {
-//            this.pivotPosition = pivotPosition;
-//        }
-//    }
     public enum PivotPos {
         RESET(0),
         TELE_OP_START_POS(-350),
@@ -108,15 +86,15 @@ private final PIDFController controller;
 
     private final static double POWER = 0.93;
     private double encoderOffset = 0;
-//    private static int pivotPos = 0;
 
     Telemetry telemetry;
     private final MotorEx armMotor;
 
     public Pivot(Telemetry tl, HardwareMap hw) {
         armMotor = new MotorEx(hw, NebulaConstants.Pivot.pivotMName);
+        armMotor.setDistancePerPulse(1);
         controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p, NebulaConstants.Pivot.pivotPID.i, NebulaConstants.Pivot.pivotPID.d, NebulaConstants.Pivot.pivotPID.f, getEncoderDistance(), getEncoderDistance());
-        controller.setTolerance(NebulaConstants.Pivot.controllerTolerance);
+        controller.setTolerance(NebulaConstants.Pivot.pivotTolerance);
 
         this.telemetry = tl;
         armAutomatic = false;
@@ -160,83 +138,10 @@ private final PIDFController controller;
         setSetPoint(PivotPos.RESET.pivotPosition - encoderOffset - 10, true);
         pivotPos = PivotPos.RESET;
     }
-//    public void moveIntakeF() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.INTAKE_FRONT.pivotPosition, true);
-//    }
-    public void moveIntakeB() {
-        armAutomatic = true;
-        setSetPoint(PivotPos.INTAKE_BACK);
-    }
-    public void moveGroundB(){
-        armAutomatic = true;
-        setSetPoint(PivotPos.GROUND_BACK);
-    }
-    public void moveGroundF(){
-        armAutomatic = true;
-        setSetPoint(PivotPos.GROUND_FRONT);
-    }
-    public void moveF() {
-        armAutomatic = true;
-        setSetPoint(PivotPos.FRONT);
-    }
-    public void moveB() {
-        armAutomatic = true;
-        setSetPoint(PivotPos.BACK);
-    }
-//    public void moveHighF() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.HIGH_FRONT, false);
-//    }
-    public void moveHighB() {
-        armAutomatic = true;
-        setSetPoint(PivotPos.HIGH_BACK);
-    }
-
-
-
-    public void moveHighBAuto(){
-        armAutomatic = true;
-        setSetPoint(PivotPos.AUTO_HIGH_BACK);
-    }
-//    public void moveHighFAuto(){
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.AUTO_HIGH_FRONT, false);
-//    }
-//    public void moveIntakeFAuto() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.AUTO_INTAKE_FRONT, true);
-//    }
     public void moveIntakeBAuto() {
         armAutomatic = true;
         setSetPoint(PivotPos.AUTO_INTAKE_BACK);
     }
-    public void moveBAuto() {
-        armAutomatic = true;
-        setSetPoint(PivotPos.AUTO_BACK);
-    }
-//    public void moveFAuto() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.AUTO_FRONT, false);
-//    }
-//    public void moveBDrop() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.DROP_BACK, false);
-//    }
-//    public void moveFDrop() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.AUTO_DROP_FRONT, false);
-//    }
-//
-//    public void moveBDropAuto() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.DROP_BACK, false);
-//    }
-//    public void moveFDropAuto() {
-//        armAutomatic = true;
-//        setSetPoint(PivotPos.AUTO_DROP_FRONT, false);
-//    }
-
     public void dropArmTeleop(){
         switch (pivotPos){
             case FRONT:
@@ -293,19 +198,6 @@ private final PIDFController controller;
     }
 
     /****************************************************************************************/
-
-//
-//    public void resetOffset() {
-//        encoderOffset = 0;
-//
-//        armAutomatic = true;
-//    }
-//    public void clawEncoderReset() {
-//        pivotPos = PivotPos.RESET;
-//    }
-//    public void resetEncoder() {
-//        clawEncoderReset();
-//    }
 
     //Check Documentation if confused
 //    public double getPotentiometerAngle(){
