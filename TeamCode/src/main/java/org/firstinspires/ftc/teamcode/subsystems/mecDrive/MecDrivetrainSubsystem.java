@@ -34,6 +34,12 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
 //        this.telemetry = tl;
     }
 
+    @Override
+    public void periodic() {
+        drive.update();
+//        drive.returnData();//TODO:What does this do?
+    }
+
     public void init() {
         new Pose2d(0,0,0);
         drive.setMotorPowers(0, 0, 0, 0);
@@ -99,11 +105,7 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
     }
 
 
-    @Override
-    public void periodic() {
-        update();
-//        drive.returnData();//TODO:What does this do?
-    }
+
 
 
     public void setMode(DcMotor.RunMode mode) {
@@ -114,9 +116,9 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
         drive.setPoseEstimate(pose);
     }
 
-    public void update() {
-        drive.update();
-    }
+//    public void update() {
+//        drive.update();
+//    }
 
     public Pose2d getPoseEstimate() {
         return drive.getPoseEstimate();

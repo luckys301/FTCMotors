@@ -194,6 +194,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         updatePoseEstimate();
         DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
         if (signal != null) setDriveSignal(signal);
+        //TODO:Batttery Improvement Here?
     }
 
     public void waitForIdle() {
