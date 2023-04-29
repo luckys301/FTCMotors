@@ -10,6 +10,8 @@ ToDo List:
     Implement Potentiometer for accurate Arm Movements
     Implement Through Bore Encoder
     How to do Follower Motor - Maybe Reverse Motor?
+    Anti-Tip
+    Have a button to Align to a Direction
 
 
 
@@ -17,3 +19,11 @@ Ideas to Implement:
     Write all Device ID Strings in 1 Location
 
 Documentation: https://docs.ftclib.org/ftclib/
+
+
+Turning in a Certain Direction //CHeck if this works for other angles
+// Turns counter clockwise
+drive.turn(Math.toRadians(180) + 1e-6);
+
+// Turns clockwise
+drive.turn(Math.toRadians(180) - 1e-6);
