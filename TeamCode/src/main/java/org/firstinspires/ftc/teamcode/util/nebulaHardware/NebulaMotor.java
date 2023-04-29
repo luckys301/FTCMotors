@@ -13,13 +13,22 @@ public class NebulaMotor {
         Forward, //False to Inverted
         Reverse //True to Inverted
     }
+//    public enum Encoder {
+//        Arm,
+//        Slide,
+//        None
+//    }
     private final MotorEx motor;
     private final Boolean isEnabled;
-    private final Motor.GoBILDA type;
+//    private final Motor.GoBILDA type;
+//    private int gearing;
+
     public NebulaMotor(HardwareMap hM, String deviceId, Motor.GoBILDA type, Direction direction, Motor.ZeroPowerBehavior behavior, Boolean isEnabled){
         motor = new MotorEx(hM, deviceId, type);
-        this.type = type;
+//        this.type = type;
         this.isEnabled = isEnabled;
+//        this.gearing = gearing;
+
         switch (direction){ //Initialization of Motor Direction
             case Forward:
                 setInverted(false);
@@ -30,9 +39,10 @@ public class NebulaMotor {
         }
         motor.setZeroPowerBehavior(behavior);
         motor.resetEncoder(); //Reset Encoder at the beginning of Initializatio
-        setDistancePerPulse(); //TODO: Check which one to do
+//        setDistancePerPulse(); //Do Seperately
 
         setPower(0); //Might be unnecessary - no risk in leaving it
+
     }
 
     public void setPower(double power) {
@@ -63,12 +73,26 @@ public class NebulaMotor {
                 break;
         }
     }
-    public void setDistancePerPulse(){
-        //TODO: What should the conversion be to get distance in mm
-        //How would this change?
-        //The below was used previously
-        motor.setDistancePerPulse(360/type.getCPR());
-    }
+//    public void setDistancePerPulse(Encoder encoder){
+//        //TODO: What should the conversion be to get distance in mm
+//        //How would this change?
+//        //The below was used previously
+//        switch(encoder){
+//            case Arm:
+//                motor.setDistancePerPulse(360/(gearing*type.getCPR()));
+//                //Math.PI/2
+//                //(Counts per revolution*Gear ratio(5:1=5 / 1:5))/(Turns per revolution * 2π)
+//                break;
+//            case Slide:
+//                motor.setDistancePerPulse((type.getCPR()*gearing)/ (_______*Math.PI));
+//                //public static final double ROT_TO_INCHES = (COUNTS_PER_PULSE * GEAR_RATIO) / (GEAR_DIAMETER_INCHES * Math.PI);
+//                break;
+//            case None:
+//                motor.setDistancePerPulse(1);
+//                break;
+//        }
+//        motor.setDistancePerPulse(360/(gearing*type.getCPR()));
+//    }
     public void setDistancePerPulse(int CPR){
         //TODO: What should the conversion be to get distance in mm
         //How would this change?
