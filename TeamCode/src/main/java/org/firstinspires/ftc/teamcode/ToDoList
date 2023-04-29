@@ -4,9 +4,12 @@ ToDo List:
     Test Nebula Motor and Servo
     See if Roadrunner Values show up on Dashboard and are changeable
     Implement Feedforward to all Mechanisms: https://docs.ftclib.org/ftclib/features/controllers
+        Trapezoid Motion Profiling
     Implement all Rev Sensors for use
     Add Units to Mechanisms (Degrees + mm)
     Implement Potentiometer for accurate Arm Movements
+    Implement Through Bore Encoder
+    How to do Follower Motor - Maybe Reverse Motor?
 
 
 
