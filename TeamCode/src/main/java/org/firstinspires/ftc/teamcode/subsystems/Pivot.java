@@ -2,10 +2,15 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.profile.MotionProfile;
+import com.acmerobotics.roadrunner.profile.MotionProfileBuilder;
+import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
+import com.acmerobotics.roadrunner.profile.MotionState;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -65,7 +70,6 @@ private final PIDFController controller;
 
     private final static double POWER = 0.93;
     private double encoderOffset = 0;
-
     Telemetry telemetry;
     private final MotorEx armMotor;
 
@@ -74,7 +78,6 @@ private final PIDFController controller;
         armMotor.setDistancePerPulse(1);
         controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p, NebulaConstants.Pivot.pivotPID.i, NebulaConstants.Pivot.pivotPID.d, NebulaConstants.Pivot.pivotPID.f, getEncoderDistance(), getEncoderDistance());
         controller.setTolerance(NebulaConstants.Pivot.pivotTolerance);
-
         this.telemetry = tl;
         armAutomatic = false;
     }
@@ -85,7 +88,8 @@ private final PIDFController controller;
 
             controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
 
-            double output = controller.calculate(getEncoderDistance());
+            double output = (controller.calculate(getEncoderDistance()));
+            //TODO: What would you put for Velocity
             telemetry.addData("CLaw Motor Output:", output);
 
             armMotor.set(output * POWER);
@@ -96,7 +100,7 @@ private final PIDFController controller;
     }
 
 
-    private double getEncoderDistance() {
+    public double getEncoderDistance() {
         return armMotor.getDistance() - encoderOffset;
     }
     public double getAngle() {

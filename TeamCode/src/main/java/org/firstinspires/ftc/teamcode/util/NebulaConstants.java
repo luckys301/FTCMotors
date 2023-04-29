@@ -23,6 +23,12 @@ public class NebulaConstants {
 
         public static PIDFCoefficients pivotPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int pivotTolerance = 10;
+        public static double ks=0,
+            kcos=0,
+            ka=0,
+            kv=0;
+        public static double maxVelocity = 0,
+            maxAcceleration = 0;
     }
     public Claw claw;
     public static class Claw {
