@@ -12,19 +12,17 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 @Config
-public class  Slide extends SubsystemBase {
-    private final Telemetry telemetry;
-    private final MotorEx slideM1,
-        slideM2;
+public class Slide extends SubsystemBase {
+    public final Telemetry telemetry;
+    public final MotorEx slideM1, slideM2;
 
-    private PIDFController controller;
-    private boolean slideAutomatic;
+    public PIDFController slideController;
+    public boolean slideAutomatic;
 
     public static double CPR = 751.8;
-    private final double encoderOffset = 0;
-    double output = 0;
+    public double output = 0;
 
-    public static boolean lowBool = false;
+    public boolean lowBool = false;
     public enum LiftPos{
         REST(-14,true),
         GROUND(30, true), LOW(315), MID(738), HIGH(1240),
@@ -54,31 +52,29 @@ public class  Slide extends SubsystemBase {
         slideM1.setDistancePerPulse(360 / CPR);
         slideM2.setDistancePerPulse(360 / CPR);
 
-        controller = new PIDFController(NebulaConstants.Slide.slidePID.p,
+        slideController = new PIDFController(NebulaConstants.Slide.slidePID.p,
             NebulaConstants.Slide.slidePID.i,
             NebulaConstants.Slide.slidePID.d,
             NebulaConstants.Slide.slidePID.f,
             getEncoderDistance(),
             getEncoderDistance());
-        controller.setTolerance(NebulaConstants.Slide.slideTolerance);
+        slideController.setTolerance(NebulaConstants.Slide.slideTolerance);
 
         this.telemetry = tl;
         slideAutomatic = false;
         liftPos = LiftPos.REST;
-        setOffset();
     }
 
     @Override
     public void periodic() {
         if (slideAutomatic) {
-            controller.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
+//            slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
 
-            output = controller.calculate(getEncoderDistance());
+            output = slideController.calculate(getEncoderDistance());
 //            if (output >= 1) output = 1;
 //            if (output <= -1) output = -1;
 
-            slideM1.set(output);
-            slideM2.set(-output);//TODO: Probably shouldn't be like this
+            setPower(output);//TODO: Probably shouldn't be like this
 //            if (lowBool) {
 //                slideM1.set(output * LOW_POWER);
 //                slideM2.set(output * LOW_POWER);
@@ -90,51 +86,40 @@ public class  Slide extends SubsystemBase {
         }
         telemetry.addLine("Slide - ");
         telemetry.addData("     Lift Motor Output:", output);
-//        telemetry.addData("     Lift Motor 1 Power", slideM1.getVelocity());
-//        telemetry.addData("     Lift Motor 2 Power:", slideM2.getVelocity());
-
         telemetry.addData("     Lift1 Encoder: ", slideM1.getCurrentPosition());
-        telemetry.addData("     Lift2 Encoder: ", slideM2.getCurrentPosition());
-        telemetry.addData("     List Pos:", liftPos);
+        telemetry.addData("     List Pos:", getSetPoint());
     }
 
-    private double getEncoderDistance() {
-        return slideM1.getDistance() - encoderOffset;
+    public double getEncoderDistance() {
+        return slideM1.getDistance();
     }
 
 
     public void setPower(double power) {
         slideM1.set(power);
-        slideM2.set(power);
+        slideM2.set(-power);//Instead of putting -power, maybe reverse the motor
     }
 
     public void stopSlide() {
         slideM1.stopMotor();
-        controller.setSetPoint(getEncoderDistance());
         slideM2.stopMotor();
+        slideController.setSetPoint(getEncoderDistance());
+
         slideAutomatic = false;
     }
-
-//    public double getAngle() {return getEncoderDistance();}
-
     /****************************************************************************************/
 
     public void slideResting() {
         slideAutomatic = true;
-        controller.setSetPoint(LiftPos.REST.liftPosition);
+        slideController.setSetPoint(LiftPos.REST.liftPosition);
         liftPos = LiftPos.REST;
     }
 
-    public void encoderRecenter() {
+    public void resetEncoder() {
         slideM1.resetEncoder();
         slideM2.resetEncoder();
     }
 
-
-    public void setOffset() {
-//        resetEncoder();
-        controller.setSetPoint(getEncoderDistance());
-    }
     public boolean isSlideAutomatic(){
         return slideAutomatic;
     }
@@ -148,23 +133,33 @@ public class  Slide extends SubsystemBase {
 //                upController.setSetPoint(MID_POS+200);
 //                break;
             case HIGH:
-                controller.setSetPoint(LiftPos.HIGH.liftPosition-740);
+                slideController.setSetPoint(LiftPos.HIGH.liftPosition-740);
                 break;
             case AUTO_MID:
-                controller.setSetPoint(LiftPos.AUTO_MID.liftPosition-290);
+                slideController.setSetPoint(LiftPos.AUTO_MID.liftPosition-290);
                 break;
             case AUTO_HIGH:
-                controller.setSetPoint(LiftPos.AUTO_HIGH.liftPosition-650);
+                slideController.setSetPoint(LiftPos.AUTO_HIGH.liftPosition-650);
                 break;
         }
     }
-    public void setSetPoint(LiftPos pos) {
-        controller.setSetPoint(pos.liftPosition + encoderOffset);
+    public void setSetPoint(LiftPos pos) {//Might want to make this function go into the 2 variable one
+        if(pos.liftPosition>NebulaConstants.Slide.MAX_POSITION ||
+            pos.liftPosition<NebulaConstants.Slide.MIN_POSITION){
+            slideM1.stopMotor();
+            return;
+        }
+        slideController.setSetPoint(pos.liftPosition);
         liftPos = pos;
         this.lowBool = pos.lowBool;
     }
     public void setSetPoint(double setPoint, boolean lowBool) {
-        controller.setSetPoint(setPoint + encoderOffset);
+        if(setPoint>NebulaConstants.Slide.MAX_POSITION ||
+            setPoint<NebulaConstants.Slide.MIN_POSITION){
+            slideM1.stopMotor();
+            return;
+        }
+        slideController.setSetPoint(setPoint);
         this.lowBool = lowBool;
     }
 
@@ -175,7 +170,7 @@ public class  Slide extends SubsystemBase {
     public Command setSetPointCommand(LiftPos pos) {
         return new InstantCommand(()->{this.setSetPoint(pos);});
     }
-    public double getPosition() {
-        return controller.getSetPoint();
+    public double getSetPoint() {
+        return slideController.getSetPoint();
     }
 }
