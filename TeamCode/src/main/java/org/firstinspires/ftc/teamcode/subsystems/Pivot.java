@@ -86,7 +86,7 @@ public class Pivot extends SubsystemBase {
     public void periodic() {
         if (armAutomatic) {
 
-            controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
+//            controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
 
             double output = (controller.calculate(getEncoderDistance()));
             //TODO: What would you put for Velocity
@@ -95,7 +95,7 @@ public class Pivot extends SubsystemBase {
             armMotor.set(output * POWER);
         }
         Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
-        Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", pivotPos);
+        Util.logger(this, telemetry, Level.INFO, "Arm Set Point: ", getSetPoint());
 
     }
 

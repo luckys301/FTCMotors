@@ -2,17 +2,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.profile.MotionProfile;
-import com.acmerobotics.roadrunner.profile.MotionProfileBuilder;
-import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
-import com.acmerobotics.roadrunner.profile.MotionState;
-import com.acmerobotics.roadrunner.profile.VelocityConstraint;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -25,11 +17,11 @@ import java.util.logging.Level;
 @Config
 public class PivotFeedforward extends Pivot {
     //Zero HAS TO be parallel to the ground and encoder needs to be in radians
-    private final static double POWER = 0.93;
+//    private final static double POWER = 0.93;
 
-    private ArmFeedforward armFeedforward;
+    private final ArmFeedforward armFeedforward;
 
-    TrapezoidProfile.State start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
+    TrapezoidProfile.State start;
     TrapezoidProfile.State goal;
     TrapezoidProfile.Constraints constraints;
     TrapezoidProfile trapezoidProfile;
@@ -38,7 +30,11 @@ public class PivotFeedforward extends Pivot {
     public PivotFeedforward(Telemetry tl, HardwareMap hw) {
         super(tl, hw);
 
-        armFeedforward = new ArmFeedforward(NebulaConstants.Pivot.ks,NebulaConstants.Pivot.kcos, NebulaConstants.Pivot.ka, NebulaConstants.Pivot.kv);
+        armFeedforward = new ArmFeedforward(
+            NebulaConstants.Pivot.ks,
+            NebulaConstants.Pivot.kcos,
+            NebulaConstants.Pivot.ka,
+            NebulaConstants.Pivot.kv);
         constraints = new TrapezoidProfile.Constraints(
             0,// radians per second
             0);//radians per second per second
@@ -48,7 +44,7 @@ public class PivotFeedforward extends Pivot {
         trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
     }
 
-
+    @Override
     public void periodic() {
         //Might need to make manual only feedforward
         if (armAutomatic) {
@@ -76,17 +72,17 @@ public class PivotFeedforward extends Pivot {
     }
     @Override
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
-        super.setSetPoint(setPoint, shouldSensorWork);;
+        super.setSetPoint(setPoint, shouldSensorWork);
         start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
     }
 
     //TODO: Test!
     @Override
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
-        return new InstantCommand(()->{setSetPoint(setPoint, shouldSensorWork);});
+        return new InstantCommand(()-> setSetPoint(setPoint, shouldSensorWork));
     }
     @Override
     public Command setSetPointCommand(PivotPos pos) {
-        return new InstantCommand(()->{setSetPoint(pos);});
+        return new InstantCommand(()->setSetPoint(pos));
     }
 }
