@@ -23,7 +23,7 @@ public class NebulaMotor {
 //    private final Motor.GoBILDA type;
 //    private int gearing;
 
-    public NebulaMotor(HardwareMap hM, String deviceId, Motor.GoBILDA type, Direction direction, Motor.ZeroPowerBehavior behavior, Boolean isEnabled){
+    public NebulaMotor(HardwareMap hM, String deviceId, Motor.GoBILDA type, Direction direction, IdleMode behavior, Boolean isEnabled){
         motor = new MotorEx(hM, deviceId, type);
 //        this.type = type;
         this.isEnabled = isEnabled;
@@ -37,7 +37,7 @@ public class NebulaMotor {
                 setInverted(true);
                 break;
         }
-        motor.setZeroPowerBehavior(behavior);
+        setIdleMode(behavior);
         motor.resetEncoder(); //Reset Encoder at the beginning of Initializatio
 //        setDistancePerPulse(); //Do Seperately
 

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-public class NebulaServo {
+public class NebulaServo {// Normal Servo
     public enum Direction {
         Forward, //False to Inverted
         Reverse //True to Inverted
