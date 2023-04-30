@@ -56,7 +56,10 @@ public class NebulaMotor {
     public int getPosition() {
         return motor.getCurrentPosition();
     }
-
+    public double getVelocity() {
+        return motor.getVelocity();
+//        return motor.getCorrectedVelocity();
+    }
     public void stop() {
         motor.stopMotor();
     }
