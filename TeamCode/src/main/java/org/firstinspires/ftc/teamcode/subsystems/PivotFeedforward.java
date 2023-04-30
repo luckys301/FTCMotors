@@ -74,15 +74,18 @@ public class PivotFeedforward extends Pivot {
         super.setSetPoint(pos);
         start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
     }
+    @Override
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
         super.setSetPoint(setPoint, shouldSensorWork);;
         start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
     }
 
     //TODO: Test!
+    @Override
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
         return new InstantCommand(()->{setSetPoint(setPoint, shouldSensorWork);});
     }
+    @Override
     public Command setSetPointCommand(PivotPos pos) {
         return new InstantCommand(()->{setSetPoint(pos);});
     }
