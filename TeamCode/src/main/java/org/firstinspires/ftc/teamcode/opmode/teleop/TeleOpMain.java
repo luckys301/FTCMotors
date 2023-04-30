@@ -8,6 +8,9 @@ import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.robotcore.internal.ui.GamepadUser;
 import org.firstinspires.ftc.teamcode.commands.arm.manual.PivotMoveManual;
 import org.firstinspires.ftc.teamcode.commands.arm.manual.SlideMoveManual;
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
@@ -51,6 +54,9 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void configureButtons() {
+        //Can Rumble Gamepads; If need to Rumble both Gamepads, might need to use queueEffect
+        driverGamepad.gamepad.rumble(1,1, 100);
+
         //Ways to use buttons
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and()
 //            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
