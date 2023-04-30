@@ -5,13 +5,18 @@ ToDo List:
     See if Roadrunner Values show up on Dashboard and are changeable
     Implement Feedforward to all Mechanisms: https://docs.ftclib.org/ftclib/features/controllers
         Trapezoid Motion Profiling
+            Find Max Velocity/Acceleration after Tuning by using ArmFeedforward.maxAchievableAcceleration
     Implement all Rev Sensors for use
     Add Units to Mechanisms (Degrees + mm)
     Implement Potentiometer for accurate Arm Movements
     Implement Through Bore Encoder
     How to do Follower Motor - Maybe Reverse Motor?
-    Anti-Tip
+    Test Anti-Tip
     Have a button to Align to a Direction
+    Create Six Wheel Drives
+        Add DefaultDriveCommand with Anti-Tip
+    CHANGE ALL MOTORS TO NEBULA MOTORS
+    Add Through Bore Encoder
 
 
 
