@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.util.odoPod;
 
 import com.acmerobotics.roadrunner.util.NanoClock;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  */
 public class Encoder {
     private final static int CPS_STEP = 0x10000;
+    private double dpp;
 
     private static double inverseOverflow(double input, double estimate) {
         double real = input;
@@ -42,6 +44,7 @@ public class Encoder {
     private int lastPosition;
     private double velocityEstimate;
     private double lastUpdateTime;
+    private double distancePerPulse;
 
     public Encoder(DcMotorEx motor, NanoClock clock) {
         this.motor = motor;
@@ -74,7 +77,7 @@ public class Encoder {
         this.direction = direction;
     }
 
-    public int getCurrentPosition() {
+    public double getCurrentPosition() {
         int multiplier = getMultiplier();
         int currentPosition = motor.getCurrentPosition() * multiplier;
         if (currentPosition != lastPosition) {
@@ -84,7 +87,8 @@ public class Encoder {
             lastPosition = currentPosition;
             lastUpdateTime = currentTime;
         }
-        return currentPosition;
+//        return currentPosition; //TODO: Which one????? Check
+        return currentPosition * dpp;
     }
 
     public double getRawVelocity() {
@@ -95,4 +99,12 @@ public class Encoder {
     public double getCorrectedVelocity() {
         return inverseOverflow(getRawVelocity(), velocityEstimate);
     }
+    public double setDistancePerPulse(double distancePerPulse) {
+        dpp = distancePerPulse;
+        return dpp;
+    }
+//    public double getDistance() {
+//        return dpp * getCurrentPosition();
+//    }
+
 }
