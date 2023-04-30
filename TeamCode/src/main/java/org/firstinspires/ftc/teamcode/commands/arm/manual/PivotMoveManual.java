@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.arm.manual;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 
 import java.util.function.Supplier;
 
