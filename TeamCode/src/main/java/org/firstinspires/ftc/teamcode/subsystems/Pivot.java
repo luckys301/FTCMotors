@@ -158,21 +158,31 @@ public class Pivot extends SubsystemBase {
     }
 
     public void setSetPoint(PivotPos pos) {
+        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
+            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
+            armMotor.stopMotor();
+            return;
+        }
         controller.setSetPoint(pos.pivotPosition + encoderOffset);
         pivotPos = pos;
         this.shouldSensorWork = pos.shouldSensorWork;
     }
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
+        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
+            setPoint<NebulaConstants.Pivot.MIN_POSITION){
+            armMotor.stopMotor();
+            return;
+        }
         controller.setSetPoint(setPoint + encoderOffset);
         this.shouldSensorWork = shouldSensorWork;
     }
 
     //TODO: Test!
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
-        return new InstantCommand(()->{this.setSetPoint(setPoint, shouldSensorWork);});
+        return new InstantCommand(()->{setSetPoint(setPoint, shouldSensorWork);});
     }
     public Command setSetPointCommand(PivotPos pos) {
-        return new InstantCommand(()->{this.setSetPoint(pos);});
+        return new InstantCommand(()->{setSetPoint(pos);});
     }
 
     public void encoderReset() {
@@ -188,10 +198,10 @@ public class Pivot extends SubsystemBase {
 //        return Range.scale(potentiometer.getVoltage(), 0, potentiometer.getMaxVoltage(), 0, 270);
 //    }
 
-    public void setPosition(double point){
-        controller.setSetPoint(point);
-    }
-    public double getPosition(){
+//    public void setPosition(double point){
+//        controller.setSetPoint(point);
+//    }
+    public double getSetPoint(){
         return controller.getSetPoint();
     }
 }
