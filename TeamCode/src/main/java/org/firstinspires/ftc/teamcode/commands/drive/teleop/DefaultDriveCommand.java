@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.commands.drive.teleop;
 
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 public class DefaultDriveCommand extends CommandBase {
     private MecDrivetrainSubsystem drive;
@@ -13,37 +15,45 @@ public class DefaultDriveCommand extends CommandBase {
     protected double multiplier;
     boolean isFieldCentric;
 
-    public DefaultDriveCommand(MecDrivetrainSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
+    public static PIDCoefficients X_TIPING_PID = new PIDCoefficients(3, 0, 0);
+    public static PIDController xTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
+    public static PIDCoefficients Y_TIPING_PID = new PIDCoefficients(3, 0, 0);
+    public static PIDController yTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
 
+    public DefaultDriveCommand(MecDrivetrainSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
         this.drive = drive;
         this.driverGamepad = driverGamepad;
-
         this.multiplier = 1.0;
         addRequirements(this.drive);
 
         this.isFieldCentric = isFieldCentric;
+        xTipController.setTolerance(NebulaConstants.Drive.tippingTolerance);
     }
 
     @Override
     public void execute() {
-        if(driverGamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
-            multiplier = 0.3;
-        } else {
-            multiplier = 1;
+//        if(driverGamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {// ToDO:IS the other command working or is this:
+//            multiplier = 0.3;
+//        } else {
+//            multiplier = 1;
+//        }
+        double y = squareInput(driverGamepad.getLeftY()),
+            x = squareInput(driverGamepad.getLeftX()),
+            rx = squareInput(driverGamepad.getRightX());
+
+        //TODO:See if this works
+        if(Math.abs(drive.getDegreeRoll())> NebulaConstants.Drive.tippingTolerance){
+            x= xTipController.calculate(drive.getDegreePitch(), 0);
         }
-        if(isFieldCentric) {
-            drive.fieldCentric(
-                    driverGamepad.getLeftY() * multiplier,
-                    driverGamepad.getLeftX() * multiplier,
-                    -driverGamepad.getRightX() * multiplier
-            );
-        } else {
-            drive.mecDrive(
-                    driverGamepad.getLeftY() * multiplier, //Removed - from drivergamepad
-                    driverGamepad.getLeftX() * multiplier,
-                    driverGamepad.getRightX() * multiplier //Changed from -driverGamepad.getLeftY(), so the drive mturns right
-            );
+        if(Math.abs(drive.getDegreePitch())> NebulaConstants.Drive.tippingTolerance){
+            y= yTipController.calculate(drive.getDegreePitch(), 0);
         }
+        drive.fieldCentric(
+            (y * multiplier),
+            (x * multiplier),
+            -(rx * multiplier)
+        );
+
     }
 
 
@@ -52,4 +62,9 @@ public class DefaultDriveCommand extends CommandBase {
     public void end(boolean interrupted) {
         drive.stop();
     }
+
+    public static double squareInput(double value) {
+        return value * Math.abs(value);
+    }
+
 }
