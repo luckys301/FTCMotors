@@ -22,8 +22,8 @@ import java.util.logging.Level;
 
 @Config
 public class Pivot extends SubsystemBase {
-private final PIDFController controller;
-    private boolean armAutomatic;
+    public final PIDFController controller;
+    public boolean armAutomatic;
     public boolean shouldSensorWork = true;
 
     public enum PivotPos {
@@ -68,10 +68,10 @@ private final PIDFController controller;
 
 
 
-    private final static double POWER = 0.93;
-    private double encoderOffset = 0;
+    public final static double POWER = 0.93;
+    public double encoderOffset = 0;
     Telemetry telemetry;
-    private final MotorEx armMotor;
+    public final MotorEx armMotor;
 
     public Pivot(Telemetry tl, HardwareMap hw) {
         armMotor = new MotorEx(hw, NebulaConstants.Pivot.pivotMName);
