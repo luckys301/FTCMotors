@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.subsystems.Slide;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,21 +21,22 @@ public class SlideFeedforward extends Slide {
     Telemetry telemetry;
     public SlideFeedforward(Telemetry tl, HardwareMap hw) {
         super(tl, hw);
+        slideFeedforward = new ElevatorFeedforward(
+            NebulaConstants.Slide.ks,
+            NebulaConstants.Slide.kcos,
+            NebulaConstants.Slide.ka,
+            NebulaConstants.Slide.kv);
+        constraints = new TrapezoidProfile.Constraints(
+            0,// radians per second
+            0);//radians per second per second
+
+        trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
     }
 
     @Override
     public void periodic() {
         if (slideAutomatic) {
 //            slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
-            slideFeedforward = new ElevatorFeedforward(
-                NebulaConstants.Slide.ks,
-                NebulaConstants.Slide.kcos,
-                NebulaConstants.Slide.ka,
-                NebulaConstants.Slide.kv);
-            constraints = new TrapezoidProfile.Constraints(
-                0,// radians per second
-                0);//radians per second per second
-
             trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
             start = trapezoidProfile.calculate(0.02);
             double output = (slideController.calculate(getEncoderDistance()) +
