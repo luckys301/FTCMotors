@@ -9,12 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class SensorColor extends SubsystemBase implements HardwareDevice {
 
-    private ColorSensor colorSensor;
-    private Telemetry telemetry;
-
-    public SensorColor(ColorSensor colorSensor) {
-        this.colorSensor = colorSensor;
-    }
+    private final ColorSensor colorSensor;
+    private final Telemetry telemetry;
 
     public SensorColor(HardwareMap hardwareMap , Telemetry tl) {
         this.colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
