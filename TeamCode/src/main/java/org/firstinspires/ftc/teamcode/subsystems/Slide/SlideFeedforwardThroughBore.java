@@ -31,6 +31,7 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
         slideEncoder = new Encoder(
             hw.get(DcMotorEx.class, NebulaConstants.Slide.slideMName1));
         slideEncoder.getCurrentPosition();
+        slideEncoder.setDistancePerPulse(1);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
         telemetry.addData("     Lift Motor Output:", output);
         telemetry.addData("     Lift1 Encoder: ", slideM1.getCurrentPosition());
         telemetry.addData("     List Pos:", getSetPoint());
-        slideEncoder.setDistancePerPulse(1);
+
     }
 
     @Override
