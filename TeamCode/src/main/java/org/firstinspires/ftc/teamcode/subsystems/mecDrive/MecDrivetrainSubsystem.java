@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
@@ -116,9 +117,9 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
         drive.setPoseEstimate(pose);
     }
 
-//    public void update() {
-//        drive.update();
-//    }
+    public void update() {
+        drive.update();
+    }
 
     public Pose2d getPoseEstimate() {
         return drive.getPoseEstimate();
@@ -250,5 +251,11 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
 //    public int getLeftAngle(){
 //        return drive.getLeftAngle();
 //    }
+    public double getDegreePitch() {
+        return drive.getDegreePitch();
+    }
+    public double getDegreeRoll() {
+        return drive.getDegreeRoll();
+    }
 
 }
