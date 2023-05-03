@@ -6,7 +6,6 @@ ToDo List:
     Implement Feedforward to all Mechanisms: https://docs.ftclib.org/ftclib/features/controllers
         Trapezoid Motion Profiling
             Find Max Velocity/Acceleration after Tuning by using ArmFeedforward.maxAchievableAcceleration
-    Implement all Rev Sensors for use
     Add Units to Mechanisms (Degrees + mm)
     Implement Potentiometer for accurate Arm Movements
     Implement Through Bore Encoder
@@ -17,18 +16,20 @@ ToDo List:
         Add DefaultDriveCommand with Anti-Tip
     CHANGE ALL MOTORS TO NEBULA MOTORS
     Add Through Bore Encoder
+    Add Cycle Tracker
 
 
 
 Ideas to Implement:
     Write all Device ID Strings in 1 Location
+    Make A Teleop to Run  misc motors to test Robotic Supply
 
 Documentation: https://docs.ftclib.org/ftclib/
 
 
 Turning in a Certain Direction //CHeck if this works for other angles
-// Turns counter clockwise
-drive.turn(Math.toRadians(180) + 1e-6);
+    // Turns counter clockwise
+    drive.turn(Math.toRadians(180) + 1e-6);
 
-// Turns clockwise
-drive.turn(Math.toRadians(180) - 1e-6);
+    // Turns clockwise
+    drive.turn(Math.toRadians(180) - 1e-6);
