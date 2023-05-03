@@ -121,7 +121,8 @@ public class TankDriveSubsystem extends SubsystemBase {
         return Math.max(min, Math.min(max, val));
     }
 
-    class ArcadeDrive{
+    public ArcadeDrive arcadeDrive;
+    public class ArcadeDrive{
         public void arcadeDrive(double forward, double rotate) {
             double maxInput = Math.copySign(Math.max(Math.abs(forward), Math.abs(rotate)), forward);
             forward = clipRange(forward);
