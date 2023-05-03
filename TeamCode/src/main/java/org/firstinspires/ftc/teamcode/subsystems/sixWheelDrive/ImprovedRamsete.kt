@@ -52,9 +52,9 @@ class ImprovedRamsete @JvmOverloads constructor(
 
         val error = Kinematics.calculateFieldPoseError(targetPose.toInches(), currentPose.toInches()).toMeters()
 
-        val k1 = 2 * zeta * sqrt(targetOmega * targetOmega + b * targetV * targetV)
+        val k1 = 2 * RamseteNum.zeta * sqrt(targetOmega * targetOmega + RamseteNum.b * targetV * targetV)
         val k3 = k1
-        val k2 = b
+        val k2 = RamseteNum.b
 
         val v = targetV * cos(error.heading) +
                 k1 * (cos(currentPose.heading) * error.x + sin(currentPose.heading) * error.y)
@@ -62,9 +62,9 @@ class ImprovedRamsete @JvmOverloads constructor(
                 (cos(currentPose.heading) * error.y - sin(currentPose.heading) * error.x) +
                 k3 * error.heading
 
-        val outV = v + (currentRobotVel?.toMeters()?.let { kLinear * (v - it.x) } ?: 0.0)
+        val outV = v + (currentRobotVel?.toMeters()?.let {RamseteNum.kLinear * (v - it.x) } ?: 0.0)
 
-        val outOmega = omega + (currentRobotVel?.toMeters()?.let { kHeading * (omega - it.heading) } ?: 0.0)
+        val outOmega = omega + (currentRobotVel?.toMeters()?.let {RamseteNum.kHeading * (omega - it.heading) } ?: 0.0)
 
         lastError = Kinematics.calculateRobotPoseError(targetPose.toInches(), currentPose.toInches())
 
