@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.manual;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.Slide.Slide;
+import org.firstinspires.ftc.teamcode.subsystems.slide.Slide;
 
 import java.util.function.Supplier;
 

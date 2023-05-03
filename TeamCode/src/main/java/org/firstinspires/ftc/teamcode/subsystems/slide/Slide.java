@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.Slide;
+package org.firstinspires.ftc.teamcode.subsystems.slide;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;

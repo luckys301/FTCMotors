@@ -1,10 +1,7 @@
-package org.firstinspires.ftc.teamcode.subsystems.Slide;
+package org.firstinspires.ftc.teamcode.subsystems.slide;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,8 +9,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.odoPod.Encoder;
-
-import java.util.Base64;
 
 @Config
 public class SlideFeedforwardThroughBore extends SlideFeedforward {
