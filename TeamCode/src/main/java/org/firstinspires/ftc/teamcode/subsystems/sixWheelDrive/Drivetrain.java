@@ -121,8 +121,7 @@ public class Drivetrain extends SubsystemBase {
         return Math.max(min, Math.min(max, val));
     }
 
-
-    static class ArcadeDrive{
+    class ArcadeDrive{
         public void arcadeDrive(double forward, double rotate) {
             double maxInput = Math.copySign(Math.max(Math.abs(forward), Math.abs(rotate)), forward);
             forward = clipRange(forward);
