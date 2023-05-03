@@ -37,8 +37,8 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
-import org.firstinspires.ftc.teamcode.util.DashboardUtil;
-import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.util.misc.DashboardUtil;
+import org.firstinspires.ftc.teamcode.util.misc.LynxModuleUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

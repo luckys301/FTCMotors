@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.pipelines.ffRectPipeline;
 
 import com.acmerobotics.dashboard.config.Config;
 
-import org.firstinspires.ftc.teamcode.util.Util;
+import org.firstinspires.ftc.teamcode.util.misc.Util;
 
 import java.util.logging.Level;
 

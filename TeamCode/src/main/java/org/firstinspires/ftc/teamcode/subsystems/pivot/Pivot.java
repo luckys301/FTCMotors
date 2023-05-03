@@ -2,21 +2,16 @@ package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.profile.MotionProfile;
-import com.acmerobotics.roadrunner.profile.MotionProfileBuilder;
-import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
-import com.acmerobotics.roadrunner.profile.MotionState;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
-import org.firstinspires.ftc.teamcode.util.Util;
+import org.firstinspires.ftc.teamcode.util.misc.Util;
 
 import java.util.logging.Level;
 

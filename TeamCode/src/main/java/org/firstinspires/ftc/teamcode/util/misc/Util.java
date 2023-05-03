@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util;
+package org.firstinspires.ftc.teamcode.util.misc;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
