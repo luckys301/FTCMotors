@@ -22,7 +22,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.subsystems.sixWheelDrive.DriveConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -104,13 +103,13 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
             motor.setMotorType(motorConfigurationType);
         }
 
-        if (DriveConstants.RUN_USING_ENCODER) {
+        if (MecDriveConstants.RUN_USING_ENCODER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if (DriveConstants.RUN_USING_ENCODER && DriveConstants.MOTOR_VELO_PID != null) {
+        if (MecDriveConstants.RUN_USING_ENCODER && MecDriveConstants.MOTOR_VELO_PID != null) {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
 
@@ -148,7 +147,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         return new TrajectorySequenceBuilder(
                 startPose,
                 VEL_CONSTRAINT, ACCEL_CONSTRAINT,
-            DriveConstants.MAX_ANG_VEL, DriveConstants.MAX_ANG_ACCEL
+            MecDriveConstants.MAX_ANG_VEL, MecDriveConstants.MAX_ANG_ACCEL
         );
     }
 
