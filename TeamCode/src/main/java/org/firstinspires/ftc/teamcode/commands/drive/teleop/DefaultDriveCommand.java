@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 public class DefaultDriveCommand extends CommandBase {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.sixWheelDrive;
+package org.firstinspires.ftc.teamcode.subsystems.drive.sixWheelDrive;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;

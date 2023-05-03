@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.mecDrive;
+package org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.*;
 
@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.*;
-
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
  */
@@ -49,8 +47,8 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
-    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
+    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MecDriveConstants.MAX_VEL, MecDriveConstants.MAX_ANG_VEL, MecDriveConstants.TRACK_WIDTH);
+    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MecDriveConstants.MAX_ACCEL);
 
     private TrajectoryFollower follower;
 
@@ -109,7 +107,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (MecDriveConstants.RUN_USING_ENCODER && MecDriveConstants.MOTOR_VELO_PID != null) {
-            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
+            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MecDriveConstants.MOTOR_VELO_PID);
         }
 
         //Motor Direction
@@ -263,7 +261,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         for (DcMotorEx motor : motors) {
             int position = motor.getCurrentPosition();
             lastEncPositions.add(position);
-            wheelPositions.add(encoderTicksToInches(position));
+            wheelPositions.add(MecDriveConstants.encoderTicksToInches(position));
         }
         return wheelPositions;
     }
@@ -276,7 +274,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         for (DcMotorEx motor : motors) {
             int vel = (int) motor.getVelocity();
             lastEncVels.add(vel);
-            wheelVelocities.add(encoderTicksToInches(vel));
+            wheelVelocities.add(MecDriveConstants.encoderTicksToInches(vel));
         }
         return wheelVelocities;
     }

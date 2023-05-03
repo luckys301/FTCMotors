@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.slide.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
 @Config

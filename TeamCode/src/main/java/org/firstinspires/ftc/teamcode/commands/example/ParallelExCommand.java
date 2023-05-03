@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.example;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 
 public class ParallelExCommand extends ParallelCommandGroup{
     public ParallelExCommand(MecDriveSubsystem mecDriveSubsystem){

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.sixWheelDrive
+package org.firstinspires.ftc.teamcode.subsystems.drive.sixWheelDrive
 
 import com.acmerobotics.roadrunner.drive.DriveSignal
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower
@@ -62,9 +62,9 @@ class ImprovedRamsete @JvmOverloads constructor(
                 (cos(currentPose.heading) * error.y - sin(currentPose.heading) * error.x) +
                 k3 * error.heading
 
-        val outV = v + (currentRobotVel?.toMeters()?.let {RamseteNum.kLinear * (v - it.x) } ?: 0.0)
+        val outV = v + (currentRobotVel?.toMeters()?.let { RamseteNum.kLinear * (v - it.x) } ?: 0.0)
 
-        val outOmega = omega + (currentRobotVel?.toMeters()?.let {RamseteNum.kHeading * (omega - it.heading) } ?: 0.0)
+        val outOmega = omega + (currentRobotVel?.toMeters()?.let { RamseteNum.kHeading * (omega - it.heading) } ?: 0.0)
 
         lastError = Kinematics.calculateRobotPoseError(targetPose.toInches(), currentPose.toInches())
 

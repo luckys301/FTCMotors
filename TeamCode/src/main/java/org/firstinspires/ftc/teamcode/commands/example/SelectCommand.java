@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.example;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 
 public class SelectCommand extends SequentialCommandGroup{
     public SelectCommand(MecDriveSubsystem mecDriveSubsystem){

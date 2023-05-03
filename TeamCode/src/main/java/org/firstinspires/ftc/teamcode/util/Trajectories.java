@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.util;
 
-import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.TRACK_WIDTH;
 
 import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;

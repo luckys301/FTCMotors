@@ -4,8 +4,8 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.DriveForwardCommand;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pipelines.aprilTagPipeline.TagVision;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
