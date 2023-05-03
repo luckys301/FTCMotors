@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrajectorySequenceContainerFollowCommand extends CommandBase implements Command {
-    private final MecDrivetrainSubsystem mecDrivetrainSubsystem;
+    private final MecDriveSubsystem mecDriveSubsystem;
     private final TrajectorySequence trajectorySequence;
     private final List<MarkerCommand> markerCommands = new ArrayList<>();
 
-    public TrajectorySequenceContainerFollowCommand(MecDrivetrainSubsystem mecDrivetrainSubsystem, TrajectorySequenceContainer trajectorySequenceContainer, MarkerCommand... markerCommands) {
-        this.mecDrivetrainSubsystem = mecDrivetrainSubsystem;
+    public TrajectorySequenceContainerFollowCommand(MecDriveSubsystem mecDriveSubsystem, TrajectorySequenceContainer trajectorySequenceContainer, MarkerCommand... markerCommands) {
+        this.mecDriveSubsystem = mecDriveSubsystem;
         TrajectorySequenceBuilder trajectorySequenceBuilder = trajectorySequenceContainer.getBuilder(PoseStorage.trajectoryPose);
         for (MarkerCommand markerCommand: markerCommands) {
             if (markerCommand.getClass() == DisplacementCommand.class) {
@@ -44,7 +44,7 @@ public class TrajectorySequenceContainerFollowCommand extends CommandBase implem
 
     @Override
     public void initialize() {
-        mecDrivetrainSubsystem.followTrajectorySequenceAsync(trajectorySequence);
+        mecDriveSubsystem.followTrajectorySequenceAsync(trajectorySequence);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class TrajectorySequenceContainerFollowCommand extends CommandBase implem
             }
         }
 
-        mecDrivetrainSubsystem.update();
+        mecDriveSubsystem.update();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class TrajectorySequenceContainerFollowCommand extends CommandBase implem
                 }
             }
         }
-        mecDrivetrainSubsystem.stop();
+        mecDriveSubsystem.stop();
 
     }
 
@@ -95,7 +95,7 @@ public class TrajectorySequenceContainerFollowCommand extends CommandBase implem
         for (MarkerCommand markerCommand: markerCommands) {
             isMarkersFinished = isMarkersFinished && markerCommand.isFinished();
         }
-        return isMarkersFinished && !mecDrivetrainSubsystem.isBusy();
+        return isMarkersFinished && !mecDriveSubsystem.isBusy();
     }
 
 }

@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Slide.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
@@ -22,7 +22,7 @@ public class TeleOpMain extends MatchOpMode {
     // Subsystems
     private Pivot pivot;
     private Claw claw;
-    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
+    private MecDriveSubsystem mecDriveSubsystem;
     private Slide slide;
 
     @Override
@@ -32,8 +32,8 @@ public class TeleOpMain extends MatchOpMode {
 
         pivot = new Pivot(telemetry, hardwareMap);
         claw = new Claw(telemetry, hardwareMap);
-        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
-        mecDrivetrainSubsystem.init();
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
+        mecDriveSubsystem.init();
         slide = new Slide(telemetry, hardwareMap);
 //        pivot.resetOffset();
         pivot.moveInitializationPosition();
@@ -47,12 +47,12 @@ public class TeleOpMain extends MatchOpMode {
 
         //Ways to use buttons
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and()
-//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+//            .whileHeld(new SlowDriveCommand(mecDriveSubsystem, driverGamepad, true));
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).or()
-//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+//            .whileHeld(new SlowDriveCommand(mecDriveSubsystem, driverGamepad, true));
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and().negate()
-//            .whileHeld(new SlowDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
-        mecDrivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDrivetrainSubsystem, driverGamepad, true));
+//            .whileHeld(new SlowDriveCommand(mecDriveSubsystem, driverGamepad, true));
+        mecDriveSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDriveSubsystem, driverGamepad, true));
     }
 
     @Override

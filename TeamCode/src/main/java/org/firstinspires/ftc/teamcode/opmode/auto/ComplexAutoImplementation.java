@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.DisplacementCommand;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.TrajectorySequenceContainerFollowCommand;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveConstants;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.pipelines.aprilTagPipeline.TagVision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Back;
@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 //@Autonomous
 public class ComplexAutoImplementation extends MatchOpMode {
     // Subsystems
-    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
+    private MecDriveSubsystem mecDriveSubsystem;
     private TagVision tagVision;
     @Config
     public static class RightRegionalAutoConstants {
@@ -237,8 +237,8 @@ public class ComplexAutoImplementation extends MatchOpMode {
 
     @Override
     public void robotInit() {
-        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        mecDrivetrainSubsystem.init();
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDriveSubsystem.init();
         tagVision = new TagVision(hardwareMap, telemetry);
         while (!isStarted() && !isStopRequested()) {
             tagVision.updateTagOfInterest();
@@ -264,43 +264,43 @@ public class ComplexAutoImplementation extends MatchOpMode {
                 RightRegionalAutoConstants.Path.Park.autoPosition = RightRegionalAutoConstants.Path.Park.AutoPosition.RIGHT;
                 break;
         }
-        mecDrivetrainSubsystem.setPoseEstimate(RightRegionalAutoConstants.Path.PreLoad.startPose.getPose());
+        mecDriveSubsystem.setPoseEstimate(RightRegionalAutoConstants.Path.PreLoad.startPose.getPose());
         PoseStorage.trajectoryPose = RightRegionalAutoConstants.Path.PreLoad.startPose.getPose();
         schedule(
                 new SequentialCommandGroup(
                         /* Preload */
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.PreLoad.preload)
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.PreLoad.preload)
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle1Pickup.cycle1Pickup,
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle1Pickup.cycle1Pickup,
                                         new DisplacementCommand(30, new SequentialCommandGroup()))
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle1Drop.cycle1Drop)
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle1Drop.cycle1Drop)
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle2Pickup.cycle2Pickup,
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle2Pickup.cycle2Pickup,
                                         new DisplacementCommand(28, new SequentialCommandGroup()))
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle2Drop.cycle2Drop)
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle2Drop.cycle2Drop)
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle3Pickup.cycle3Pickup,
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle3Pickup.cycle3Pickup,
                                         new DisplacementCommand(28, new SequentialCommandGroup()))
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Cycle3Drop.cycle3Drop)
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Cycle3Drop.cycle3Drop)
                         ),
                         new ParallelCommandGroup(
-                                new TrajectorySequenceContainerFollowCommand(mecDrivetrainSubsystem, RightRegionalAutoConstants.Path.Park.getPark(finalX))
+                                new TrajectorySequenceContainerFollowCommand(mecDriveSubsystem, RightRegionalAutoConstants.Path.Park.getPark(finalX))
                         ),
                         new SequentialCommandGroup(
                         ),
 
                         /* Save Pose and end opmode*/
-                        run(() -> PoseStorage.currentPose = mecDrivetrainSubsystem.getPoseEstimate()),
+                        run(() -> PoseStorage.currentPose = mecDriveSubsystem.getPoseEstimate()),
                         run(this::stop)
                 )
         );

@@ -8,14 +8,14 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
 @Config
 public class KindaSlowSplineCommand extends CommandBase{
 
-    MecDrivetrainSubsystem drive;
+    MecDriveSubsystem drive;
     Trajectory trajectory;
     boolean reverse = false;
     Vector2d splinePos;
@@ -23,7 +23,7 @@ public class KindaSlowSplineCommand extends CommandBase{
     Pose2d poseToUse;
 
     MinVelocityConstraint maxVelConstraint;
-    public KindaSlowSplineCommand(MecDrivetrainSubsystem drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public KindaSlowSplineCommand(MecDriveSubsystem drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this.drive = drive;
         this.reverse = reverse;
         this.splinePos = splinePos;
@@ -34,19 +34,19 @@ public class KindaSlowSplineCommand extends CommandBase{
 
     }
 
-    public KindaSlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading) {
+    public KindaSlowSplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading) {
         this(drive, Trajectories.kindaSlowVelConstraint, false, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public KindaSlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, boolean reverse) {
+    public KindaSlowSplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, boolean reverse) {
         this(drive, Trajectories.kindaSlowVelConstraint, reverse, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public KindaSlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public KindaSlowSplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this(drive, Trajectories.kindaSlowVelConstraint, false, splinePos, endHeading, poseToUse);
     }
 
-    public KindaSlowSplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
+    public KindaSlowSplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
         this(drive, Trajectories.kindaSlowVelConstraint, reverse, splinePos, endHeading, poseToUse);
     }
 

@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
@@ -18,14 +18,14 @@ public class TeleOpDrivetrainOnly extends MatchOpMode {
 
 
     // Subsystems
-    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
+    private MecDriveSubsystem mecDriveSubsystem;
 
     @Override
     public void robotInit() {
         driverGamepad = new GamepadEx(gamepad1);
-        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
-        mecDrivetrainSubsystem.init();
-        mecDrivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDrivetrainSubsystem, driverGamepad, false));
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
+        mecDriveSubsystem.init();
+        mecDriveSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDriveSubsystem, driverGamepad, false));
     }
 
 

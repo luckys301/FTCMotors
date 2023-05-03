@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.DriveForwardCommand;
 import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrive;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pipelines.aprilTagPipeline.TagVision;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
@@ -14,14 +14,14 @@ import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 public class AprilTagAutoImplementation extends MatchOpMode {
     private int tagNum = 0;
 
-    private MecDrivetrainSubsystem mecDrivetrainSubsystem;
+    private MecDriveSubsystem mecDriveSubsystem;
     private TagVision tagVision;
 
 
     @Override
     public void robotInit() {
-        mecDrivetrainSubsystem = new MecDrivetrainSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
-        mecDrivetrainSubsystem.init();
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDriveSubsystem.init();
         tagVision = new TagVision(hardwareMap,  telemetry);
         while (!isStarted() && !isStopRequested())
         {
@@ -36,13 +36,13 @@ public class AprilTagAutoImplementation extends MatchOpMode {
         switch (tagNum) {
             case 1: { //Left
                 schedule(
-                        new SequentialCommandGroup(new DriveForwardCommand(mecDrivetrainSubsystem, 3))
+                        new SequentialCommandGroup(new DriveForwardCommand(mecDriveSubsystem, 3))
                 );
                 return;
             }
             case 2: { //Mid
                 schedule(
-                        new SequentialCommandGroup(new DriveForwardCommand(mecDrivetrainSubsystem, 7))
+                        new SequentialCommandGroup(new DriveForwardCommand(mecDriveSubsystem, 7))
                 );
                 return;
             }

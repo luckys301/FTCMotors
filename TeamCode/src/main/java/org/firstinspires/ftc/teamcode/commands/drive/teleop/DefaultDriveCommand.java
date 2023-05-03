@@ -5,11 +5,11 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 public class DefaultDriveCommand extends CommandBase {
-    private MecDrivetrainSubsystem drive;
+    private MecDriveSubsystem drive;
     private GamepadEx driverGamepad;
 
     protected double multiplier;
@@ -20,7 +20,7 @@ public class DefaultDriveCommand extends CommandBase {
     public static PIDCoefficients Y_TIPING_PID = new PIDCoefficients(3, 0, 0);
     public static PIDController yTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
 
-    public DefaultDriveCommand(MecDrivetrainSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
+    public DefaultDriveCommand(MecDriveSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
         this.drive = drive;
         this.driverGamepad = driverGamepad;
         this.multiplier = 1.0;

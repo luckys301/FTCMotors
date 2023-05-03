@@ -3,25 +3,25 @@ package org.firstinspires.ftc.teamcode.commands.drive.trajectory;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.Util;
 
 import java.util.logging.Level;
 
 public class TurnToCommand extends CommandBase {
 
-    private final MecDrivetrainSubsystem drive;
+    private final MecDriveSubsystem drive;
     private final double angle;
     double desired = 0, firstAngle;
     boolean weird = false;
     Telemetry tl;
-    public TurnToCommand(MecDrivetrainSubsystem drive, double angle) {
+    public TurnToCommand(MecDriveSubsystem drive, double angle) {
         this.drive = drive;
         this.angle = angle;
         addRequirements(drive);
     }
 
-    public TurnToCommand(MecDrivetrainSubsystem drive, double angle, boolean weird) {
+    public TurnToCommand(MecDriveSubsystem drive, double angle, boolean weird) {
         this.drive = drive;
         this.angle = angle;
         this.weird = weird;

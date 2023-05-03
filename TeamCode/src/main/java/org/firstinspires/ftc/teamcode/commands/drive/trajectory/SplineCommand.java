@@ -8,14 +8,14 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
 @Config
 public class SplineCommand extends CommandBase{
 
-    MecDrivetrainSubsystem drive;
+    MecDriveSubsystem drive;
     Trajectory trajectory;
     boolean reverse;
     Vector2d splinePos;
@@ -23,7 +23,7 @@ public class SplineCommand extends CommandBase{
     Pose2d poseToUse;
 
     MinVelocityConstraint maxVelConstraint;
-    public SplineCommand(MecDrivetrainSubsystem drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public SplineCommand(MecDriveSubsystem drive, MinVelocityConstraint constraint, boolean reverse, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this.drive = drive;
         this.reverse = reverse;
         this.splinePos = splinePos;
@@ -34,19 +34,19 @@ public class SplineCommand extends CommandBase{
 
     }
 
-    public SplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading) {
+    public SplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading) {
         this(drive, Trajectories.velConstraint, false, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public SplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, boolean reverse) {
+    public SplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, boolean reverse) {
         this(drive, Trajectories.velConstraint, reverse, splinePos, endHeading, PoseStorage.currentPose);
     }
 
-    public SplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
+    public SplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse) {
         this(drive, Trajectories.velConstraint, false, splinePos, endHeading, poseToUse);
     }
 
-    public SplineCommand(MecDrivetrainSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
+    public SplineCommand(MecDriveSubsystem drive, Vector2d splinePos, double endHeading, Pose2d poseToUse, boolean reverse) {
         this(drive, Trajectories.velConstraint, reverse, splinePos, endHeading, poseToUse);
     }
 

@@ -8,10 +8,8 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
@@ -19,7 +17,7 @@ import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import java.util.List;
 
 
-public class MecDrivetrainSubsystem extends SubsystemBase {
+public class MecDriveSubsystem extends SubsystemBase {
 
     private final MecDrive drive;
     private final int LFVal = 0,
@@ -30,7 +28,7 @@ public class MecDrivetrainSubsystem extends SubsystemBase {
 
 
 
-    public MecDrivetrainSubsystem(MecDrive drive, Telemetry tl, HardwareMap hardwareMap) {
+    public MecDriveSubsystem(MecDrive drive, Telemetry tl, HardwareMap hardwareMap) {
         this.drive = drive;
 //        this.telemetry = tl;
     }

@@ -7,21 +7,21 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
 @Config
 public class SplinetoLinearCommand extends CommandBase{
 
-    MecDrivetrainSubsystem drive;
+    MecDriveSubsystem drive;
     Trajectory trajectory;
     boolean reverse;
     Pose2d splinePos;
     double endHeading;
 
     MinVelocityConstraint maxVelConstraint;
-    public SplinetoLinearCommand(MecDrivetrainSubsystem drive, MinVelocityConstraint constraint, Pose2d splinePos, double endHeading, boolean reverse) {
+    public SplinetoLinearCommand(MecDriveSubsystem drive, MinVelocityConstraint constraint, Pose2d splinePos, double endHeading, boolean reverse) {
         this.drive = drive;
         this.maxVelConstraint = constraint;
         this.reverse = reverse;
@@ -31,11 +31,11 @@ public class SplinetoLinearCommand extends CommandBase{
         this.addRequirements(drive);
     }
 
-    public SplinetoLinearCommand(MecDrivetrainSubsystem drive, Pose2d splinePos, double endHeading) {
+    public SplinetoLinearCommand(MecDriveSubsystem drive, Pose2d splinePos, double endHeading) {
         this(drive, Trajectories.velConstraint, splinePos, endHeading, false);
     }
 
-    public SplinetoLinearCommand(MecDrivetrainSubsystem drive, Pose2d splinePos, double endHeading, boolean reverse) {
+    public SplinetoLinearCommand(MecDriveSubsystem drive, Pose2d splinePos, double endHeading, boolean reverse) {
         this(drive, Trajectories.velConstraint, splinePos, endHeading, reverse);
     }
 
