@@ -20,7 +20,7 @@ public class MotorTest extends OpMode {
                 "motorName",
                 Motor.GoBILDA.RPM_84,
                 NebulaMotor.Direction.Forward,
-                Motor.ZeroPowerBehavior.FLOAT,
+                NebulaMotor.IdleMode.Coast,
                 true);
     }
 
