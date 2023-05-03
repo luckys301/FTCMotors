@@ -12,12 +12,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.List;
 
 
-public class Drivetrain extends SubsystemBase {
+public class TankDriveSubsystem extends SubsystemBase {
 
-    private final SampleTankDrive drive;
+    private final TankDrive drive;
     private Telemetry telemetry;
 
-    public Drivetrain(SampleTankDrive drive, Telemetry tl) {
+    public TankDriveSubsystem(TankDrive drive, Telemetry tl) {
         this.drive = drive;
         this.telemetry = tl;
     }

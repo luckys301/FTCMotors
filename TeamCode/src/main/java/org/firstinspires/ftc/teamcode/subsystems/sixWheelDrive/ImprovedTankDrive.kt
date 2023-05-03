@@ -59,7 +59,7 @@ abstract class ImprovedTankDrive constructor(
                 val wheelDeltas = wheelPositions
                         .zip(lastWheelPositions)
                         .map { it.first - it.second }
-                val robotPoseDelta = TankKinematics.wheelToRobotVelocities(wheelDeltas, DriveConstants.TRACK_WIDTH)
+                val robotPoseDelta = TankKinematics.wheelToRobotVelocities(wheelDeltas, TankDriveConstants.TRACK_WIDTH)
                 val finalHeadingDelta = if (useExternalHeading) {
                     Angle.normDelta(extHeading - lastExtHeading)
                 } else {
@@ -74,7 +74,7 @@ abstract class ImprovedTankDrive constructor(
             val wheelVelocities = drive.getWheelVelocities()
             val extHeadingVel = drive.getExternalHeadingVelocity()
             if (wheelVelocities != null) {
-                poseVelocity = TankKinematics.wheelToRobotVelocities(wheelVelocities, DriveConstants.TRACK_WIDTH)
+                poseVelocity = TankKinematics.wheelToRobotVelocities(wheelVelocities, TankDriveConstants.TRACK_WIDTH)
                 if (useExternalHeading && extHeadingVel != null) {
                     poseVelocity = Pose2d(poseVelocity!!.vec(), extHeadingVel)
                 }

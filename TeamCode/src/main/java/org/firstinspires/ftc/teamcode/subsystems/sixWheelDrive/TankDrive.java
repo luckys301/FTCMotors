@@ -49,7 +49,7 @@ import java.util.List;
  * Simple tank drive hardware implementation for REV hardware.
  */
 @Config
-public class SampleTankDrive extends ImprovedTankDrive {
+public class TankDrive extends ImprovedTankDrive {
     //public static PIDCoefficients AXIAL_PID = new PIDCoefficients(5, 0, 0); //7,0,1
     //public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.04, 0, 0); //0.06,0,0
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(14, 0, 0.6); //14.5,0,1
@@ -89,11 +89,11 @@ public class SampleTankDrive extends ImprovedTankDrive {
 
     private VoltageSensor batteryVoltageSensor;
 
-    public SampleTankDrive(HardwareMap hardwareMap) {
-        super(DriveConstants.kV,
-            DriveConstants.kA,
-            DriveConstants.kStatic,
-            DriveConstants.TRACK_WIDTH,
+    public TankDrive(HardwareMap hardwareMap) {
+        super(TankDriveConstants.kV,
+            TankDriveConstants.kA,
+            TankDriveConstants.kStatic,
+            TankDriveConstants.TRACK_WIDTH,
             hardwareMap.voltageSensor.iterator().next());
 
         dashboard = FtcDashboard.getInstance();
@@ -110,10 +110,10 @@ public class SampleTankDrive extends ImprovedTankDrive {
         turnController.setInputBounds(0, 2 * Math.PI);
 
         velConstraint = new MinVelocityConstraint(Arrays.asList(
-                new AngularVelocityConstraint(DriveConstants.MAX_ANG_VEL),
-                new TankVelocityConstraint(DriveConstants.MAX_VEL, DriveConstants.TRACK_WIDTH)
+                new AngularVelocityConstraint(TankDriveConstants.MAX_ANG_VEL),
+                new TankVelocityConstraint(TankDriveConstants.MAX_VEL, TankDriveConstants.TRACK_WIDTH)
         ));
-        accelConstraint = new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL);
+        accelConstraint = new ProfileAccelerationConstraint(TankDriveConstants.MAX_ACCEL);
         /*
             follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
@@ -134,7 +134,7 @@ public class SampleTankDrive extends ImprovedTankDrive {
         // TODO: adjust the names of the following hardware devices to match your configuration
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-            DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
+            TankDriveConstants.LOGO_FACING_DIR, TankDriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
         // add/remove motors depending on your robot (e.g., 6WD)
@@ -157,14 +157,14 @@ public class SampleTankDrive extends ImprovedTankDrive {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        if (DriveConstants.RUN_USING_ENCODER) {
+        if (TankDriveConstants.RUN_USING_ENCODER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if (DriveConstants.RUN_USING_ENCODER && DriveConstants.MOTOR_VELO_PID != null) {
-            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, DriveConstants.MOTOR_VELO_PID);
+        if (TankDriveConstants.RUN_USING_ENCODER && TankDriveConstants.MOTOR_VELO_PID != null) {
+            setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, TankDriveConstants.MOTOR_VELO_PID);
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
@@ -194,8 +194,8 @@ public class SampleTankDrive extends ImprovedTankDrive {
         turnProfile = MotionProfileGenerator.generateSimpleMotionProfile(
                 new MotionState(heading, 0, 0, 0),
                 new MotionState(heading + angle, 0, 0, 0),
-                DriveConstants.MAX_ANG_VEL,
-                DriveConstants.MAX_ANG_ACCEL
+                TankDriveConstants.MAX_ANG_VEL,
+                TankDriveConstants.MAX_ANG_ACCEL
         );
         turnStart = clock.seconds();
         mode = Mode.TURN;
@@ -206,8 +206,8 @@ public class SampleTankDrive extends ImprovedTankDrive {
         turnProfile = MotionProfileGenerator.generateSimpleMotionProfile(
                 new MotionState(heading, 0, 0, 0),
                 new MotionState(angle, 0, 0, 0),
-                DriveConstants.MAX_ANG_VEL,
-                DriveConstants.MAX_ANG_ACCEL
+                TankDriveConstants.MAX_ANG_VEL,
+                TankDriveConstants.MAX_ANG_ACCEL
         );
         turnStart = clock.seconds();
         mode = Mode.TURN;
@@ -386,10 +386,10 @@ public class SampleTankDrive extends ImprovedTankDrive {
 
             double leftSum = 0, rightSum = 0;
             for (DcMotorEx leftMotor : leftMotors) {
-                leftSum += DriveConstants.encoderTicksToInches(leftMotor.getCurrentPosition());
+                leftSum += TankDriveConstants.encoderTicksToInches(leftMotor.getCurrentPosition());
             }
             for (DcMotorEx rightMotor : rightMotors) {
-                rightSum += DriveConstants.encoderTicksToInches(rightMotor.getCurrentPosition());
+                rightSum += TankDriveConstants.encoderTicksToInches(rightMotor.getCurrentPosition());
             }
             return Arrays.asList(leftSum / leftMotors.size(), rightSum / rightMotors.size());
 
@@ -400,8 +400,8 @@ public class SampleTankDrive extends ImprovedTankDrive {
     }
 
     public List<Double> getWheelVelocities() {
-        double leftSum = DriveConstants.encoderTicksToInches(leftMotors.get(0).getVelocity());
-        double rightSum = -DriveConstants.encoderTicksToInches(rightMotors.get(0).getVelocity());
+        double leftSum = TankDriveConstants.encoderTicksToInches(leftMotors.get(0).getVelocity());
+        double rightSum = -TankDriveConstants.encoderTicksToInches(rightMotors.get(0).getVelocity());
 
         return Arrays.asList(leftSum, rightSum);
     }
