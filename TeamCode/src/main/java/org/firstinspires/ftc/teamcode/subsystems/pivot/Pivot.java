@@ -80,9 +80,7 @@ public class Pivot extends SubsystemBase {
     @Override
     public void periodic() {
         if (armAutomatic) {
-
 //            controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
-
             double output = (controller.calculate(getEncoderDistance()));
             //TODO: What would you put for Velocity
             telemetry.addData("CLaw Motor Output:", output);
@@ -102,14 +100,10 @@ public class Pivot extends SubsystemBase {
         return getEncoderDistance();
     }
 
-    /****************************************************************************************/
-
-    public void stopArm() {
-        armMotor.stopMotor();
-        armAutomatic = false;
-    }
-
-    /****************************************************************************************/
+//    public void stopArm() {
+//        armMotor.stopMotor();
+//        armAutomatic = false;
+//    }
 
     public void moveInitializationPosition() {
         armAutomatic = true;
@@ -184,18 +178,6 @@ public class Pivot extends SubsystemBase {
         armMotor.resetEncoder();
         telemetry.addLine("ARM RESET");
     }
-
-    /****************************************************************************************/
-
-    //Check Documentation if confused
-//    public double getPotentiometerAngle(){
-//        double angle = potentiometer.getVoltage()*81.8;
-//        return Range.scale(potentiometer.getVoltage(), 0, potentiometer.getMaxVoltage(), 0, 270);
-//    }
-
-//    public void setPosition(double point){
-//        controller.setSetPoint(point);
-//    }
     public double getSetPoint(){
         return controller.getSetPoint();
     }

@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,15 +15,13 @@ import java.util.logging.Level;
 @Config
 public class PivotFeedforward extends Pivot {
     //Zero HAS TO be parallel to the ground and encoder needs to be in radians
-//    private final static double POWER = 0.93;
+    public ArmFeedforward armFeedforward;
 
-    private final ArmFeedforward armFeedforward;
-
-    TrapezoidProfile.State start;
-    TrapezoidProfile.State goal;
-    TrapezoidProfile.Constraints constraints;
-    TrapezoidProfile trapezoidProfile;
-    Telemetry telemetry;
+    public TrapezoidProfile.State start;
+    public TrapezoidProfile.State goal;
+    public TrapezoidProfile.Constraints constraints;
+    public TrapezoidProfile trapezoidProfile;
+    public Telemetry telemetry;
 
     public PivotFeedforward(Telemetry tl, HardwareMap hw) {
         super(tl, hw);
@@ -63,26 +59,5 @@ public class PivotFeedforward extends Pivot {
         Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
         Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", pivotPos);
 
-    }
-
-    @Override
-    public void setSetPoint(PivotPos pos) {
-        super.setSetPoint(pos);
-        start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
-    }
-    @Override
-    public void setSetPoint(double setPoint, boolean shouldSensorWork) {
-        super.setSetPoint(setPoint, shouldSensorWork);
-        start = new TrapezoidProfile.State(getEncoderDistance(), armMotor.getVelocity());
-    }
-
-    //TODO: Test!
-    @Override
-    public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
-        return new InstantCommand(()-> setSetPoint(setPoint, shouldSensorWork));
-    }
-    @Override
-    public Command setSetPointCommand(PivotPos pos) {
-        return new InstantCommand(()->setSetPoint(pos));
     }
 }
