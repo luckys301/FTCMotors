@@ -18,8 +18,6 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 @Config
 @Autonomous(group = "drive")
 public class StraightTest extends LinearOpMode {
-    public static double DISTANCE = 60; // in
-
     @Override
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -27,7 +25,7 @@ public class StraightTest extends LinearOpMode {
         MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
+                .forward(RoadrunnerValues.StraightTest.DISTANCE)
                 .build();
 
         waitForStart();

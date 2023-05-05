@@ -26,10 +26,10 @@ import java.util.Objects;
 @Config
 @Autonomous(group = "drive")
 public class MaxAngularVeloTuner extends LinearOpMode {
-    public static double RUNTIME = 4.0;
+//    public static double RUNTIME = 4.0;
 
     private ElapsedTime timer;
-    private double maxAngVelocity = 0.0;
+//    private double maxAngVelocity = 0.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -39,7 +39,7 @@ public class MaxAngularVeloTuner extends LinearOpMode {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        telemetry.addLine("Your bot will turn at full speed for " + RUNTIME + " seconds.");
+        telemetry.addLine("Your bot will turn at full speed for " + RoadrunnerValues.MaxAngularVeloTuner.RUNTIME + " seconds.");
         telemetry.addLine("Please ensure you have enough space cleared.");
         telemetry.addLine("");
         telemetry.addLine("Press start when ready.");
@@ -53,20 +53,20 @@ public class MaxAngularVeloTuner extends LinearOpMode {
         drive.setDrivePower(new Pose2d(0, 0, 1));
         timer = new ElapsedTime();
 
-        while (!isStopRequested() && timer.seconds() < RUNTIME) {
+        while (!isStopRequested() && timer.seconds() < RoadrunnerValues.MaxAngularVeloTuner.RUNTIME) {
             drive.updatePoseEstimate();
 
             Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");
 
-            maxAngVelocity = Math.max(poseVelo.getHeading(), maxAngVelocity);
+            RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity = Math.max(poseVelo.getHeading(), RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity);
         }
 
         drive.setDrivePower(new Pose2d());
 
-        telemetry.addData("Max Angular Velocity (rad)", maxAngVelocity);
-        telemetry.addData("Max Angular Velocity (deg)", Math.toDegrees(maxAngVelocity));
-        telemetry.addData("Max Recommended Angular Velocity (rad)", maxAngVelocity * 0.8);
-        telemetry.addData("Max Recommended Angular Velocity (deg)", Math.toDegrees(maxAngVelocity * 0.8));
+        telemetry.addData("Max Angular Velocity (rad)", RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity);
+        telemetry.addData("Max Angular Velocity (deg)", Math.toDegrees(RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity));
+        telemetry.addData("Max Recommended Angular Velocity (rad)", RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity * 0.8);
+        telemetry.addData("Max Recommended Angular Velocity (deg)", Math.toDegrees(RoadrunnerValues.MaxAngularVeloTuner.maxAngVelocity * 0.8));
         telemetry.update();
 
         while (!isStopRequested()) idle();

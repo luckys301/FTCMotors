@@ -67,7 +67,7 @@ import org.firstinspires.ftc.teamcode.util.odoPod.StandardTrackingWheelLocalizer
 @Config
 @TeleOp(group = "drive")
 public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
-    public static int NUM_TURNS = 10;
+//    public static int NUM_TURNS = 10;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -144,7 +144,7 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
         telemetry.clearAll();
         telemetry.addLine("Localizer's total heading: " + Math.toDegrees(headingAccumulator) + "°");
         telemetry.addLine("Effective LATERAL_DISTANCE: " +
-                (headingAccumulator / (NUM_TURNS * Math.PI * 2)) * StandardTrackingWheelLocalizer.LATERAL_DISTANCE);
+                (headingAccumulator / (RoadrunnerValues.TrackingWheelLateralDistanceTuner.NUM_TURNS * Math.PI * 2)) * StandardTrackingWheelLocalizer.LATERAL_DISTANCE);
 
         telemetry.update();
 

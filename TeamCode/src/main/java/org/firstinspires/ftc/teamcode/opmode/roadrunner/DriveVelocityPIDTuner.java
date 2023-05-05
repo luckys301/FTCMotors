@@ -53,16 +53,14 @@ import java.util.List;
 @Config
 @Autonomous(group = "drive")
 public class DriveVelocityPIDTuner extends LinearOpMode {
-    public static double DISTANCE = 72; // in
-
-    enum Mode {
-        DRIVER_MODE,
-        TUNING_MODE
-    }
+//    enum Mode {
+//        DRIVER_MODE,
+//        TUNING_MODE
+//    }
 
     private static MotionProfile generateProfile(boolean movingForward) {
-        MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
-        MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
+        MotionState start = new MotionState(movingForward ? 0 : RoadrunnerValues.DriveVelocityPIDTuner.DISTANCE, 0, 0, 0);
+        MotionState goal = new MotionState(movingForward ? RoadrunnerValues.DriveVelocityPIDTuner.DISTANCE : 0, 0, 0, 0);
         return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
     }
 
@@ -77,7 +75,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
 
-        Mode mode = Mode.TUNING_MODE;
+        RoadrunnerValues.DriveVelocityPIDTuner.Mode mode = RoadrunnerValues.DriveVelocityPIDTuner.Mode.TUNING_MODE;
 
         double lastKp = MOTOR_VELO_PID.p;
         double lastKi = MOTOR_VELO_PID.i;
@@ -107,7 +105,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
             switch (mode) {
                 case TUNING_MODE:
                     if (gamepad1.y) {
-                        mode = Mode.DRIVER_MODE;
+                        mode = RoadrunnerValues.DriveVelocityPIDTuner.Mode.DRIVER_MODE;
                         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                     }
 
@@ -141,7 +139,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     if (gamepad1.b) {
                         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                        mode = Mode.TUNING_MODE;
+                        mode = RoadrunnerValues.DriveVelocityPIDTuner.Mode.TUNING_MODE;
                         movingForwards = true;
                         activeProfile = generateProfile(movingForwards);
                         profileStart = clock.seconds();

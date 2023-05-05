@@ -29,10 +29,10 @@ import java.util.Objects;
 @Config
 @Autonomous(group = "drive")
 public class MaxVelocityTuner extends LinearOpMode {
-    public static double RUNTIME = 2.0;
+//    public static double RUNTIME = 2.0;
 
     private ElapsedTime timer;
-    private double maxVelocity = 0.0;
+//    private double maxVelocity = 0.0;
 
     private VoltageSensor batteryVoltageSensor;
 
@@ -46,7 +46,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        telemetry.addLine("Your bot will go at full speed for " + RUNTIME + " seconds.");
+        telemetry.addLine("Your bot will go at full speed for " + RoadrunnerValues.MaxVelocityTuner.RUNTIME + " seconds.");
         telemetry.addLine("Please ensure you have enough space cleared.");
         telemetry.addLine("");
         telemetry.addLine("Press start when ready.");
@@ -60,20 +60,20 @@ public class MaxVelocityTuner extends LinearOpMode {
         drive.setDrivePower(new Pose2d(1, 0, 0));
         timer = new ElapsedTime();
 
-        while (!isStopRequested() && timer.seconds() < RUNTIME) {
+        while (!isStopRequested() && timer.seconds() < RoadrunnerValues.MaxVelocityTuner.RUNTIME) {
             drive.updatePoseEstimate();
 
             Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");
 
-            maxVelocity = Math.max(poseVelo.vec().norm(), maxVelocity);
+            RoadrunnerValues.MaxVelocityTuner.maxVelocity = Math.max(poseVelo.vec().norm(), RoadrunnerValues.MaxVelocityTuner.maxVelocity);
         }
 
         drive.setDrivePower(new Pose2d());
 
-        double effectiveKf = MecDriveConstants.getMotorVelocityF(veloInchesToTicks(maxVelocity));
+        double effectiveKf = MecDriveConstants.getMotorVelocityF(veloInchesToTicks(RoadrunnerValues.MaxVelocityTuner.maxVelocity));
 
-        telemetry.addData("Max Velocity", maxVelocity);
-        telemetry.addData("Max Recommended Velocity", maxVelocity * 0.8);
+        telemetry.addData("Max Velocity", RoadrunnerValues.MaxVelocityTuner.maxVelocity);
+        telemetry.addData("Max Recommended Velocity", RoadrunnerValues.MaxVelocityTuner.maxVelocity * 0.8);
         telemetry.addData("Voltage Compensated kF", effectiveKf * batteryVoltageSensor.getVoltage() / 12);
         telemetry.update();
 

@@ -25,13 +25,11 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 @Autonomous(group = "drive")
 public class FollowerPIDTuner extends LinearOpMode {
-    public static double DISTANCE = 48; // in
-
     @Override
     public void runOpMode() throws InterruptedException {
         MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
 
-        Pose2d startPose = new Pose2d(-DISTANCE / 2, -DISTANCE / 2, 0);
+        Pose2d startPose = new Pose2d(-RoadrunnerValues.FollowerPIDTuner.DISTANCE / 2, -RoadrunnerValues.FollowerPIDTuner.DISTANCE / 2, 0);
 
         drive.setPoseEstimate(startPose);
 
@@ -41,13 +39,13 @@ public class FollowerPIDTuner extends LinearOpMode {
 
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(DISTANCE)
+                    .forward(RoadrunnerValues.FollowerPIDTuner.DISTANCE)
                     .turn(Math.toRadians(90))
-                    .forward(DISTANCE)
+                    .forward(RoadrunnerValues.FollowerPIDTuner.DISTANCE)
                     .turn(Math.toRadians(90))
-                    .forward(DISTANCE)
+                    .forward(RoadrunnerValues.FollowerPIDTuner.DISTANCE)
                     .turn(Math.toRadians(90))
-                    .forward(DISTANCE)
+                    .forward(RoadrunnerValues.FollowerPIDTuner.DISTANCE)
                     .turn(Math.toRadians(90))
                     .build();
             drive.followTrajectorySequence(trajSeq);

@@ -38,9 +38,9 @@ import org.firstinspires.ftc.teamcode.util.odoPod.StandardTrackingWheelLocalizer
 @Config
 @Autonomous(group="drive")
 public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
-    public static double ANGLE = 180; // deg
-    public static int NUM_TRIALS = 5;
-    public static int DELAY = 1000; // ms
+//    public static double ANGLE = 180; // deg
+//    public static int NUM_TRIALS = 5;
+//    public static int DELAY = 1000; // ms
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -66,15 +66,15 @@ public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
         telemetry.addLine("Running...");
         telemetry.update();
 
-        MovingStatistics forwardOffsetStats = new MovingStatistics(NUM_TRIALS);
-        for (int i = 0; i < NUM_TRIALS; i++) {
+        MovingStatistics forwardOffsetStats = new MovingStatistics(RoadrunnerValues.TrackingWheelForwardOffsetTuner.NUM_TRIALS);
+        for (int i = 0; i < RoadrunnerValues.TrackingWheelForwardOffsetTuner.NUM_TRIALS; i++) {
             drive.setPoseEstimate(new Pose2d());
 
             // it is important to handle heading wraparounds
             double headingAccumulator = 0;
             double lastHeading = 0;
 
-            drive.turnAsync(Math.toRadians(ANGLE));
+            drive.turnAsync(Math.toRadians(RoadrunnerValues.TrackingWheelForwardOffsetTuner.ANGLE));
 
             while (!isStopRequested() && drive.isBusy()) {
                 double heading = drive.getPoseEstimate().getHeading();
@@ -88,14 +88,14 @@ public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
                     drive.getPoseEstimate().getY() / headingAccumulator;
             forwardOffsetStats.add(forwardOffset);
 
-            sleep(DELAY);
+            sleep(RoadrunnerValues.TrackingWheelForwardOffsetTuner.DELAY);
         }
 
         telemetry.clearAll();
         telemetry.addLine("Tuning complete");
         telemetry.addLine(Misc.formatInvariant("Effective forward offset = %.2f (SE = %.3f)",
                 forwardOffsetStats.getMean(),
-                forwardOffsetStats.getStandardDeviation() / Math.sqrt(NUM_TRIALS)));
+                forwardOffsetStats.getStandardDeviation() / Math.sqrt(RoadrunnerValues.TrackingWheelForwardOffsetTuner.NUM_TRIALS)));
         telemetry.update();
 
         while (!isStopRequested()) {

@@ -28,9 +28,9 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstant
 @Config
 @Autonomous(group = "drive")
 public class TrackWidthTuner extends LinearOpMode {
-    public static double ANGLE = 180; // deg
-    public static int NUM_TRIALS = 5;
-    public static int DELAY = 1000; // ms
+//    public static double ANGLE = 180; // deg
+//    public static int NUM_TRIALS = 5;
+//    public static int DELAY = 1000; // ms
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -52,15 +52,15 @@ public class TrackWidthTuner extends LinearOpMode {
         telemetry.addLine("Running...");
         telemetry.update();
 
-        MovingStatistics trackWidthStats = new MovingStatistics(NUM_TRIALS);
-        for (int i = 0; i < NUM_TRIALS; i++) {
+        MovingStatistics trackWidthStats = new MovingStatistics(RoadrunnerValues.TrackWidthTuner.NUM_TRIALS);
+        for (int i = 0; i < RoadrunnerValues.TrackWidthTuner.NUM_TRIALS; i++) {
             drive.setPoseEstimate(new Pose2d());
 
             // it is important to handle heading wraparounds
             double headingAccumulator = 0;
             double lastHeading = 0;
 
-            drive.turnAsync(Math.toRadians(ANGLE));
+            drive.turnAsync(Math.toRadians(RoadrunnerValues.TrackWidthTuner.ANGLE));
 
             while (!isStopRequested() && drive.isBusy()) {
                 double heading = drive.getPoseEstimate().getHeading();
@@ -70,17 +70,17 @@ public class TrackWidthTuner extends LinearOpMode {
                 drive.update();
             }
 
-            double trackWidth = MecDriveConstants.TRACK_WIDTH * Math.toRadians(ANGLE) / headingAccumulator;
+            double trackWidth = MecDriveConstants.TRACK_WIDTH * Math.toRadians(RoadrunnerValues.TrackWidthTuner.ANGLE) / headingAccumulator;
             trackWidthStats.add(trackWidth);
 
-            sleep(DELAY);
+            sleep(RoadrunnerValues.TrackWidthTuner.DELAY);
         }
 
         telemetry.clearAll();
         telemetry.addLine("Tuning complete");
         telemetry.addLine(Misc.formatInvariant("Effective track width = %.2f (SE = %.3f)",
                 trackWidthStats.getMean(),
-                trackWidthStats.getStandardDeviation() / Math.sqrt(NUM_TRIALS)));
+                trackWidthStats.getStandardDeviation() / Math.sqrt(RoadrunnerValues.TrackWidthTuner.NUM_TRIALS)));
         telemetry.update();
 
         while (!isStopRequested()) {

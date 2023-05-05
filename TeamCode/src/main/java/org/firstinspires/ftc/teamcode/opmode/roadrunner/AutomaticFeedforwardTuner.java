@@ -39,9 +39,6 @@ import java.util.List;
 @Config
 @Autonomous(group = "drive")
 public class AutomaticFeedforwardTuner extends LinearOpMode {
-    public static double MAX_POWER = 0.7;
-    public static double DISTANCE = 100; // in
-
     @Override
     public void runOpMode() throws InterruptedException {
         if (RUN_USING_ENCODER) {
@@ -87,7 +84,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         telemetry.clearAll();
         telemetry.addLine(Misc.formatInvariant(
-                "Place your robot on the field with at least %.2f in of room in front", DISTANCE));
+                "Place your robot on the field with at least %.2f in of room in front", RoadrunnerValues.AutomaticFeedforwardTuner.DISTANCE));
         telemetry.addLine("Press (Y/Δ) to begin");
         telemetry.update();
 
@@ -103,9 +100,9 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
         telemetry.update();
 
         double maxVel = rpmToVelocity(MAX_RPM);
-        double finalVel = MAX_POWER * maxVel;
-        double accel = (finalVel * finalVel) / (2.0 * DISTANCE);
-        double rampTime = Math.sqrt(2.0 * DISTANCE / accel);
+        double finalVel = RoadrunnerValues.AutomaticFeedforwardTuner.MAX_POWER * maxVel;
+        double accel = (finalVel * finalVel) / (2.0 * RoadrunnerValues.AutomaticFeedforwardTuner.DISTANCE);
+        double rampTime = Math.sqrt(2.0 * RoadrunnerValues.AutomaticFeedforwardTuner.DISTANCE / accel);
 
         List<Double> timeSamples = new ArrayList<>();
         List<Double> positionSamples = new ArrayList<>();
@@ -184,14 +181,14 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
             telemetry.addLine("Running...");
             telemetry.update();
 
-            double maxPowerTime = DISTANCE / maxVel;
+            double maxPowerTime = RoadrunnerValues.AutomaticFeedforwardTuner.DISTANCE / maxVel;
 
             timeSamples.clear();
             positionSamples.clear();
             powerSamples.clear();
 
             drive.setPoseEstimate(new Pose2d());
-            drive.setDrivePower(new Pose2d(MAX_POWER, 0.0, 0.0));
+            drive.setDrivePower(new Pose2d(RoadrunnerValues.AutomaticFeedforwardTuner.MAX_POWER, 0.0, 0.0));
 
             startTime = clock.seconds();
             while (!isStopRequested()) {
@@ -202,7 +199,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
                 timeSamples.add(elapsedTime);
                 positionSamples.add(drive.getPoseEstimate().getX());
-                powerSamples.add(MAX_POWER);
+                powerSamples.add(RoadrunnerValues.AutomaticFeedforwardTuner.MAX_POWER);
 
                 drive.updatePoseEstimate();
             }

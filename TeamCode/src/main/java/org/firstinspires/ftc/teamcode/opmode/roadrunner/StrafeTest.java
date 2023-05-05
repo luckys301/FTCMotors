@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 @Config
 @Autonomous(group = "drive")
 public class StrafeTest extends LinearOpMode {
-    public static double DISTANCE = RoadrunnerValues.StrafeTest.DISTANCE; // in
+//    public static double DISTANCE = RoadrunnerValues.StrafeTest.DISTANCE; // in
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +27,7 @@ public class StrafeTest extends LinearOpMode {
         MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(DISTANCE)
+                .strafeRight(RoadrunnerValues.StrafeTest.DISTANCE)
                 .build();
 
         waitForStart();

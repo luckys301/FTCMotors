@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 @Config
 @TeleOp(group = "drive")
 public class MotorDirectionDebugger extends LinearOpMode {
-    public static double MOTOR_POWER = 0.7;
+//    public static double MOTOR_POWER = 0.7;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -71,16 +71,16 @@ public class MotorDirectionDebugger extends LinearOpMode {
             telemetry.addLine();
 
             if(gamepad1.x) {
-                drive.setMotorPowers(MOTOR_POWER, 0, 0, 0);
+                drive.setMotorPowers(RoadrunnerValues.MotionDirectionDebugger.MOTOR_POWER, 0, 0, 0);
                 telemetry.addLine("Running Motor: Front Left");
             } else if(gamepad1.y) {
-                drive.setMotorPowers(0, 0, 0, MOTOR_POWER);
+                drive.setMotorPowers(0, 0, 0, RoadrunnerValues.MotionDirectionDebugger.MOTOR_POWER);
                 telemetry.addLine("Running Motor: Front Right");
             } else if(gamepad1.b) {
-                drive.setMotorPowers(0, 0, MOTOR_POWER, 0);
+                drive.setMotorPowers(0, 0, RoadrunnerValues.MotionDirectionDebugger.MOTOR_POWER, 0);
                 telemetry.addLine("Running Motor: Rear Right");
             } else if(gamepad1.a) {
-                drive.setMotorPowers(0, MOTOR_POWER, 0, 0);
+                drive.setMotorPowers(0, RoadrunnerValues.MotionDirectionDebugger.MOTOR_POWER, 0, 0);
                 telemetry.addLine("Running Motor: Rear Left");
             } else {
                 drive.setMotorPowers(0, 0, 0, 0);

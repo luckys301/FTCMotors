@@ -47,7 +47,6 @@ import java.util.Objects;
 @Config
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
-    public static double DISTANCE = 72; // in
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
@@ -61,8 +60,8 @@ public class ManualFeedforwardTuner extends LinearOpMode {
     private Mode mode;
 
     private static MotionProfile generateProfile(boolean movingForward) {
-        MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
-        MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
+        MotionState start = new MotionState(movingForward ? 0 : RoadrunnerValues.ManualFeedforwardTuner.DISTANCE, 0, 0, 0);
+        MotionState goal = new MotionState(movingForward ? RoadrunnerValues.ManualFeedforwardTuner.DISTANCE : 0, 0, 0, 0);
         return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
     }
 
