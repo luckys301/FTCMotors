@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands.drive.teleop;
+package org.firstinspires.ftc.teamcode.commands.drive.teleop.mec;
 
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.arcrobotics.ftclib.command.CommandBase;
@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
-public class DefaultDriveCommand extends CommandBase {
+public class DefaultMecDriveCommand extends CommandBase {
     private MecDriveSubsystem drive;
     private GamepadEx driverGamepad;
 
@@ -20,7 +20,7 @@ public class DefaultDriveCommand extends CommandBase {
     public static PIDCoefficients Y_TIPING_PID = new PIDCoefficients(3, 0, 0);
     public static PIDController yTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
 
-    public DefaultDriveCommand(MecDriveSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
+    public DefaultMecDriveCommand(MecDriveSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
         this.drive = drive;
         this.driverGamepad = driverGamepad;
         this.multiplier = 1.0;

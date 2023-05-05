@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.commands.drive.teleop.DefaultDriveCommand;
+import org.firstinspires.ftc.teamcode.commands.drive.teleop.mec.DefaultMecDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
@@ -16,7 +16,6 @@ public class TeleOpDrivetrainOnly extends MatchOpMode {
     // Gamepad
     private GamepadEx driverGamepad;
 
-
     // Subsystems
     private MecDriveSubsystem mecDriveSubsystem;
 
@@ -25,7 +24,7 @@ public class TeleOpDrivetrainOnly extends MatchOpMode {
         driverGamepad = new GamepadEx(gamepad1);
         mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
         mecDriveSubsystem.init();
-        mecDriveSubsystem.setDefaultCommand(new DefaultDriveCommand(mecDriveSubsystem, driverGamepad, false));
+        mecDriveSubsystem.setDefaultCommand(new DefaultMecDriveCommand(mecDriveSubsystem, driverGamepad, false));
     }
 
 
