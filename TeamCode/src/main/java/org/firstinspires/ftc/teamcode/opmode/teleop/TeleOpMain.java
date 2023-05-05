@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -8,11 +9,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.mec.DefaultMecDriveCommand;
+import org.firstinspires.ftc.teamcode.commands.drive.trajectory.TurnToCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.slide.Slide;
-import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
+import org.firstinspires.ftc.teamcode.util.CycleTracker;
 import org.firstinspires.ftc.teamcode.util.teleop.GamepadTrigger;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
@@ -56,6 +59,14 @@ public class TeleOpMain extends MatchOpMode {
         new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
             .and(new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
             .whileActiveContinuous(new SequentialCommandGroup());
+
+        new GamepadButton(driverGamepad, GamepadKeys.Button.DPAD_DOWN)//To Test
+            .whileActiveContinuous(new TurnToCommand(mecDriveSubsystem, 180+1e6));
+
+        (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))//To Test
+            .whileActiveOnce(new InstantCommand(()-> CycleTracker.trackCycle(1)));
+        (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
+            .whileActiveOnce(new InstantCommand(()-> CycleTracker.trackCycle(2)));
 //        new GamepadTrigger(driverGamepad, GamepadKeys.Trigger.LEFT_TRIGGER)
 //            .and(new GamepadButton(operatorGamepad, GamepadKeys.Button.LEFT_BUMPER))
 //            .whileActiveContinuous(new SlowMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
