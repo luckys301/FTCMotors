@@ -27,7 +27,7 @@ public class PivotFeedforwardThroughBore extends PivotFeedforward {
     public PivotFeedforwardThroughBore(Telemetry tl, HardwareMap hw) {
         super(tl, hw);
         armEncoder = new Encoder(
-            hw.get(DcMotorEx.class, NebulaConstants.Slide.slideMName1));
+            hw.get(DcMotorEx.class, NebulaConstants.Pivot.pivotMName));
         armEncoder.getCurrentPosition();
         armEncoder.setDistancePerPulse(1);
     }
