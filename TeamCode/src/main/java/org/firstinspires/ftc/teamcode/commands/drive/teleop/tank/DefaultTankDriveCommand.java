@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 public class DefaultTankDriveCommand extends CommandBase {
     private final TankDriveSubsystem drive;
     private final GamepadEx driverGamepad;
-    private static final PIDCoefficients X_TIPPING_PID = new PIDCoefficients(3, 0, 0);
-    private static final PIDController xTipController = new PIDController(X_TIPPING_PID.kP, X_TIPPING_PID.kI, X_TIPPING_PID.kD);
+    private static final PIDCoefficients Y_TIPPING_PID = new PIDCoefficients(3, 0, 0);
+    private static final PIDController yTipController = new PIDController(Y_TIPPING_PID.kP, Y_TIPPING_PID.kI, Y_TIPPING_PID.kD);
 
     protected double multiplier;
 
@@ -26,22 +26,21 @@ public class DefaultTankDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double y = squareInput(driverGamepad.getLeftY()),
-            x = squareInput(driverGamepad.getLeftX()),
-            rx = squareInput(driverGamepad.getRightX());
+        double y = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getLeftY()),
+            rx = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getRightX());
+
+        y = NebulaConstants.Gamepad.cubeInput(y);
+        rx = NebulaConstants.Gamepad.cubeInput(rx);
         //TODO:See if this works
         if(Math.abs(drive.getDegreeRoll())> NebulaConstants.Drive.tippingTolerance){
-            x = xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
+            y = yTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
         }
-//        drive.arcadeDrive.arcadeDrive(driverGamepad.getLeftY() * multiplier, driverGamepad.getRightX() * multiplier);
-        drive.tankDrive(driverGamepad.getLeftY() * multiplier, driverGamepad.getRightY() * multiplier);
+        drive.arcadeDrive.arcadeDrive(y*multiplier, rx*multiplier);
+//        drive.tankDrive(lY * multiplier, rY * multiplier);
     }
 
     @Override
     public void end(boolean interrupted) {
         drive.stop();
-    }
-    private static double squareInput(double value) {
-        return value * Math.abs(value);
     }
 }

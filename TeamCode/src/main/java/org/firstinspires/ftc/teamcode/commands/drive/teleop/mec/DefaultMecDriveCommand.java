@@ -37,16 +37,20 @@ public class DefaultMecDriveCommand extends CommandBase {
 //        } else {
 //            multiplier = 1;
 //        }
-        double y = squareInput(driverGamepad.getLeftY()),
-            x = squareInput(driverGamepad.getLeftX()),
-            rx = squareInput(driverGamepad.getRightX());
+        double y = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getLeftY()),
+            x = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getLeftX()),
+            rx = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getRightX());
+
+        y = NebulaConstants.Gamepad.cubeInput(y);
+        x = NebulaConstants.Gamepad.cubeInput(x);
+        rx = NebulaConstants.Gamepad.cubeInput(rx);
 
         //TODO:See if this works
-        if(Math.abs(drive.getDegreeRoll())> NebulaConstants.Drive.tippingTolerance){
-            x= xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
+        if (Math.abs(drive.getDegreeRoll()) > NebulaConstants.Drive.tippingTolerance) {
+            x = xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
         }
-        if(Math.abs(drive.getDegreePitch())> NebulaConstants.Drive.tippingTolerance){
-            y= yTipController.calculate(drive.getDegreeRoll(), 0);//Make sure this is the right IMU
+        if (Math.abs(drive.getDegreePitch()) > NebulaConstants.Drive.tippingTolerance) {
+            y = yTipController.calculate(drive.getDegreeRoll(), 0);//Make sure this is the right IMU
         }
         drive.fieldCentric(
             (y * multiplier),
@@ -57,14 +61,8 @@ public class DefaultMecDriveCommand extends CommandBase {
     }
 
 
-
     @Override
     public void end(boolean interrupted) {
         drive.stop();
     }
-
-    private static double squareInput(double value) {
-        return value * Math.abs(value);
-    }
-
 }

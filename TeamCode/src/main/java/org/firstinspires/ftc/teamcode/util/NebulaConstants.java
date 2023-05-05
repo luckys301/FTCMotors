@@ -67,6 +67,23 @@ public class NebulaConstants {
             rightFrontDir = NebulaMotor.Direction.Forward;
         public static boolean isSquaredInputs = true;
         public static double tippingTolerance = 5;//This probably needs to be less
-
+    }
+    public static class Gamepad {
+        public static double squareInput(double value) {
+            return value * Math.abs(value);
+        }
+        public static double cubeInput(double value) {
+            return value * Math.abs(value);
+        }
+        public static double isDriverOneDeadband(double value) {
+            if(value<0.1){
+                return 0;
+            } else return value;
+        }
+        public static double isDriverTwoDeadband(double value) {
+            if(value<0.1){
+                return 0;
+            } else return value;
+        }
     }
 }
