@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.util;
 import com.arcrobotics.ftclib.util.Timing;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import com.arcrobotics.ftclib.util.Timing.Timer;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +15,17 @@ public class CycleTracker {
     protected static Timing.Timer timer = new Timer(120, TimeUnit.SECONDS);
 //    Timing.Timer
     // private static int high = 0 , low = 0;
-    private File file;
+    private static final File file = new File("/home/lvuser/Logs");
+    private static final PrintStream stream;
+
+    static {
+        try {
+            stream = new PrintStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static HashMap<String, Double> data;
     private static double cycle =0,
         mean = 0,
@@ -22,8 +34,7 @@ public class CycleTracker {
         high = 0,
         low = 0;
 
-    public CycleTracker(){
-        file = new File("/home/lvuser/Logs");//Add in data like time of match, what type it is from DRIVER STATION
+    public CycleTracker() throws FileNotFoundException {
         timer.start();
     }
     
@@ -54,7 +65,7 @@ public class CycleTracker {
 //        printOut(DriverStation.getMatchType().toString(), DriverStation.getMatchNumber());
 
         for (int i = 0; i < stat.getSizeInt(); i++) {
-            printOut("Cycle "+ i +":", stat.getNum(i));
+            printOutStream("Cycle "+ i +":", stat.getNum(i));
         }
         printOut("High: ", high);
         printOut("Low: ", low);
@@ -65,4 +76,9 @@ public class CycleTracker {
 //        printOut("Fastest: ", stat.getHighestValue());
 //        printOut("SLowest", stat.getLowestValue());
     }
+    public static void printOutStream(String string, double num){
+        stream.print(string + num);
+//        data.put(string, num);
+    }
+
 }
