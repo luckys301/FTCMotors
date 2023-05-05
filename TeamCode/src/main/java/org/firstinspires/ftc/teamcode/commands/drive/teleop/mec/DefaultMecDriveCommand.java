@@ -9,16 +9,16 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsyste
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 public class DefaultMecDriveCommand extends CommandBase {
-    private MecDriveSubsystem drive;
-    private GamepadEx driverGamepad;
+    private final MecDriveSubsystem drive;
+    private final GamepadEx driverGamepad;
 
     protected double multiplier;
     boolean isFieldCentric;
 
-    public static PIDCoefficients X_TIPING_PID = new PIDCoefficients(3, 0, 0);
-    public static PIDController xTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
-    public static PIDCoefficients Y_TIPING_PID = new PIDCoefficients(3, 0, 0);
-    public static PIDController yTipController = new PIDController(X_TIPING_PID.kP, X_TIPING_PID.kI, X_TIPING_PID.kD);
+    private static final PIDCoefficients X_TIPPING_PID = new PIDCoefficients(3, 0, 0);
+    private static final PIDController xTipController = new PIDController(X_TIPPING_PID.kP, X_TIPPING_PID.kI, X_TIPPING_PID.kD);
+    private static final PIDCoefficients Y_TIPPING_PID = new PIDCoefficients(3, 0, 0);
+    private static final PIDController yTipController = new PIDController(Y_TIPPING_PID.kP, Y_TIPPING_PID.kI, Y_TIPPING_PID.kD);
 
     public DefaultMecDriveCommand(MecDriveSubsystem drive, GamepadEx driverGamepad, boolean isFieldCentric) {
         this.drive = drive;
@@ -43,10 +43,10 @@ public class DefaultMecDriveCommand extends CommandBase {
 
         //TODO:See if this works
         if(Math.abs(drive.getDegreeRoll())> NebulaConstants.Drive.tippingTolerance){
-            x= xTipController.calculate(drive.getDegreePitch(), 0);
+            x= xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
         }
         if(Math.abs(drive.getDegreePitch())> NebulaConstants.Drive.tippingTolerance){
-            y= yTipController.calculate(drive.getDegreePitch(), 0);
+            y= yTipController.calculate(drive.getDegreeRoll(), 0);//Make sure this is the right IMU
         }
         drive.fieldCentric(
             (y * multiplier),
@@ -63,7 +63,7 @@ public class DefaultMecDriveCommand extends CommandBase {
         drive.stop();
     }
 
-    public static double squareInput(double value) {
+    private static double squareInput(double value) {
         return value * Math.abs(value);
     }
 

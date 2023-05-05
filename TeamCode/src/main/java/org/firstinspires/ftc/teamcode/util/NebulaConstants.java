@@ -66,7 +66,7 @@ public class NebulaConstants {
             rightRearDir = NebulaMotor.Direction.Forward,
             rightFrontDir = NebulaMotor.Direction.Forward;
         public static boolean isSquaredInputs = true;
-        public static double tippingTolerance = 5;
+        public static double tippingTolerance = 5;//This probably needs to be less
 
     }
 }
