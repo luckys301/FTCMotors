@@ -46,8 +46,8 @@ public class Slide extends SubsystemBase {
 
     public Slide( Telemetry tl, HardwareMap hw) {
 
-        slideM1 = new MotorEx(hw, "lift");
-        slideM2 = new MotorEx(hw, "lift2");
+        slideM1 = new MotorEx(hw, NebulaConstants.Slide.slideMName1);
+        slideM2 = new MotorEx(hw, NebulaConstants.Slide.slideMName2);
 
         slideM1.setDistancePerPulse(360 / CPR);
         slideM2.setDistancePerPulse(360 / CPR);
