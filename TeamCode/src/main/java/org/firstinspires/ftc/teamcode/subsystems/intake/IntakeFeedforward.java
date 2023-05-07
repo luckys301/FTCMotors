@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.shooter;
+package org.firstinspires.ftc.teamcode.subsystems.intake;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
@@ -9,20 +9,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 @Config
-public class ShooterFeedforward extends Shooter {
-    public SimpleMotorFeedforward shooterFeedforward;
+public class IntakeFeedforward extends Intake {
+    public SimpleMotorFeedforward intakeFeedforward;
 
     TrapezoidProfile.State start = new TrapezoidProfile.State(getShooterRPM(), getShooterRPM());
     TrapezoidProfile.State goal;
     TrapezoidProfile.Constraints constraints;
     TrapezoidProfile trapezoidProfile;
     Telemetry telemetry;
-    public ShooterFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+    public IntakeFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);
-        shooterFeedforward = new SimpleMotorFeedforward(
-            NebulaConstants.Shooter.ks,
-            NebulaConstants.Shooter.ka,
-            NebulaConstants.Shooter.kv);
+        intakeFeedforward = new SimpleMotorFeedforward(
+            NebulaConstants.Intake.ks,
+            NebulaConstants.Intake.ka,
+            NebulaConstants.Intake.kv);
         constraints = new TrapezoidProfile.Constraints(
             0,// radians per second
             0);//radians per second per second
@@ -36,10 +36,10 @@ public class ShooterFeedforward extends Shooter {
         trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
         start = trapezoidProfile.calculate(0.02);
         double output = (controller.calculate(getShooterRPM()) +
-            (shooterFeedforward.calculate(start.position, start.velocity)));
+            (intakeFeedforward.calculate(start.position, start.velocity)));
         motorGroup.setPower(output);
-        telemetry.addData("Shooter RPM:", getShooterRPM());
-        telemetry.addData("Shooter Required RPM:", controller.getSetPoint());
+        telemetry.addData("Intake RPM:", getShooterRPM());
+        telemetry.addData("Intake Required RPM:", controller.getSetPoint());
 
     }
 }

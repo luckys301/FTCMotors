@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.shooter;
+package org.firstinspires.ftc.teamcode.subsystems.intake;
 
 
 import com.acmerobotics.dashboard.config.Config;
@@ -15,50 +15,49 @@ import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotorGroup;
 
 @Config
-public class Shooter extends SubsystemBase {
+public class Intake extends SubsystemBase {
     public final PIDFController controller;
     public final NebulaMotorGroup motorGroup;
 
-
-    public enum ShooterRPM {
+    public enum IntakeRPM {
         OUTTAKE(100),
         INTAKE(-100),
         STOP(0);
 
-        public final double pivotPosition;
-        ShooterRPM(double speed) {
-            this.pivotPosition = speed;
+        public final double speed;
+        IntakeRPM(double speed) {
+            this.speed = speed;
         }
     }
-    ShooterRPM shooterRPM = ShooterRPM.STOP;
+    IntakeRPM shooterRPM = IntakeRPM.STOP;
     Telemetry telemetry;
     public final NebulaMotor motor, motor2;
 
-    public Shooter(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
-        motor = new NebulaMotor(hw, NebulaConstants.Shooter.shooterMName,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Shooter.shooterDirection,
+    public Intake(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
+        motor = new NebulaMotor(hw, NebulaConstants.Intake.intakeMName,
+            Motor.GoBILDA.RPM_312, NebulaConstants.Intake.intakeDirection,
             NebulaMotor.IdleMode.Coast, isEnabled);
-        motor2 = new NebulaMotor(hw, NebulaConstants.Shooter.shooterM2Name,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Shooter.shooter2Direction,
+        motor2 = new NebulaMotor(hw, NebulaConstants.Intake.intakeM2Name,
+            Motor.GoBILDA.RPM_312, NebulaConstants.Intake.intake2Direction,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motorGroup = new NebulaMotorGroup(motor, motor2);
 //        motor.setDistancePerPulse(1);
         controller = new PIDFController(
-            NebulaConstants.Shooter.shooterPID.p,
-            NebulaConstants.Shooter.shooterPID.i,
-            NebulaConstants.Shooter.shooterPID.d,
-            NebulaConstants.Shooter.shooterPID.f,
+            NebulaConstants.Intake.intakePID.p,
+            NebulaConstants.Intake.intakePID.i,
+            NebulaConstants.Intake.intakePID.d,
+            NebulaConstants.Intake.intakePID.f,
             getShooterRPM(),
             getShooterRPM());
-        controller.setTolerance(NebulaConstants.Shooter.shooterTolerance);
+        controller.setTolerance(NebulaConstants.Intake.intakeTolerance);
         this.telemetry = tl;
     }
 
     @Override
     public void periodic() {
         double output = (controller.calculate(getShooterRPM()));
-        telemetry.addData("Shooter RPM:", getShooterRPM());
-        telemetry.addData("Shooter Required RPM:", controller.getSetPoint());
+        telemetry.addData("Intake RPM:", getShooterRPM());
+        telemetry.addData("Intake Required RPM:", controller.getSetPoint());
 
         motorGroup.setPower(output);
     }
@@ -74,14 +73,14 @@ public class Shooter extends SubsystemBase {
     //    ang_velocity_right = rpm_right * rpm_to_radians;
     //    ang_velocity_right_deg = ang_velocity_right * rad_to_deg;
 
-    public void setSetPoint(ShooterRPM pos) {
+    public void setSetPoint(IntakeRPM speed) {
 //        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
 //            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
 //            motor.stopMotor();
 //            return;
 //        }
-        controller.setSetPoint(pos.pivotPosition);
-        shooterRPM = pos;
+        controller.setSetPoint(speed.speed);
+        shooterRPM = speed;
     }
     public void setSetPoint(double setPoint) {
 //        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
@@ -96,7 +95,7 @@ public class Shooter extends SubsystemBase {
     public Command setSetPointCommand(double setPoint) {
         return new InstantCommand(()->{setSetPoint(setPoint);});
     }
-    public Command setSetPointCommand(ShooterRPM pos) {
+    public Command setSetPointCommand(IntakeRPM pos) {
         return new InstantCommand(()->{setSetPoint(pos);});
     }
 

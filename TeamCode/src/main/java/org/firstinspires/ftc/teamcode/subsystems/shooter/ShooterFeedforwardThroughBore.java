@@ -33,8 +33,9 @@ public class ShooterFeedforwardThroughBore extends ShooterFeedforward {
                 (shooterFeedforward.calculate(start.position, start.velocity)));
             motorGroup.setPower(output);//TODO: Probably shouldn't be like this
 
-        telemetry.addData("Motor RPM:", getShooterRPM());
-        telemetry.addData("Motor Required RPM:", controller.getSetPoint());
+        telemetry.addData("Shooter RPM:", getShooterRPM());
+        telemetry.addData("Shooter Required RPM:", controller.getSetPoint());
+
 
     }
 
