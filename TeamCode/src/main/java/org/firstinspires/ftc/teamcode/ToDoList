@@ -1,35 +1,36 @@
 ToDo List:
     Add Improved Tank Drive into MecDrive
-    Test Angles on Servo
-    Test Nebula Motor and Servo
-    See if Roadrunner Values show up on Dashboard and are changeable
     Implement Feedforward to all Mechanisms: https://docs.ftclib.org/ftclib/features/controllers
         Trapezoid Motion Profiling
             Find Max Velocity/Acceleration after Tuning by using ArmFeedforward.maxAchievableAcceleration
     Add Units to Mechanisms (Degrees + mm)
-    Implement Potentiometer for accurate Arm Movements
-    Implement Through Bore Encoder
     How to do Follower Motor - Maybe Reverse Motor?
-    Test Anti-Tip
-    Have a button to Align to a Direction
-    Create Six Wheel Drives
-        Add DefaultDriveCommand with Anti-Tip
     CHANGE ALL MOTORS TO NEBULA MOTORS
-    Add Through Bore Encoder
-    Add Cycle Tracker
+    TRANSFER ALL DRIVETRAIN CONSTANTS into NEBULA CONSTANTS
+    Shooter
+    Intake - SetPower and at least pid Both Options
 
-
-
-Ideas to Implement:
-    Write all Device ID Strings in 1 Location
-    Make A Teleop to Run  misc motors to test Robotic Supply
 
 Documentation: https://docs.ftclib.org/ftclib/
-
-
-Turning in a Certain Direction //CHeck if this works for other angles
+Turning in a Certain Direction //Check if this works for other angles
     // Turns counter clockwise
     drive.turn(Math.toRadians(180) + 1e-6);
 
     // Turns clockwise
     drive.turn(Math.toRadians(180) - 1e-6);
+
+Test:
+    Test Angles on Servo
+    Test Nebula Motor and Servo
+    Test Anti-Tip
+    See if Roadrunner Values show up on Dashboard and are changeable
+    Test Align to a Direction - Teleop
+        Alignment to something with PID in teleop
+    Test Potentiometer for accurate Arm Movements
+    Test Cycle Tracker
+
+
+Done:
+    Create Six Wheel Drives
+        Add DefaultDriveCommand with Anti-Tip
+    Implement Through Bore Encoder
