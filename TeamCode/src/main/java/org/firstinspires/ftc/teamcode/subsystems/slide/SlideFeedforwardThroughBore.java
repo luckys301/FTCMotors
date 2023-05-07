@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.slide;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -35,11 +32,6 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
     public void periodic() {
         if (slideAutomatic) {
 //            slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
-            slideFeedforward = new ElevatorFeedforward(
-                NebulaConstants.Slide.ks,
-                NebulaConstants.Slide.kcos,
-                NebulaConstants.Slide.ka,
-                NebulaConstants.Slide.kv);
             constraints = new TrapezoidProfile.Constraints(
                 0,// radians per second
                 0);//radians per second per second

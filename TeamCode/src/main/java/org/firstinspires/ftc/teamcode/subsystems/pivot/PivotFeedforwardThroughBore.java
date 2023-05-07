@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -36,11 +35,6 @@ public class PivotFeedforwardThroughBore extends PivotFeedforward {
     public void periodic() {
         if (armAutomatic) {
 //            slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
-            armFeedforward = new ArmFeedforward(
-                NebulaConstants.Slide.ks,
-                NebulaConstants.Slide.kcos,
-                NebulaConstants.Slide.ka,
-                NebulaConstants.Slide.kv);
             constraints = new TrapezoidProfile.Constraints(
                 0,// radians per second
                 0);//radians per second per second

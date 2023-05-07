@@ -71,7 +71,12 @@ public class Pivot extends SubsystemBase {
     public Pivot(Telemetry tl, HardwareMap hw) {
         armMotor = new MotorEx(hw, NebulaConstants.Pivot.pivotMName);
         armMotor.setDistancePerPulse(1);
-        controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p, NebulaConstants.Pivot.pivotPID.i, NebulaConstants.Pivot.pivotPID.d, NebulaConstants.Pivot.pivotPID.f, getEncoderDistance(), getEncoderDistance());
+        controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p,
+            NebulaConstants.Pivot.pivotPID.i,
+            NebulaConstants.Pivot.pivotPID.d,
+            NebulaConstants.Pivot.pivotPID.f,
+            getEncoderDistance(),
+            getEncoderDistance());
         controller.setTolerance(NebulaConstants.Pivot.pivotTolerance);
         this.telemetry = tl;
         armAutomatic = false;
@@ -82,7 +87,6 @@ public class Pivot extends SubsystemBase {
         if (armAutomatic) {
 //            controller.setF(NebulaConstants.Pivot.pivotPID.f * Math.cos(Math.toRadians(controller.getSetPoint())));
             double output = (controller.calculate(getEncoderDistance()));
-            //TODO: What would you put for Velocity
             telemetry.addData("CLaw Motor Output:", output);
 
             armMotor.set(output * POWER);
