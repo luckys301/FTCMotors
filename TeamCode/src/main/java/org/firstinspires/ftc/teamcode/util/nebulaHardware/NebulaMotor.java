@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class NebulaMotor {
+public class NebulaMotor{
     public enum IdleMode {
         Coast,
         Brake
@@ -20,6 +20,7 @@ public class NebulaMotor {
 //    }
     private final MotorEx motor;
     private final Boolean isEnabled;
+    private Direction direction;
 //    private final Motor.GoBILDA type;
 //    private int gearing;
 
@@ -28,6 +29,7 @@ public class NebulaMotor {
 //        this.type = type;
         this.isEnabled = isEnabled;
 //        this.gearing = gearing;
+        this.direction = direction;
 
         switch (direction){ //Initialization of Motor Direction
             case Forward:
@@ -58,7 +60,9 @@ public class NebulaMotor {
     }
     public double getVelocity() {
         return motor.getVelocity();
-//        return motor.getCorrectedVelocity();
+    }
+    public double getCorrectedVelocity() {
+        return motor.getCorrectedVelocity();
     }
     public void stop() {
         motor.stopMotor();
@@ -76,6 +80,16 @@ public class NebulaMotor {
                 break;
         }
     }
+//    public boolean getInverted() {
+//        switch(direction){
+//            case Forward:
+//                return false;
+//                break;
+//            case Reverse:
+//                return true;
+//                break;
+//        }
+//    }
 //    public void setDistancePerPulse(Encoder encoder){
 //        //TODO: What should the conversion be to get distance in mm
 //        //How would this change?
@@ -101,5 +115,8 @@ public class NebulaMotor {
         //How would this change?
         //The below was used previously
         motor.setDistancePerPulse(360/CPR);
+    }
+    public void disable(){
+        motor.disable();
     }
 }
