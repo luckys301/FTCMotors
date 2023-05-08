@@ -21,12 +21,18 @@ public class Intake extends SubsystemBase {
 
     public enum IntakeRPM {
         OUTTAKE(100),
-        INTAKE(-100),
+        INTAKE(-100,true),
         STOP(0);
 
         public final double speed;
+        public final boolean reset;
         IntakeRPM(double speed) {
             this.speed = speed;
+            this.reset = false;
+        }
+        IntakeRPM(double speed, boolean reset) {
+            this.speed = speed;
+            this.reset = reset;
         }
     }
     IntakeRPM shooterRPM = IntakeRPM.STOP;
@@ -81,19 +87,25 @@ public class Intake extends SubsystemBase {
 //        }
         controller.setSetPoint(speed.speed);
         shooterRPM = speed;
+        if(speed.reset){
+            NebulaConstants.Intake.intakeTime.reset();
+        }
     }
-    public void setSetPoint(double setPoint) {
+    public void setSetPoint(double setPoint, boolean reset) {
 //        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
 //            setPoint<NebulaConstants.Pivot.MIN_POSITION){
 //            motor.stopMotor();
 //            return;
 //        }
         controller.setSetPoint(setPoint);
+        if(reset){
+            NebulaConstants.Intake.intakeTime.reset();
+        }
     }
 
     //TODO: Test!
-    public Command setSetPointCommand(double setPoint) {
-        return new InstantCommand(()->{setSetPoint(setPoint);});
+    public Command setSetPointCommand(double setPoint, boolean reset) {
+        return new InstantCommand(()->{setSetPoint(setPoint, reset);});
     }
     public Command setSetPointCommand(IntakeRPM pos) {
         return new InstantCommand(()->{setSetPoint(pos);});
@@ -104,5 +116,12 @@ public class Intake extends SubsystemBase {
     }
     public double getSetPoint(){
         return controller.getSetPoint();
+    }
+
+    public boolean isIntaked(){//TODO:Needs to have something where it times
+        if(NebulaConstants.Intake.intakeTime.seconds()>2){
+            return controller.getVelocityError()>100;//Whatever the Number is
+        }
+        return false;
     }
 }

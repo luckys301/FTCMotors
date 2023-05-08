@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
@@ -127,6 +128,7 @@ public class NebulaConstants {
             kv=0;
         public static double maxVelocity = 0,
             maxAcceleration = 0;
+        public static ElapsedTime intakeTime = new ElapsedTime(0);
     }
 //From RobotAutoDriveByGyro_Linear.java
 //    // Calculate the COUNTS_PER_INCH for your specific drive train.

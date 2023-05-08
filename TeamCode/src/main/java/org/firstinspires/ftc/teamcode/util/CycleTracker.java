@@ -1,22 +1,21 @@
 package org.firstinspires.ftc.teamcode.util;
 
-import com.arcrobotics.ftclib.util.Timing;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.HashMap;
-import com.arcrobotics.ftclib.util.Timing.Timer;
-import java.util.concurrent.TimeUnit;
 
 
 public class CycleTracker {
     protected static StatCalculator stat = new StatCalculator();
-    protected static Timing.Timer timer = new Timer(120, TimeUnit.SECONDS);
+    protected static ElapsedTime timer = new ElapsedTime(0);
 //    Timing.Timer
     // private static int high = 0 , low = 0;
     private static final File file = new File("/home/lvuser/Logs");
     private static final PrintStream stream;
+//    private static double lastElapsedTime = 0;
 
     static {
         try {
@@ -35,11 +34,11 @@ public class CycleTracker {
         low = 0;
 
     public CycleTracker() throws FileNotFoundException {
-        timer.start();
+        timer.reset();
     }
     
     public static void trackCycle(int num){
-        double cycleTime = timer.elapsedTime();
+        double cycleTime = timer.seconds();
         stat.addNumber(cycleTime);
         cycle = stat.getSizeDouble();
         mean = stat.getMean();
@@ -56,6 +55,7 @@ public class CycleTracker {
             case 2:
                 low = (low+1);
         }    // }
+        timer.reset();
     }
 
     public static void printOut(String string, double num){
