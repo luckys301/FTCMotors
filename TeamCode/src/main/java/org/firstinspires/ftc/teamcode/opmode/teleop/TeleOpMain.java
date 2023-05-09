@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -25,6 +24,7 @@ public class TeleOpMain extends MatchOpMode {
     // Gamepad
     private GamepadEx driverGamepad;
     private GamepadEx operatorGamepad;
+    private final CycleTracker cycleTracker = new CycleTracker();
 
     // Subsystems
     private Pivot pivot;
@@ -49,24 +49,32 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void configureButtons() {
-        //Can Rumble Gamepads; If need to Rumble both Gamepads, might need to use queueEffect
+        mecDriveSubsystem.setDefaultCommand(new DefaultMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
+        cycleTracker.resetTimer();
+        //Can Rumble Gamepads; If need to Rumble both Gamepads, might need to use queueEffect - Doesn't WORK
         driverGamepad.gamepad.rumble(1,1, 100);
 
+        (new GamepadButton(driverGamepad, GamepadKeys.Button.A))
+            .whenPressed(new InstantCommand(mecDriveSubsystem::reInitializeIMU));
+
         //Ways to use buttons
-        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
-            .and(new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER)).negate()
-            .whileActiveContinuous(new SequentialCommandGroup());
-        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
-            .and(new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
-            .whileActiveContinuous(new SequentialCommandGroup());
+//        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
+//            .and(new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER)).negate()
+//            .whileActiveContinuous(new SequentialCommandGroup());
+//        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
+//            .and(new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
+//            .whileActiveContinuous(new SequentialCommandGroup());
 
         new GamepadButton(driverGamepad, GamepadKeys.Button.DPAD_DOWN)//To Test
-            .whileActiveContinuous(new TurnToCommand(mecDriveSubsystem, 180+1e6));
+            .whileHeld(new TurnToCommand(mecDriveSubsystem, 180)) //KInda Works as it turns and stuff
+//            .whenPressed(new TurnToTeleop(mecDriveSubsystem,180, telemetry)) //doesn't work
+            .whenReleased(new InstantCommand(()->mecDriveSubsystem.stop()));
 
         (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))//To Test
-            .whileActiveOnce(new InstantCommand(()-> CycleTracker.trackCycle(1)));
-        (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER))
-            .whileActiveOnce(new InstantCommand(()-> CycleTracker.trackCycle(2)));
+            .whileActiveOnce(new InstantCommand(()-> cycleTracker.trackCycle(1)));
+//            .whileActiveOnce(new InstantCommand(()->        driverGamepad.gamepad.rumble(1,1, -1)));
+        (new GamepadTrigger(operatorGamepad, GamepadKeys.Trigger.RIGHT_TRIGGER))
+            .whileActiveOnce(new InstantCommand(()-> cycleTracker.trackCycle(2)));
 //        new GamepadTrigger(driverGamepad, GamepadKeys.Trigger.LEFT_TRIGGER)
 //            .and(new GamepadButton(operatorGamepad, GamepadKeys.Button.LEFT_BUMPER))
 //            .whileActiveContinuous(new SlowMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
@@ -81,7 +89,16 @@ public class TeleOpMain extends MatchOpMode {
     }
 
     @Override
-    public void matchLoop() {}
+    public void matchLoop() {
+        telemetry.addData("Mean", cycleTracker.getMean());
+        telemetry.addData("Cycle", cycleTracker.getCycle());
+
+        telemetry.addData("high", cycleTracker.getHigh());
+        telemetry.addData("low", cycleTracker.getLow());
+        telemetry.addData("fast", cycleTracker.getFastest());
+        telemetry.addData("slow", cycleTracker.getSlowest());
+
+    }
     @Override
     public void disabledPeriodic() { }
     @Override
