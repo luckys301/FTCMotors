@@ -99,8 +99,12 @@ public class MecDriveSubsystem extends SubsystemBase {
         return power*Math.abs(power)*Math.abs(power);
     }
 
-    public double getHeading() {
+    public double getHeading() {//TODO: Does this make a difference
         return Math.toDegrees(drive.getExternalHeading());
+//        return drive.getRawExternalHeading();
+    }
+    public double getHeadingDegrees() {//TODO: Does this make a difference
+        return drive.getDegreeHeading();
     }
 
 
