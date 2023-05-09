@@ -9,6 +9,8 @@ ToDo List:
     TRANSFER ALL DRIVETRAIN CONSTANTS into NEBULA CONSTANTS
     Shooter
     Intake - SetPower and at least pid Both Options
+    Look at ProfiledPIDController
+    Look at Faster Gradle Times - Document for future easy access
 
 
 Documentation: https://docs.ftclib.org/ftclib/
@@ -20,17 +22,18 @@ Turning in a Certain Direction //Check if this works for other angles
     drive.turn(Math.toRadians(180) - 1e-6);
 
 Test:
-    Test Angles on Servo
-    Test Nebula Motor and Servo
     Test Anti-Tip
     See if Roadrunner Values show up on Dashboard and are changeable
     Test Align to a Direction - Teleop
         Alignment to something with PID in teleop
     Test Potentiometer for accurate Arm Movements
-    Test Cycle Tracker
+
 
 
 Done:
     Create Six Wheel Drives
         Add DefaultDriveCommand with Anti-Tip
     Implement Through Bore Encoder
+    Test Nebula Motor and Servo - Works
+    Test Cycle Tracker - Works
+    Test Angles on Servo - Doesn't Work, but positional works
