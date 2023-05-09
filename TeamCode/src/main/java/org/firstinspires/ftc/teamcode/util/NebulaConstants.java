@@ -87,12 +87,12 @@ public class NebulaConstants {
             return value * Math.abs(value);
         }
         public static double isDriverOneDeadband(double value) {
-            if(value<0.1){
+            if(Math.abs(value)<0.1){
                 return 0;
             } else return value;
         }
         public static double isDriverTwoDeadband(double value) {
-            if(value<0.1){
+            if(Math.abs(value)<0.1){
                 return 0;
             } else return value;
         }
