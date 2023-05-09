@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.util.nebulaHardware;
 
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -13,7 +11,8 @@ public class NebulaServo {// Normal Servo
         Forward, //False to Inverted
         Reverse //True to Inverted
     }
-    private final SimpleServo servo;
+//    private final SimpleServo servo;
+    private final ServoEx servo;
     private final Boolean isEnabled;
 
     public NebulaServo(HardwareMap hM, String deviceId, Direction direction, double minAngle, double maxAngle, Boolean isEnabled){
@@ -34,7 +33,7 @@ public class NebulaServo {// Normal Servo
             else servo.setPosition(position);
     }
 
-    public void setInverted(boolean isInverted) {
+    private void setInverted(boolean isInverted) {
         servo.setInverted(isInverted);
     }
     public double getPosition() {
@@ -47,10 +46,13 @@ public class NebulaServo {// Normal Servo
     public void close() {//How does it disable, Restart Teleop or robot
         servo.disable();
     }
+    @Deprecated
     public void rotateByAngle(double angle) {
         servo.rotateByAngle(angle, AngleUnit.DEGREES);
     }
+    @Deprecated
     public void turnToAngle(double angle) {
         servo.turnToAngle(angle, AngleUnit.DEGREES);
+        servo.turnToAngle(angle);
     }
 }

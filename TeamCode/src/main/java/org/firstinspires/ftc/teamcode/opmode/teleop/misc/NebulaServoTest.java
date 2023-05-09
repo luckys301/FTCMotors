@@ -4,14 +4,16 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
+
 //@Disabled
 @TeleOp
-public class ServoTest extends OpMode {
-    com.qualcomm.robotcore.hardware.Servo servo;
-    double pos = 0.3;
+public class NebulaServoTest extends OpMode {
+    NebulaServo servo;
+    double pos = 0;
     @Override
     public void init() {
-        servo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "clawS2");
+        servo = new NebulaServo(hardwareMap, "clawS2", NebulaServo.Direction.Forward, 0,360, true);
     }
 
     @Override
