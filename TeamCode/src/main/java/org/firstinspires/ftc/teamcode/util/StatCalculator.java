@@ -59,7 +59,14 @@ public class StatCalculator {
   }
 
   public double getHighestValue() {
-    return Collections.max(numbers);
+    double highest=0;
+    for (int i = 0; i < numbers.size(); i++) {
+      if (numbers.get(i) > highest) {
+        highest = numbers.get(i);
+      }
+    }
+    return highest;
+//    return Collections.max(numbers);
   }
 
   public double getMedian() {
