@@ -46,11 +46,17 @@ public class DefaultMecDriveCommand extends CommandBase {
         rx = NebulaConstants.Gamepad.cubeInput(rx);
 
         //TODO:See if this works
-        if (Math.abs(drive.getDegreeRoll()) > NebulaConstants.Drive.tippingTolerance) {
+        if (drive.getDegreeRoll() > NebulaConstants.Drive.tippingTolerance) {
             x = xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
         }
-        if (Math.abs(drive.getDegreePitch()) > NebulaConstants.Drive.tippingTolerance) {
+        if (drive.getDegreeRoll() < -NebulaConstants.Drive.tippingTolerance) {
+            x = -xTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
+        }
+        if (drive.getDegreePitch() > NebulaConstants.Drive.tippingTolerance) {
             y = yTipController.calculate(drive.getDegreeRoll(), 0);//Make sure this is the right IMU
+        }
+        if (drive.getDegreePitch() < -NebulaConstants.Drive.tippingTolerance) {
+            y = -yTipController.calculate(drive.getDegreeRoll(), 0);//Make sure this is the right IMU
         }
         drive.fieldCentric(
             (y * multiplier),
