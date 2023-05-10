@@ -113,6 +113,22 @@ public class NebulaConstants {
         public static double maxVelocity = 0,
             maxAcceleration = 0;
     }
+    public Hood hood; //Most Likely Needed to View on Dashboard
+    public static class Hood {
+        public static String shooterMName = "shooterM";
+        public static String shooterM2Name = "shooterM2";
+        public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse;
+        public static NebulaMotor.Direction shooter2Direction = NebulaMotor.Direction.Reverse;
+//        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
+
+        public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
+        public static int shooterTolerance = 1;
+        public static double ks=0,
+            ka=0,
+            kv=0;
+        public static double maxVelocity = 0,
+            maxAcceleration = 0;
+    }
     public Intake intake; //Most Likely Needed to View on Dashboard
     public static class Intake {
         public static String intakeMName = "intakeM";
