@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,8 +10,11 @@ import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
 
 //This will be used to store all Initialization Values for Subsystems, etc.
 //Positions will
+@Config
 public class NebulaConstants {
     //TODO: Add IdleMode, and Motertype
+    //TODO: make some things final
+    // TODO: servos = have set angles
     //Arm Distance Per Pulse
     //Math.PI/2
     //(Counts per revolution*Gear ratio(5:1=5 / 1:5))/(Turns per revolution * 2π)
@@ -17,12 +22,13 @@ public class NebulaConstants {
     //Slide Distance Per Pulse
     //(COUNTS_PER_PULSE * GEAR_RATIO) / (GEAR_DIAMETER_INCHES * Math.PI);
 
-    public Pivot pivot; //Most Likely Needed to View on Dashboard
+    public static Pivot pivot;
     public static class Pivot {
-        public static String pivotMName = "clawM";
+        public final static String pivotMName = "clawM";
         public static NebulaMotor.Direction pivotDirection = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
-
+        public static NebulaMotor.IdleMode pivotIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA pivotType = Motor.GoBILDA.RPM_312;
         public static PIDFCoefficients pivotPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int pivotTolerance = 10;
         public static double ks=0,
@@ -34,22 +40,24 @@ public class NebulaConstants {
             MIN_POSITION = Math.toRadians(20),
             MAX_POSITION = Math.toRadians(230);
     }
-    public Claw claw;
+    public static Claw claw;
     public static class Claw {
-        public static String clawSName = "clawS2";  //EH3
-        public static NebulaServo.Direction pivotDirection = NebulaServo.Direction.Reverse;
+        public final static String clawSName = "clawS2";  //EH3
+        public final static NebulaServo.Direction clawDirection = NebulaServo.Direction.Reverse;
+        public static double minAngle = 0, maxAngle = 360;
     }
-    public Slide slide;
+    public static Slide slide;
     public static class Slide {
-        public static String slideMName1 = "lift";
-        public static String slideMName2 = "lift2";
+        public final static String slideMName1 = "lift";
+        public final static String slideMName2 = "lift2";
         public static NebulaMotor.Direction slideDirection1 = NebulaMotor.Direction.Reverse,
-            slideDirection2 = NebulaMotor.Direction.Forward;
+                                            slideDirection2 = NebulaMotor.Direction.Forward;
         public static PIDFCoefficients slidePID = new PIDFCoefficients(0.005, 0.00, 0,0);//.0075, 0., .003, 0)
         public static int slideTolerance = 10;
 //        public int slideDistancePerPulse = (COUNTS_PER_PULSE * GEAR_RATIO) / (GEAR_DIAMETER_INCHES * Math.PI);
 //        public int slideDistancePerPulse = (GEAR_DIAMETER_INCHES * Math.PI);
-
+        public static NebulaMotor.IdleMode slideIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA slideType = Motor.GoBILDA.RPM_312;
         public static double ks=0,
             kcos=0,
             ka=0,
@@ -59,25 +67,27 @@ public class NebulaConstants {
             MIN_POSITION = 0,//mm
             MAX_POSITION = 0;
     }
-    public Drive drive;
+    public static Drive drive;
     public static class Drive {//TODO:FIX CONSTANTS
-        public static String leftFrontM = "leftFront";
-        public static String leftRearM = "leftRear";
-        public static String rightRearM = "rightRear";
-        public static String rightFrontM = "rightFront";
+        public final static String leftFrontM = "leftFront",
+            leftRearM = "leftRear",
+            rightRearM = "rightRear",
+            rightFrontM = "rightFront";
         public static NebulaMotor.Direction leftFrontDir = NebulaMotor.Direction.Reverse,
             leftRearDir = NebulaMotor.Direction.Reverse,
             rightRearDir = NebulaMotor.Direction.Forward,
             rightFrontDir = NebulaMotor.Direction.Forward;
+        public static NebulaMotor.IdleMode driveIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA driveType = Motor.GoBILDA.RPM_435;
         public static boolean isSquaredInputs = true;
         public static double tippingTolerance = 5;//This probably needs to be less
     }
-    public ClawAlignToServo clawAlignToServo;
+    public static ClawAlignToServo clawAlignToServo;
     public static class ClawAlignToServo {//14361
-        public static String backL = "bL";
-        public static String backR = "bR";
-        public static String poleR = "pR";
-        public static String poleL = "pL";
+        public final static String backL = "bL",
+            backR = "bR",
+            poleR = "pR",
+            poleL = "pL";
     }
     public static class Gamepad {
         public static double squareInput(double value) {
@@ -97,46 +107,61 @@ public class NebulaConstants {
             } else return value;
         }
     }
-    public Shooter shooter; //Most Likely Needed to View on Dashboard
+    public static Shooter shooter;
     public static class Shooter {
-        public static String shooterMName = "shooterM";
-        public static String shooterM2Name = "shooterM2";
-        public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse;
-        public static NebulaMotor.Direction shooter2Direction = NebulaMotor.Direction.Reverse;
+        public final static String shooterMName = "shooterM",
+            shooterM2Name = "shooterM2";
+        public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse,
+            shooter2Direction = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
-
+        public static NebulaMotor.IdleMode shooterIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA shooterType = Motor.GoBILDA.RPM_312;
         public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int shooterTolerance = 1;
         public static double ks=0,
             ka=0,
             kv=0;
         public static double maxVelocity = 0,
-            maxAcceleration = 0;
+            maxAcceleration = 0,
+            MIN_POSITION = -400,
+            MAX_POSITION = 400;
     }
-    public Hood hood; //Most Likely Needed to View on Dashboard
+    public static Hood hood;
     public static class Hood {
-        public static String shooterMName = "shooterM";
-        public static String shooterM2Name = "shooterM2";
-        public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse;
-        public static NebulaMotor.Direction shooter2Direction = NebulaMotor.Direction.Reverse;
+        public final static String shooterMName = "shooterM",
+            shooterM2Name = "shooterM2";
+        public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse,
+            shooter2Direction = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
 
+        public static NebulaMotor.IdleMode hoodIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA hoodType = Motor.GoBILDA.RPM_312;
         public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int shooterTolerance = 1;
         public static double ks=0,
             ka=0,
             kv=0;
         public static double maxVelocity = 0,
-            maxAcceleration = 0;
+            maxAcceleration = 0,
+            MIN_POSITION = 20,
+            MAX_POSITION = 200;
     }
-    public Intake intake; //Most Likely Needed to View on Dashboard
+    public static ServoHood servoHood;
+    public static class ServoHood {
+        public final static String hoodSName = "hood";  //EH3
+        public final static NebulaServo.Direction hoodDirection = NebulaServo.Direction.Reverse;
+        public static double minAngle = 0, maxAngle = 360;
+    }
+    public static Intake intake;
     public static class Intake {
-        public static String intakeMName = "intakeM";
-        public static String intakeM2Name = "intakeM2";
-        public static NebulaMotor.Direction intakeDirection = NebulaMotor.Direction.Reverse;
-        public static NebulaMotor.Direction intake2Direction = NebulaMotor.Direction.Reverse;
+        public final static String intakeMName = "intakeM",
+            intakeM2Name = "intakeM2";//TODO: Remove 2nd Intake Motor
+        public static NebulaMotor.Direction intakeDirection = NebulaMotor.Direction.Reverse,
+            intake2Direction = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
 
+        public static NebulaMotor.IdleMode intakeIdleMode = NebulaMotor.IdleMode.Brake;
+        public final static Motor.GoBILDA intakeType = Motor.GoBILDA.RPM_312;
         public static PIDFCoefficients intakePID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int intakeTolerance = 1;
         public static double ks=0,

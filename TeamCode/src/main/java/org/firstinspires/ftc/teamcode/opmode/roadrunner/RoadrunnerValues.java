@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.roadrunner;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+@Config
 
 public class RoadrunnerValues {
     public static AutomaticFeedforwardTuner automaticFeedforwardTuner;
@@ -79,5 +81,5 @@ public class RoadrunnerValues {
     }
 
 
-
+//    public static RoadrunnerValues roadrunner;
 }
