@@ -30,7 +30,7 @@ public class shooterHood extends SubsystemBase {
     Position position = Position.IN;
     Telemetry telemetry;
     public final NebulaMotor motor;
-    private String posWriter = "NONE";
+//    private String posWriter = "NONE";
 
     public shooterHood(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Hood.shooterMName,
@@ -45,9 +45,13 @@ public class shooterHood extends SubsystemBase {
             motor.getPosition());
         controller.setTolerance(NebulaConstants.Hood.shooterTolerance);
         this.telemetry = tl;
-        setSetPoint(Position.IN);
+        setSetPointCommand(Position.IN);
     }
-
+//    ServoController;
+//    ControlSystem;
+//    ControlHubPasswordManager;//Reset password
+//    ControlHubDeviceNameManager;
+//    ControllerConfiguration;
     @Override
     public void periodic() {
         double output = (controller.calculate(motor.getPosition()));
@@ -56,31 +60,30 @@ public class shooterHood extends SubsystemBase {
 
         motor.setPower(output);
     }
-    public void setSetPoint(Position pos) {
-//        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
-//            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
-//            return;
-//        }
-        controller.setSetPoint(pos.pos);
-        position = pos;
-    }
+//    public void setSetPoint(Position pos) {
+////        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
+////            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
+////            motor.stopMotor();
+////            return;
+////        }
+//        controller.setSetPoint(pos.pos);
+//        position = pos;
+//    }
     public void setSetPoint(double setPoint) {
-//        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
-//            setPoint<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
-//            return;
-//        }
+        if(setPoint>NebulaConstants.Hood.MAX_POSITION ||
+            setPoint<NebulaConstants.Hood.MIN_POSITION){
+            motor.stop();
+            return;
+        }
+//        posWriter = String.valueOf(setPoint);
         controller.setSetPoint(setPoint);
     }
 
     //TODO: Test!
     public Command setSetPointCommand(double setPoint) {
-        posWriter = String.valueOf(setPoint);
         return new InstantCommand(()->{setSetPoint(setPoint);});
     }
     public Command setSetPointCommand(Position pos) {
-        posWriter = pos.name();
 //        return new InstantCommand(()->{setSetPoint(pos);});
         return setSetPointCommand(pos.pos);
     }
