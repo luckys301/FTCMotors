@@ -11,7 +11,12 @@ ToDo List:
     Intake - SetPower and at least pid Both Options
     Look at ProfiledPIDController
     Look at Faster Gradle Times - Document for future easy access
-
+    Type in the Type of Motor in Nebula Constants like the RPM of the Motor
+    Servo Shooter Hood
+    Add the accumulated time of the total CycleTracker
+    To Think How should I do setSetPoint
+    Driver Override button for the minimum and maximum positions
+    Add Static for Nebula Constants
 
 Documentation: https://docs.ftclib.org/ftclib/
 Turning in a Certain Direction //Check if this works for other angles
