@@ -79,18 +79,18 @@ public class Intake extends SubsystemBase {
     //    ang_velocity_right = rpm_right * rpm_to_radians;
     //    ang_velocity_right_deg = ang_velocity_right * rad_to_deg;
 
-    public void setSetPoint(IntakeRPM speed) {
-//        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
-//            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
-//            return;
+//    public void setSetPoint(IntakeRPM speed) {
+////        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
+////            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
+////            motor.stopMotor();
+////            return;
+////        }
+//        controller.setSetPoint(speed.speed);
+//        shooterRPM = speed;
+//        if(speed.reset){
+//            NebulaConstants.Intake.intakeTime.reset();
 //        }
-        controller.setSetPoint(speed.speed);
-        shooterRPM = speed;
-        if(speed.reset){
-            NebulaConstants.Intake.intakeTime.reset();
-        }
-    }
+//    }
     public void setSetPoint(double setPoint, boolean reset) {
 //        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
 //            setPoint<NebulaConstants.Pivot.MIN_POSITION){
@@ -108,7 +108,8 @@ public class Intake extends SubsystemBase {
         return new InstantCommand(()->{setSetPoint(setPoint, reset);});
     }
     public Command setSetPointCommand(IntakeRPM pos) {
-        return new InstantCommand(()->{setSetPoint(pos);});
+        return setSetPointCommand(pos.speed, pos.reset);
+//        return new InstantCommand(()->{setSetPoint(pos);});
     }
 
     public void encoderReset() {//Motors wouldn't need reset
