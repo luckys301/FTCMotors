@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class FollowerPIDTuner extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, true);
 
         Pose2d startPose = new Pose2d(-RoadrunnerValues.FollowerPIDTuner.DISTANCE / 2, -RoadrunnerValues.FollowerPIDTuner.DISTANCE / 2, 0);
 

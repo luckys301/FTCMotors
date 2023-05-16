@@ -24,7 +24,7 @@ public class StrafeTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, true);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .strafeRight(RoadrunnerValues.StrafeTest.DISTANCE)

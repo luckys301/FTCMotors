@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 public class BackAndForth extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, true);
 
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
                 .forward(RoadrunnerValues.BackAndForth.DISTANCE)

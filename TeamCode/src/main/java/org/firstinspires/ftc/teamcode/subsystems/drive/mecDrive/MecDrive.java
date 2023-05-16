@@ -75,7 +75,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
     private List<Integer> lastEncVels = new ArrayList<>();
     private double voltage;
 
-    public MecDrive(HardwareMap hardwareMap, Telemetry telemetry, boolean deprecated, ) {
+    public MecDrive(HardwareMap hM, Telemetry telemetry, boolean isEnabled) {
         super(MecDriveConstants.kV,
             MecDriveConstants.kA,
             MecDriveConstants.kStatic,
@@ -85,23 +85,23 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
-        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
+        LynxModuleUtil.ensureMinimumFirmwareVersion(hM);
 
-        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+        batteryVoltageSensor = hM.voltageSensor.iterator().next();
 
-        for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
+        for (LynxModule module : hM.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        imu = hardwareMap.get(IMU.class, "imu");
+        imu = hM.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 MecDriveConstants.LOGO_FACING_DIR, MecDriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = hM.get(DcMotorEx.class, "leftFront");
+        leftRear = hM.get(DcMotorEx.class, "leftRear");
+        rightRear = hM.get(DcMotorEx.class, "rightRear");
+        rightFront = hM.get(DcMotorEx.class, "rightFront");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

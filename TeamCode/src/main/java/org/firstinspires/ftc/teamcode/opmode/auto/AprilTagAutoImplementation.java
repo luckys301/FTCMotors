@@ -20,7 +20,7 @@ public class AprilTagAutoImplementation extends MatchOpMode {
 
     @Override
     public void robotInit() {
-        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
         mecDriveSubsystem.init();
         tagVision = new TagVision(hardwareMap,  telemetry);
         while (!isStarted() && !isStopRequested())

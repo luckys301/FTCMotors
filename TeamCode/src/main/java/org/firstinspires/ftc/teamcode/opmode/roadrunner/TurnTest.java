@@ -17,7 +17,7 @@ public class TurnTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, true);
 
         waitForStart();
 

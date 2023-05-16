@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.DisplacementCommand;
 import org.firstinspires.ftc.teamcode.commands.drive.trajectory.sequence.TrajectorySequenceContainerFollowCommand;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.pipelines.aprilTagPipeline.TagVision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Back;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Forward;
@@ -19,8 +20,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.container.StrafeRight;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceConstraints;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.TrajectorySequenceContainer;
 import org.firstinspires.ftc.teamcode.trajectorysequence.container.Turn;
-import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
+import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 //438247
 
 //@Autonomous
@@ -237,7 +238,7 @@ public class ComplexAutoImplementation extends MatchOpMode {
 
     @Override
     public void robotInit() {
-        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, false), telemetry, hardwareMap);
+        mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
         mecDriveSubsystem.init();
         tagVision = new TagVision(hardwareMap, telemetry);
         while (!isStarted() && !isStopRequested()) {

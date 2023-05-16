@@ -73,7 +73,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MecDrive drive = new MecDrive(hardwareMap, telemetry, false);
+        MecDrive drive = new MecDrive(hardwareMap, telemetry, true);
 
         RoadrunnerValues.DriveVelocityPIDTuner.Mode mode = RoadrunnerValues.DriveVelocityPIDTuner.Mode.TUNING_MODE;
 
