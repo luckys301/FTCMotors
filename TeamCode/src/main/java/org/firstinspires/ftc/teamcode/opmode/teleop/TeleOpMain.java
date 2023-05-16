@@ -34,7 +34,9 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void robotInit() {
-        driverGamepad = new GamepadEx(gamepad1);
+          driverGamepad = new GamepadEx(gamepad1);
+//          driverGamepad.gamepad.type = Gamepad.Type.SONY_PS4;
+//          driverGamepad.gamepad.runRumbleEffect(Gamepad.RumbleEffect.Step);
         operatorGamepad = new GamepadEx(gamepad2);
 
         pivot = new Pivot(telemetry, hardwareMap);
