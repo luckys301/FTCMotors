@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
+package org.firstinspires.ftc.teamcode.opmode.teleop.misc.motor;
 
 
 import com.arcrobotics.ftclib.hardware.motors.Motor;

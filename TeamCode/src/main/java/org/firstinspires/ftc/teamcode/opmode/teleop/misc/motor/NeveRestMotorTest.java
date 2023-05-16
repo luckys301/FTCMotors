@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
+package org.firstinspires.ftc.teamcode.opmode.teleop.misc.motor;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;

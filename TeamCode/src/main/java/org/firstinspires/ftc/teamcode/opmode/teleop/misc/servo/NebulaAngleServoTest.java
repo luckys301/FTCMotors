@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
+package org.firstinspires.ftc.teamcode.opmode.teleop.misc.servo;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -30,7 +30,7 @@ public class NebulaAngleServoTest extends OpMode {
 
         angle = Math.min(Math.max(angle, 0), 360);
         servo.turnToAngle(angle);
-        telemetry.addData("ServoTest Pos: ", servo.getAngle());
+        telemetry.addData("NormalServoTest Pos: ", servo.getAngle());
         telemetry.addData("Desired Pos: ", angle);
         telemetry.update();
 

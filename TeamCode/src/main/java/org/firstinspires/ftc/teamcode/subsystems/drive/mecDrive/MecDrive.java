@@ -75,7 +75,7 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive {
     private List<Integer> lastEncVels = new ArrayList<>();
     private double voltage;
 
-    public MecDrive(HardwareMap hardwareMap, Telemetry telemetry, boolean deprecated) {
+    public MecDrive(HardwareMap hardwareMap, Telemetry telemetry, boolean deprecated, ) {
         super(MecDriveConstants.kV,
             MecDriveConstants.kA,
             MecDriveConstants.kStatic,

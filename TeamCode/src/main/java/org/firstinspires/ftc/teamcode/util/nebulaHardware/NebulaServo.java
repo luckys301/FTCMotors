@@ -46,6 +46,7 @@ public class NebulaServo {// Normal Servo
     public void close() {//How does it disable, Restart Teleop or robot
         servo.disable();
     }
+
     @Deprecated
     public void rotateByAngle(double angle) {
         servo.rotateByAngle(angle, AngleUnit.DEGREES);
@@ -53,6 +54,6 @@ public class NebulaServo {// Normal Servo
     @Deprecated
     public void turnToAngle(double angle) {
         servo.turnToAngle(angle, AngleUnit.DEGREES);
-        servo.turnToAngle(angle);
+//        servo.turnToAngle(angle);
     }
 }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
+package org.firstinspires.ftc.teamcode.opmode.teleop.misc.motor;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 //@Disabled
 @TeleOp
-public class ServoTest extends OpMode {
+public class NormalServoTest extends OpMode {
     com.qualcomm.robotcore.hardware.Servo servo;
     double pos = 0.3;
     @Override
@@ -24,7 +24,7 @@ public class ServoTest extends OpMode {
 
         pos = Math.min(Math.max(pos, 0), 1);
         servo.setPosition(pos);
-        telemetry.addData("ServoTest Pos: ", servo.getPosition());
+        telemetry.addData("NormalServoTest Pos: ", servo.getPosition());
         telemetry.addData("Desired Pos: ", pos);
         telemetry.update();
 

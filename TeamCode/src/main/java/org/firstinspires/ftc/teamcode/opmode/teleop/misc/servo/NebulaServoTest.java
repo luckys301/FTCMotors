@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.teleop.misc;
+package org.firstinspires.ftc.teamcode.opmode.teleop.misc.servo;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -26,7 +26,7 @@ public class NebulaServoTest extends OpMode {
 
         pos = Math.min(Math.max(pos, 0), 1);
         servo.setPosition(pos);
-        telemetry.addData("ServoTest Pos: ", servo.getPosition());
+        telemetry.addData("NormalServoTest Pos: ", servo.getPosition());
         telemetry.addData("Desired Pos: ", pos);
         telemetry.update();
 
