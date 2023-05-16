@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -41,10 +40,10 @@ public class Intake extends SubsystemBase {
 
     public Intake(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Intake.intakeMName,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Intake.intakeDirection,
+            NebulaConstants.Intake.intakeType, NebulaConstants.Intake.intakeDirection,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motor2 = new NebulaMotor(hw, NebulaConstants.Intake.intakeM2Name,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Intake.intake2Direction,
+            NebulaConstants.Intake.intakeType, NebulaConstants.Intake.intake2Direction,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motorGroup = new NebulaMotorGroup(motor, motor2);
 //        motor.setDistancePerPulse(1);

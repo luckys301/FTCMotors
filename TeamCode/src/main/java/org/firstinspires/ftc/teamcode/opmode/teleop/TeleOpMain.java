@@ -39,11 +39,11 @@ public class TeleOpMain extends MatchOpMode {
 //          driverGamepad.gamepad.runRumbleEffect(Gamepad.RumbleEffect.Step);
         operatorGamepad = new GamepadEx(gamepad2);
 
-        pivot = new Pivot(telemetry, hardwareMap);
-        claw = new Claw(telemetry, hardwareMap);
+        pivot = new Pivot(telemetry, hardwareMap, true);
+        claw = new Claw(telemetry, hardwareMap, true);
         mecDriveSubsystem = new MecDriveSubsystem(new MecDrive(hardwareMap, telemetry, true), telemetry, hardwareMap);
         mecDriveSubsystem.init();
-        slide = new Slide(telemetry, hardwareMap);
+        slide = new Slide(telemetry, hardwareMap, true);
 //        pivot.resetOffset();
         pivot.moveInitializationPosition();
     }

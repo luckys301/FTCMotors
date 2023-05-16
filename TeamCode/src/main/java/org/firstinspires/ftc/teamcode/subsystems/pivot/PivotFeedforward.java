@@ -23,8 +23,8 @@ public class PivotFeedforward extends Pivot {
     public TrapezoidProfile trapezoidProfile;
     public Telemetry telemetry;
 
-    public PivotFeedforward(Telemetry tl, HardwareMap hw) {
-        super(tl, hw);
+    public PivotFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        super(tl, hw, isEnabled);
 
         armFeedforward = new ArmFeedforward(
             NebulaConstants.Pivot.ks,
@@ -54,9 +54,9 @@ public class PivotFeedforward extends Pivot {
             telemetry.addData("CLaw Motor Output:", output);
             telemetry.addData("Arm Velocity:", armMotor.getVelocity());
 
-            armMotor.set(output);
+            armMotor.setPower(output);
         }
-        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
+        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getPosition());
         Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", pivotPos);
 
     }

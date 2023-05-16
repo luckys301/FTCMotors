@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Potentiometer extends SubsystemBase {
+    //FRC: return (m_analogInput.getAverageVoltage() / RobotController.getVoltage5V()) * m_fullRange
+    //        + m_offset;
     private final Telemetry telemetry;
     private final AnalogInput potentiometer;
     private AnalogInputController controller;

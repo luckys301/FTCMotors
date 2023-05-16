@@ -5,16 +5,16 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
+import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
 @Config
 public class Slide extends SubsystemBase {
     public final Telemetry telemetry;
-    public final MotorEx slideM1, slideM2;
+    public final NebulaMotor slideM1, slideM2;
 
     public PIDFController slideController;
     public boolean slideAutomatic;
@@ -44,13 +44,25 @@ public class Slide extends SubsystemBase {
     LiftPos liftPos;
 
 
-    public Slide( Telemetry tl, HardwareMap hw) {
+    public Slide( Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        slideM1 = new NebulaMotor(hw,
+            NebulaConstants.Slide.slideMName1,
+            NebulaConstants.Slide.slideType,
+            NebulaConstants.Slide.slideDirection1,
+            NebulaConstants.Slide.slideIdleMode,
+            isEnabled);
+        slideM2 = new NebulaMotor(hw,
+            NebulaConstants.Slide.slideMName2,
+            NebulaConstants.Slide.slideType,
+            NebulaConstants.Slide.slideDirection2,
+            NebulaConstants.Slide.slideIdleMode,
+            isEnabled);
 
-        slideM1 = new MotorEx(hw, NebulaConstants.Slide.slideMName1);
-        slideM2 = new MotorEx(hw, NebulaConstants.Slide.slideMName2);
+//        slideM1 = new MotorEx(hw, NebulaConstants.Slide.slideMName1);
+//        slideM2 = new MotorEx(hw, NebulaConstants.Slide.slideMName2);
 
-        slideM1.setDistancePerPulse(360 / CPR);
-        slideM2.setDistancePerPulse(360 / CPR);
+        slideM1.setDistancePerPulse(NebulaConstants.Slide.slideDistancePerPulse);
+        slideM2.setDistancePerPulse(NebulaConstants.Slide.slideDistancePerPulse);
 
         slideController = new PIDFController(NebulaConstants.Slide.slidePID.p,
             NebulaConstants.Slide.slidePID.i,
@@ -86,7 +98,7 @@ public class Slide extends SubsystemBase {
         }
         telemetry.addLine("Slide - ");
         telemetry.addData("     Lift Motor Output:", output);
-        telemetry.addData("     Lift1 Encoder: ", slideM1.getCurrentPosition());
+        telemetry.addData("     Lift1 Encoder: ", slideM1.getPosition());
         telemetry.addData("     List Pos:", getSetPoint());
     }
 
@@ -96,13 +108,13 @@ public class Slide extends SubsystemBase {
 
 
     public void setPower(double power) {
-        slideM1.set(power);
-        slideM2.set(-power);//Instead of putting -power, maybe reverse the motor
+        slideM1.setPower(power);
+        slideM2.setPower(-power);//Instead of putting -power, maybe reverse the motor
     }
 
     public void stopSlide() {
-        slideM1.stopMotor();
-        slideM2.stopMotor();
+        slideM1.stop();
+        slideM2.stop();
         slideController.setSetPoint(getEncoderDistance());
 
         slideAutomatic = false;
@@ -146,7 +158,7 @@ public class Slide extends SubsystemBase {
     public void setSetPoint(LiftPos pos) {//Might want to make this function go into the 2 variable one
         if(pos.liftPosition>NebulaConstants.Slide.MAX_POSITION ||
             pos.liftPosition<NebulaConstants.Slide.MIN_POSITION){
-            slideM1.stopMotor();
+            slideM1.stop();
             return;
         }
         slideController.setSetPoint(pos.liftPosition);
@@ -156,7 +168,7 @@ public class Slide extends SubsystemBase {
     public void setSetPoint(double setPoint, boolean lowBool) {
         if(setPoint>NebulaConstants.Slide.MAX_POSITION ||
             setPoint<NebulaConstants.Slide.MIN_POSITION){
-            slideM1.stopMotor();
+            slideM1.stop();
             return;
         }
         slideController.setSetPoint(setPoint);

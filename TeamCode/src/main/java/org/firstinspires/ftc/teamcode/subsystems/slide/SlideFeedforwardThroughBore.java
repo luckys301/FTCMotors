@@ -20,8 +20,8 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
 //    TrapezoidProfile.Constraints constraints;
 //    TrapezoidProfile trapezoidProfile;
 //    Telemetry telemetry;
-    public SlideFeedforwardThroughBore(Telemetry tl, HardwareMap hw) {
-        super(tl, hw);
+    public SlideFeedforwardThroughBore(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        super(tl, hw, isEnabled);
         slideEncoder = new Encoder(
             hw.get(DcMotorEx.class, NebulaConstants.Slide.slideMName1));
         slideEncoder.getCurrentPosition();
@@ -44,7 +44,7 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
         }
         telemetry.addLine("Slide - ");
         telemetry.addData("     Lift Motor Output:", output);
-        telemetry.addData("     Lift1 Encoder: ", slideM1.getCurrentPosition());
+        telemetry.addData("     Lift1 Encoder: ", slideM1.getPosition());
         telemetry.addData("     List Pos:", getSetPoint());
 
     }

@@ -5,11 +5,11 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.ServoEx;
-import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
+import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
 
 @Config
 public class shooterHoodServo extends SubsystemBase
@@ -25,11 +25,16 @@ public class shooterHoodServo extends SubsystemBase
         }
     }
     Telemetry telemetry;
-    private final ServoEx clawS1;     //Claw
+    private final NebulaServo clawS1;     //Claw
 
-    public shooterHoodServo(Telemetry tl, HardwareMap hw) {
-        this.clawS1 = new SimpleServo(hw, "clawS2", 0, 360);
-        this.clawS1.setPosition(ShooterPos.IN.shooterPos);  //Port 3
+    public shooterHoodServo(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        clawS1 = new NebulaServo(hw,
+            NebulaConstants.ServoHood.hoodSName,
+            NebulaConstants.ServoHood.hoodDirection,
+            NebulaConstants.ServoHood.minAngle,
+            NebulaConstants.ServoHood.maxAngle,
+            isEnabled);
+        clawS1.setPosition(ShooterPos.IN.shooterPos);  //Port 3
 
         this.telemetry = tl;
     }

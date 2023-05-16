@@ -17,8 +17,8 @@ public class SlideFeedforward extends Slide {
     TrapezoidProfile.Constraints constraints;
     TrapezoidProfile trapezoidProfile;
     Telemetry telemetry;
-    public SlideFeedforward(Telemetry tl, HardwareMap hw) {
-        super(tl, hw);
+    public SlideFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        super(tl, hw, isEnabled);
         slideFeedforward = new ElevatorFeedforward(
             NebulaConstants.Slide.ks,
             NebulaConstants.Slide.kcos,
@@ -43,7 +43,7 @@ public class SlideFeedforward extends Slide {
         }
         telemetry.addLine("Slide - ");
         telemetry.addData("     Lift Motor Output:", output);
-        telemetry.addData("     Lift1 Encoder: ", slideM1.getCurrentPosition());
+        telemetry.addData("     Lift1 Encoder: ", slideM1.getPosition());
         telemetry.addData("     List Pos:", getSetPoint());
     }
 }

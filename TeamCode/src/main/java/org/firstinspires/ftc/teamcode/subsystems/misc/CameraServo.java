@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.subsystems.misc;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.ServoEx;
-import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
+import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
 
 @Config
 public class CameraServo extends SubsystemBase {
@@ -16,11 +16,13 @@ public class CameraServo extends SubsystemBase {
                         blueLeft = 0.98;
 
     Telemetry telemetry;
-    private final ServoEx camServo;
+    private final NebulaServo camServo;
 
-    public CameraServo(HardwareMap hw, Telemetry tl) {
-
-        this.camServo = new SimpleServo(hw, "camServo", 0, 360);
+    public CameraServo(HardwareMap hM, Telemetry tl) {
+        camServo = new NebulaServo(hM, NebulaConstants.CamServo.camSName,
+            NebulaConstants.CamServo.camDirection,
+            NebulaConstants.CamServo.minAngle,
+            NebulaConstants.CamServo.maxAngle,true);
         this.camServo.setPosition(0.5);  //Port
         this.telemetry = tl;
     }

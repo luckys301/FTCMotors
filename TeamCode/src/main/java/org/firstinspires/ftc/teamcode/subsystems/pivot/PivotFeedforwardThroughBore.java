@@ -23,8 +23,8 @@ public class PivotFeedforwardThroughBore extends PivotFeedforward {
 //    TrapezoidProfile.Constraints constraints;
 //    TrapezoidProfile trapezoidProfile;
 //    Telemetry telemetry;
-    public PivotFeedforwardThroughBore(Telemetry tl, HardwareMap hw) {
-        super(tl, hw);
+    public PivotFeedforwardThroughBore(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        super(tl, hw, isEnabled);
         armEncoder = new Encoder(
             hw.get(DcMotorEx.class, NebulaConstants.Pivot.pivotMName));
         armEncoder.getCurrentPosition();
@@ -43,9 +43,9 @@ public class PivotFeedforwardThroughBore extends PivotFeedforward {
             start = trapezoidProfile.calculate(0.02);
             double output = (controller.calculate(getEncoderDistance()) +
                 (armFeedforward.calculate(start.position, start.velocity)));
-            armMotor.set(output);//TODO: Probably shouldn't be like this
+            armMotor.setPower(output);//TODO: Probably shouldn't be like this
         }
-        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
+        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getPosition());
         Util.logger(this, telemetry, Level.INFO, "Arm Pos: ", pivotPos);
     }
 

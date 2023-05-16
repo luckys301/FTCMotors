@@ -6,12 +6,12 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.misc.Util;
+import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
 import java.util.logging.Level;
 
@@ -62,14 +62,17 @@ public class Pivot extends SubsystemBase {
     PivotPos pivotPos = PivotPos.RESET;
 
 
-
     public final static double POWER = 0.93;
     public double encoderOffset = 0;
     Telemetry telemetry;
-    public final MotorEx armMotor;
+    public final NebulaMotor armMotor;
 
-    public Pivot(Telemetry tl, HardwareMap hw) {
-        armMotor = new MotorEx(hw, NebulaConstants.Pivot.pivotMName);
+    public Pivot(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+        armMotor = new NebulaMotor(hw, NebulaConstants.Pivot.pivotMName,
+            NebulaConstants.Pivot.pivotType,
+            NebulaConstants.Pivot.pivotDirection,
+            NebulaConstants.Pivot.pivotIdleMode,
+            isEnabled);
         armMotor.setDistancePerPulse(1);
         controller = new PIDFController(NebulaConstants.Pivot.pivotPID.p,
             NebulaConstants.Pivot.pivotPID.i,
@@ -89,9 +92,9 @@ public class Pivot extends SubsystemBase {
             double output = (controller.calculate(getEncoderDistance()));
             telemetry.addData("CLaw Motor Output:", output);
 
-            armMotor.set(output * POWER);
+            armMotor.setPower(output * POWER);
         }
-        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getCurrentPosition());
+        Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getPosition());
         Util.logger(this, telemetry, Level.INFO, "Arm Set Point: ", getSetPoint());
 
     }
@@ -153,7 +156,7 @@ public class Pivot extends SubsystemBase {
     public void setSetPoint(PivotPos pos) {
         if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
             pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-            armMotor.stopMotor();
+            armMotor.stop();
             return;
         }
         controller.setSetPoint(pos.pivotPosition + encoderOffset);
@@ -163,7 +166,7 @@ public class Pivot extends SubsystemBase {
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
         if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
             setPoint<NebulaConstants.Pivot.MIN_POSITION){
-            armMotor.stopMotor();
+            armMotor.stop();
             return;
         }
         controller.setSetPoint(setPoint + encoderOffset);
