@@ -17,7 +17,7 @@ public class RoadrunnerValues {
     public static DriveVelocityPIDTuner driveVelocityPIDTuner;
     public static class DriveVelocityPIDTuner {
         public static double DISTANCE = 72;
-        enum Mode {
+        public enum Mode {
             DRIVER_MODE,
             TUNING_MODE
         }
