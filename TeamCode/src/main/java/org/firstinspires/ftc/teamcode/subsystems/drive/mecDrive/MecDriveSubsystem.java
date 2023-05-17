@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequenceBuilder;
 
 import java.util.List;
 

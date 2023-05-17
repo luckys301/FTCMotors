@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.trajectorysequence.container;
+package org.firstinspires.ftc.teamcode.util.trajectorysequence.container;
 
 public class SplineToConstantHeading extends PathSegment {
     public volatile double x, y, endHeading;

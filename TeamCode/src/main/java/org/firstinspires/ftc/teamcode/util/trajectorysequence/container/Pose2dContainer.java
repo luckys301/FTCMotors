@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.trajectorysequence.container;
+package org.firstinspires.ftc.teamcode.util.trajectorysequence.container;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 

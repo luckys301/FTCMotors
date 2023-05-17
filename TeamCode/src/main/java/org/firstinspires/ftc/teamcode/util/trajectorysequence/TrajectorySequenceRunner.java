@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.trajectorysequence;
+package org.firstinspires.ftc.teamcode.util.trajectorysequence;
 
 import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.NOMINAL_VOLTAGE;
 
@@ -20,12 +20,12 @@ import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
-import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSegment;
 import org.firstinspires.ftc.teamcode.util.misc.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.misc.LogFiles;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.SequenceSegment;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.TrajectorySegment;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.TurnSegment;
+import org.firstinspires.ftc.teamcode.util.trajectorysequence.sequencesegment.WaitSegment;
 
 import java.util.ArrayList;
 import java.util.Collections;
