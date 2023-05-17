@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -18,13 +17,12 @@ import org.firstinspires.ftc.teamcode.util.CycleTracker;
 import org.firstinspires.ftc.teamcode.util.teleop.GamepadTrigger;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
-@Config
 @TeleOp
 public class TeleOpMain extends MatchOpMode {
     // Gamepad
     private GamepadEx driverGamepad;
     private GamepadEx operatorGamepad;
-    private final CycleTracker cycleTracker = new CycleTracker();
+    private final CycleTracker cycleTracker = new CycleTracker(telemetry);
 
     // Subsystems
     private Pivot pivot;
@@ -92,14 +90,7 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void matchLoop() {
-        telemetry.addData("Mean", cycleTracker.getMean());
-        telemetry.addData("Cycle", cycleTracker.getCycle());
-
-        telemetry.addData("high", cycleTracker.getHigh());
-        telemetry.addData("low", cycleTracker.getLow());
-        telemetry.addData("fast", cycleTracker.getFastest());
-        telemetry.addData("slow", cycleTracker.getSlowest());
-
+        cycleTracker.cyclePeriodic();
     }
     @Override
     public void disabledPeriodic() { }
