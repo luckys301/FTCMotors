@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems.misc;
 
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
-
-@Config
-public class TestServo extends SubsystemBase {
+@Deprecated
+public class ServoImplementation extends SubsystemBase {
     public enum positions{
         CLOSE_POS_S1(2),
         AUTO_CLOSE_S1(56),
@@ -32,7 +30,7 @@ public class TestServo extends SubsystemBase {
     Telemetry telemetry;
     private final NebulaServo clawS1;     //Claw
 
-    public TestServo(Telemetry tl, HardwareMap hw) {
+    public ServoImplementation(Telemetry tl, HardwareMap hw) {
         this.clawS1 = new NebulaServo(hw,
             "clawS2",
             NebulaServo.Direction.Forward,
