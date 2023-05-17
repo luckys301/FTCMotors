@@ -6,9 +6,7 @@ package org.firstinspires.ftc.teamcode.util.nebulaHardware;
  *
  */
 public class NebulaMotorGroup {
-
     private final NebulaMotor[] group;
-//    private boolean isInverted;
 
     /**
      * Create a new NebulaMotorGroup with the provided Motors.
@@ -29,15 +27,6 @@ public class NebulaMotorGroup {
         for (NebulaMotor x : group) {
 //            x.setPower(x.getInverted() ? -speed : speed);
             x.setPower(speed);
-        }
-    }
-
-    /**
-     * Disables all the motor devices.
-     */
-    public void close() {
-        for (NebulaMotor x : group) {
-            x.disable();
         }
     }
 
@@ -63,6 +52,9 @@ public class NebulaMotorGroup {
             x.resetEncoder();
         }
     }
+    /**
+     * Disables all the motor devices.
+     */
     public void disable(){
         for (NebulaMotor x : group) {
             x.disable();

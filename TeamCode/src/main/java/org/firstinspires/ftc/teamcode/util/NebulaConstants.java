@@ -56,6 +56,7 @@ public class NebulaConstants {
         public static int slideTolerance = 10;
 //        public int slideDistancePerPulse = (COUNTS_PER_PULSE * GEAR_RATIO) / (GEAR_DIAMETER_INCHES * Math.PI);
 //        public int slideDistancePerPulse = (GEAR_DIAMETER_INCHES * Math.PI);
+        public static int slideDistancePerPulse = 1;
         public static NebulaMotor.IdleMode slideIdleMode = NebulaMotor.IdleMode.Brake;
         public final static Motor.GoBILDA slideType = Motor.GoBILDA.RPM_312;
         public static double ks=0,
@@ -170,6 +171,12 @@ public class NebulaConstants {
         public static double maxVelocity = 0,
             maxAcceleration = 0;
         public static ElapsedTime intakeTime = new ElapsedTime(0);
+    }
+    public static CamServo camServo;
+    public static class CamServo {
+        public final static String camSName = "cam";  //EH3
+        public final static NebulaServo.Direction camDirection = NebulaServo.Direction.Reverse;
+        public static double minAngle = 0, maxAngle = 360;
     }
 //From RobotAutoDriveByGyro_Linear.java
 //    // Calculate the COUNTS_PER_INCH for your specific drive train.

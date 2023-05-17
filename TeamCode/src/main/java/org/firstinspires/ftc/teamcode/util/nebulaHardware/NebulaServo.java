@@ -43,7 +43,7 @@ public class NebulaServo {// Normal Servo
         return servo.getAngle();
     }
 
-    public void close() {//How does it disable, Restart Teleop or robot
+    public void disable() {//How does it disable, Restart Teleop or robot
         servo.disable();
     }
 

@@ -20,7 +20,7 @@ public class NebulaMotor{
 //    }
     private final MotorEx motor;
     private final Boolean isEnabled;
-    private Direction direction;
+//    private final Direction direction;
 //    private final Motor.GoBILDA type;
 //    private int gearing;
 
@@ -29,7 +29,6 @@ public class NebulaMotor{
 //        this.type = type;
         this.isEnabled = isEnabled;
 //        this.gearing = gearing;
-        this.direction = direction;
 
         switch (direction){ //Initialization of Motor Direction
             case Forward:
@@ -67,7 +66,9 @@ public class NebulaMotor{
     public void stop() {
         motor.stopMotor();
     }
-
+    public void setDistancePerPulse(double distancePerPulse) {
+        motor.setDistancePerPulse(distancePerPulse);
+    }
     public void resetEncoder() {
         motor.resetEncoder();
     }
@@ -79,6 +80,9 @@ public class NebulaMotor{
             case Brake: motor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
                 break;
         }
+    }
+    public double getDistance() {
+        return motor.getDistance();
     }
 //    public boolean getInverted() {
 //        switch(direction){
@@ -119,4 +123,5 @@ public class NebulaMotor{
     public void disable(){
         motor.disable();
     }
+
 }
