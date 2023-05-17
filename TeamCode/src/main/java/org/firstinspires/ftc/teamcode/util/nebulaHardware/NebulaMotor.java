@@ -84,16 +84,15 @@ public class NebulaMotor{
     public double getDistance() {
         return motor.getDistance();
     }
-//    public boolean getInverted() {
-//        switch(direction){
-//            case Forward:
-//                return false;
-//                break;
-//            case Reverse:
-//                return true;
-//                break;
-//        }
-//    }
+    public boolean getInverted(Direction direction) {
+        switch(direction){
+            case Forward:
+                return false;
+            case Reverse:
+                return true;
+        }
+        return false;
+    }
 //    public void setDistancePerPulse(Encoder encoder){
 //        //TODO: What should the conversion be to get distance in mm
 //        //How would this change?
@@ -114,12 +113,14 @@ public class NebulaMotor{
 //        }
 //        motor.setDistancePerPulse(360/(gearing*type.getCPR()));
 //    }
-    public void setDistancePerPulse(int CPR){
-        //TODO: What should the conversion be to get distance in mm
-        //How would this change?
-        //The below was used previously
-        motor.setDistancePerPulse(360/CPR);
-    }
+
+
+//    public void setDistancePerPulse(int CPR){
+//        //TODO: What should the conversion be to get distance in mm
+//        //How would this change?
+//        //The below was used previously
+//        motor.setDistancePerPulse(360/CPR);
+//    }
     public void disable(){
         motor.disable();
     }

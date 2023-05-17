@@ -60,5 +60,10 @@ public class NebulaMotorGroup {
             x.disable();
         }
     }
+    public void setDistancePerPulse(double pulse) {
+        for (NebulaMotor x : group) {
+            x.setDistancePerPulse(pulse);
+        }
+    }
 
 }
