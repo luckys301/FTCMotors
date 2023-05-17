@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.roadrunner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -15,7 +14,6 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
  * This is a simple routine to test translational drive capabilities.
  */
 //@Disabled
-@Config
 @Autonomous(group = "drive")
 public class StraightTest extends LinearOpMode {
     @Override

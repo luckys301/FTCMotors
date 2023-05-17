@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.commands.drive.trajectory;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -12,7 +11,6 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsyste
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
-@Config
 public class SlowSplineCommand extends CommandBase {
 //    private static int num = 1;//BAD BAD BAD
 

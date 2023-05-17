@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.misc.motor;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -10,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.util.teleop.GamepadTrigger;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
-@Config
 @TeleOp
 public class NeveRestMotorTest extends MatchOpMode {
     // Gamepad

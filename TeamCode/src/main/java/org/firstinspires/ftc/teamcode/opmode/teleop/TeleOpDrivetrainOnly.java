@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.mec.DefaultMecDriveCommand;
-import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
-@Config
 @TeleOp(group = "Subsystem test")
 public class TeleOpDrivetrainOnly extends MatchOpMode {
 

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.roadrunner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.util.Angle;
@@ -35,7 +34,6 @@ import org.firstinspires.ftc.teamcode.util.odoPod.StandardTrackingWheelLocalizer
  * satisfactory result is produced.
  */
 //@Disabled
-@Config
 @Autonomous(group="drive")
 public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
 //    public static double ANGLE = 180; // deg

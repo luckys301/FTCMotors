@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.misc;
 
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -9,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
 
-@Config
 public class CameraServo extends SubsystemBase {
     //Claw Variables
     public final double blueRight = 0.4,

@@ -7,7 +7,6 @@ import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveC
 import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.rpmToVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.util.NanoClock;
@@ -36,7 +35,6 @@ import java.util.List;
  *      regression.
  */
 //@Disabled
-@Config
 @Autonomous(group = "drive")
 public class AutomaticFeedforwardTuner extends LinearOpMode {
     @Override

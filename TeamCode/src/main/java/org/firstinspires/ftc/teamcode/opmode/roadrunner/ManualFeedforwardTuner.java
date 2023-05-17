@@ -10,7 +10,6 @@ import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveC
 import static org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveConstants.kV;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
@@ -44,7 +43,6 @@ import java.util.Objects;
  * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
 //@Disabled
-@Config
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
 

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.commands.drive.trajectory;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
@@ -11,7 +10,6 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsyste
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.Trajectories;
 
-@Config
 public class SplinetoSplineCommand extends CommandBase{
 
     MecDriveSubsystem drive;

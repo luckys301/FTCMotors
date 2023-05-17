@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.pipelines.ffRectPipeline;
 
-import com.acmerobotics.dashboard.config.Config;
-
 import org.firstinspires.ftc.teamcode.util.misc.Util;
 
 import java.util.logging.Level;
 
-@Config
 public class TeamMarkerPipeline extends FFRectMarkerPipeline {
 
     public static double MIN = 105;
