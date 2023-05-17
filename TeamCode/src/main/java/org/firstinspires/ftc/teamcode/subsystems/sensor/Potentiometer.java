@@ -38,6 +38,9 @@ public class Potentiometer extends SubsystemBase {
         return solveForTheta(potentiometer.getVoltage());
 //        double angle = potentiometer.getVoltage()*81.8;
 //        return Range.scale(potentiometer.getVoltage(), 0, potentiometer.getMaxVoltage(), 0, 270);
+
+        //GetAverageVoltage() * potentiometerRange / (upperVoltageLimit - lowerVoltageLimit)) - voltageOffset;//From Botbusters 4635
+
     }
 
     public String getDeviceType() {return "Color Sensor";}
