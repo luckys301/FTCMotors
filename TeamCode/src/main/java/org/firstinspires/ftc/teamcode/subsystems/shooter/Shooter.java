@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -36,10 +35,10 @@ public class Shooter extends SubsystemBase {
 
     public Shooter(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Shooter.shooterMName,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Shooter.shooterDirection,
+            NebulaConstants.Shooter.shooterType, NebulaConstants.Shooter.shooterDirection,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motor2 = new NebulaMotor(hw, NebulaConstants.Shooter.shooterM2Name,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Shooter.shooter2Direction,
+            NebulaConstants.Shooter.shooterType, NebulaConstants.Shooter.shooter2Direction,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motorGroup = new NebulaMotorGroup(motor, motor2);
 //        motor.setDistancePerPulse(1);

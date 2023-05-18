@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -28,7 +27,7 @@ public class NebulaConstants {
         public static NebulaMotor.Direction pivotDirection = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
         public static NebulaMotor.IdleMode pivotIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA pivotType = Motor.GoBILDA.RPM_312;
+        public final static NebulaMotor.MotorType pivotType = NebulaMotor.MotorType.RPM_312;
         public static PIDFCoefficients pivotPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int pivotTolerance = 10;
         public static double ks=0,
@@ -58,7 +57,7 @@ public class NebulaConstants {
 //        public int slideDistancePerPulse = (GEAR_DIAMETER_INCHES * Math.PI);
         public static int slideDistancePerPulse = 1;
         public static NebulaMotor.IdleMode slideIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA slideType = Motor.GoBILDA.RPM_312;
+        public final static NebulaMotor.MotorType slideType = NebulaMotor.MotorType.RPM_312;
         public static double ks=0,
             kcos=0,
             ka=0,
@@ -79,7 +78,7 @@ public class NebulaConstants {
             rightRearDir = NebulaMotor.Direction.Forward,
             rightFrontDir = NebulaMotor.Direction.Forward;
         public static NebulaMotor.IdleMode driveIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA driveType = Motor.GoBILDA.RPM_435;
+        public final static NebulaMotor.MotorType driveType = NebulaMotor.MotorType.RPM_435;
         public static boolean isSquaredInputs = true;
         public static double tippingTolerance = 5;//This probably needs to be less
     }
@@ -117,7 +116,7 @@ public class NebulaConstants {
             shooter2Direction = NebulaMotor.Direction.Reverse;
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
         public static NebulaMotor.IdleMode shooterIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA shooterType = Motor.GoBILDA.RPM_312;
+        public final static NebulaMotor.MotorType shooterType = NebulaMotor.MotorType.RPM_312;
         public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int shooterTolerance = 1;
         public static double ks=0,
@@ -137,7 +136,7 @@ public class NebulaConstants {
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
 
         public static NebulaMotor.IdleMode hoodIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA hoodType = Motor.GoBILDA.RPM_312;
+        public final static NebulaMotor.MotorType hoodType = NebulaMotor.MotorType.RPM_312;
         public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int shooterTolerance = 1;
         public static double ks=0,
@@ -163,7 +162,7 @@ public class NebulaConstants {
 //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
 
         public static NebulaMotor.IdleMode intakeIdleMode = NebulaMotor.IdleMode.Brake;
-        public final static Motor.GoBILDA intakeType = Motor.GoBILDA.RPM_312;
+        public final static NebulaMotor.MotorType intakeType = NebulaMotor.MotorType.RPM_312;
         public static PIDFCoefficients intakePID = new PIDFCoefficients(.005, 0.00, 0.0,0);
         public static int intakeTolerance = 1;
         public static double ks=0,

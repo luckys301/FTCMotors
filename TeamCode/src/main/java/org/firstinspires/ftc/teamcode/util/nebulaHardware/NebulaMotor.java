@@ -25,6 +25,23 @@ public class NebulaMotor{
         public double getAchievableMaxTicksPerSecond() {
             return cpr * rpm / 60;
         }
+        public static Motor.GoBILDA getType(MotorType type){
+            switch(type){
+                case RPM_30: return Motor.GoBILDA.RPM_30;
+                case RPM_43: return Motor.GoBILDA.RPM_43;
+                case RPM_60: return Motor.GoBILDA.RPM_60;
+                case RPM_84: return Motor.GoBILDA.RPM_84;
+                case RPM_117: return Motor.GoBILDA.RPM_117;
+                case RPM_223: return Motor.GoBILDA.RPM_223;
+                case RPM_312: return Motor.GoBILDA.RPM_312;
+                case RPM_435: return Motor.GoBILDA.RPM_435;
+                case RPM_1150: return Motor.GoBILDA.RPM_1150;
+                case RPM_1620: return Motor.GoBILDA.RPM_1620;
+                case BARE: return Motor.GoBILDA.BARE;
+                case NONE:
+                default: return Motor.GoBILDA.NONE;
+            }
+        }
     }
     public enum IdleMode {
         Coast,
@@ -43,13 +60,14 @@ public class NebulaMotor{
     private final Boolean isEnabled;
 //    private final Direction direction;
 //    private final Motor.GoBILDA type;
+//    private static MotorType type;
 //    private int gearing;
 
     public NebulaMotor(HardwareMap hM, String deviceId,
-                       Motor.GoBILDA type, Direction direction,
+                       MotorType type, Direction direction,
                        IdleMode behavior, Boolean isEnabled){
-        motor = new MotorEx(hM, deviceId, type);
-//        this.type = type;
+        motor = new MotorEx(hM, deviceId, MotorType.getType(type));
+//        NebulaMotor.type = type;
         this.isEnabled = isEnabled;
 //        this.gearing = gearing;
 

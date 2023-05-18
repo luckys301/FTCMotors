@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -34,7 +33,7 @@ public class shooterHood extends SubsystemBase {
 
     public shooterHood(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Hood.shooterMName,
-            Motor.GoBILDA.RPM_312, NebulaConstants.Hood.shooterDirection,
+            NebulaConstants.Hood.hoodType, NebulaConstants.Hood.shooterDirection,
             NebulaMotor.IdleMode.Coast, isEnabled);
         controller = new PIDFController(
             NebulaConstants.Hood.shooterPID.p,

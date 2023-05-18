@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.misc.motor;
 
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,7 +15,7 @@ public class MotorTest extends OpMode {
 //        motor = hardwareMap.get(NebulaMotor.class, "leftRear");
         motor = new NebulaMotor(hardwareMap,
                 "leftRear",
-                Motor.GoBILDA.RPM_435,
+            NebulaMotor.MotorType.RPM_435,
                 NebulaMotor.Direction.Forward,
                 NebulaMotor.IdleMode.Coast,
                 false);
