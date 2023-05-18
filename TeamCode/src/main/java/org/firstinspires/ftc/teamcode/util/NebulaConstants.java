@@ -107,6 +107,7 @@ public class NebulaConstants {
                 return 0;
             } else return value;
         }
+        public static boolean overrideSafety = false;
     }
     public static Shooter shooter;
     public static class Shooter {

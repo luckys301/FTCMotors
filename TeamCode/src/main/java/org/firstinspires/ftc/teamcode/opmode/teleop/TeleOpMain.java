@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsyste
 import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.slide.Slide;
 import org.firstinspires.ftc.teamcode.util.CycleTracker;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.teleop.GamepadTrigger;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
@@ -56,6 +57,9 @@ public class TeleOpMain extends MatchOpMode {
 
         (new GamepadButton(driverGamepad, GamepadKeys.Button.A))
             .whenPressed(new InstantCommand(mecDriveSubsystem::reInitializeIMU));
+        new GamepadButton(driverGamepad, GamepadKeys.Button.DPAD_DOWN)//TODO:Test
+            .toggleWhenPressed(new InstantCommand(()-> NebulaConstants.Gamepad.overrideSafety = true),
+                new InstantCommand(()-> NebulaConstants.Gamepad.overrideSafety = false));
 
         //Ways to use buttons
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER)
@@ -90,6 +94,7 @@ public class TeleOpMain extends MatchOpMode {
 
     @Override
     public void matchLoop() {
+        telemetry.addData("Override Safety", NebulaConstants.Gamepad.overrideSafety);
         cycleTracker.cyclePeriodic();
     }
     @Override
