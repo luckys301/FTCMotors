@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class NebulaMotor{
     public enum MotorType {
         RPM_30(5264, 30), RPM_43(3892, 43), RPM_60(2786, 60), RPM_84(1993.6, 84),
@@ -166,4 +168,7 @@ public class NebulaMotor{
         motor.disable();
     }
 
+    public void getCurrent(){
+        motor.motorEx.getCurrent(CurrentUnit.AMPS);
+    }   //TODO: How is this?
 }
