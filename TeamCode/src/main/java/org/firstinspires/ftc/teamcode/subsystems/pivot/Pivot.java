@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -17,49 +16,68 @@ import java.util.logging.Level;
 
 @Config
 public class Pivot extends SubsystemBase {
+//    public static class PivotValue {
+//        public volatile double pivotPosition;
+//        public volatile boolean shouldSensorWork;
+//        public volatile String string;
+//        public enum PivotEnum {
+//            RESET,
+//            TRANSFER,
+//            INTAKE_FRONT,
+//            INTAKE_BACK,
+//            AUTO_INTAKE_FRONT,
+//            AUTO_INTAKE_BACK,
+//            AUTO_FRONT,
+//            AUTO_HIGH_FRONT,
+//            AUTO_BACK,
+//            AUTO_HIGH_BACK,
+//            HIGH_BACK,
+//            BACK,
+//            HIGH_FRONT,
+//            FRONT,
+//            DROP_FRONT,
+//            DROP_BACK,
+//            AUTO_DROP_BACK, REST, GROUND,
+//        }
+//        public PivotEnum pivotEnum;
+//
+//        public PivotValue(PivotEnum pivotEnum, double pivotPosition, boolean shouldSensorWork) {
+//            this.pivotEnum = pivotEnum;
+//            this.pivotPosition = pivotPosition;
+//            this.shouldSensorWork = shouldSensorWork;
+//            this.string = pivotEnum.toString();
+//        }
+//        public double getPivotPosition(){
+//            return pivotPosition;
+//        }
+//        public boolean getShouldSensorWork(){
+//            return shouldSensorWork;
+//        }
+//        public PivotEnum getEnum(){
+//            return pivotEnum;
+//        }
+//        public final boolean equals(Object other) {
+//            return this==other;
+//        }
+//        public String getString(){
+//            return string;
+//        }
+//    }
     public final PIDFController controller;
     public boolean armAutomatic;
     public boolean shouldSensorWork = true;
 
-    public enum PivotPos {
-        RESET(0),
-        TELE_OP_START_POS(-350),
+      PivotValue INTAKE_FRONT=new PivotValue(PivotValue.PivotEnum.INTAKE_FRONT,1, true);
+      PivotValue INTAKE_BACK=new PivotValue(PivotValue.PivotEnum.INTAKE_BACK,5,false);
+      PivotValue AUTO_INTAKE_BACK=new PivotValue(PivotValue.PivotEnum.AUTO_INTAKE_BACK,1, true);
+      PivotValue AUTO_INTAKE_FRONT=new PivotValue(PivotValue.PivotEnum.AUTO_INTAKE_FRONT,5,false);
+      PivotValue DROP_FRONT=new PivotValue(PivotValue.PivotEnum.DROP_FRONT,1, true);
+    PivotValue DROP_BACK=new PivotValue(PivotValue.PivotEnum.DROP_FRONT,1, true);
+    PivotValue AUTO_DROP_BACK=new PivotValue(PivotValue.PivotEnum.AUTO_DROP_BACK,5,false);
+    PivotValue RESET=new PivotValue(PivotValue.PivotEnum.AUTO_DROP_BACK,5,false);
 
-        INTAKE_BACK(0, true),
-        BACK(-455),
-        HIGH_BACK(-455),
-        GROUND_BACK(-480),
-        DROP_BACK(-700),
-
-        INTAKE_FRONT(-PivotPos.INTAKE_BACK.pivotPosition, true),
-        FRONT(-PivotPos.BACK.pivotPosition),
-        HIGH_FRONT(-PivotPos.HIGH_BACK.pivotPosition),
-        GROUND_FRONT(-PivotPos.GROUND_BACK.pivotPosition),
-        DROP_FRONT(-PivotPos.DROP_BACK.pivotPosition),
-
-
-        AUTO_INTAKE_BACK(-150, true),
-        AUTO_BACK(-233),
-        AUTO_HIGH_BACK(-150),
-        AUTO_DROP_BACK(-390),
-
-        AUTO_INTAKE_FRONT(-PivotPos.AUTO_INTAKE_BACK.pivotPosition, true),
-        AUTO_FRONT(-PivotPos.AUTO_BACK.pivotPosition),
-        AUTO_HIGH_FRONT(-PivotPos.AUTO_HIGH_BACK.pivotPosition),
-        AUTO_DROP_FRONT(-PivotPos.AUTO_DROP_BACK.pivotPosition);
-
-        public final double pivotPosition;
-        public final boolean shouldSensorWork;
-        PivotPos(double pivotPosition) {
-            this.pivotPosition = pivotPosition;
-            this.shouldSensorWork = false;
-        }
-        PivotPos(double pivotPosition, boolean shouldSensorWork) {
-            this.pivotPosition = pivotPosition;
-            this.shouldSensorWork = shouldSensorWork;
-        }
-    }
-    public static PivotPos pivotPos = PivotPos.RESET;
+    public static PivotValue.PivotEnum pivotPos = PivotValue.PivotEnum.RESET; // HOlds CUrrent Pivot Position
+//    public static String pivotPos = PivotValue.PivotEnum.RESET.toString(); // HOlds CUrrent Pivot Position
 
 
     public final static double POWER = 0.93;
@@ -114,22 +132,22 @@ public class Pivot extends SubsystemBase {
 
     public void moveInitializationPosition() {
         armAutomatic = true;
-        setSetPoint(PivotPos.RESET.pivotPosition - encoderOffset - 10, true);
-        pivotPos = PivotPos.RESET;
+        setSetPoint(RESET.pivotPosition - encoderOffset - 10, true);
+        pivotPos = PivotValue.PivotEnum.RESET;
     }
     public void moveIntakeBAuto() {
         armAutomatic = true;
-        setSetPoint(PivotPos.AUTO_INTAKE_BACK);
+        setSetPointCommand(AUTO_INTAKE_BACK);
     }
     public void dropArmTeleop(){
         switch (pivotPos){
             case FRONT:
             case HIGH_FRONT:
-                setSetPoint(PivotPos.DROP_FRONT);
+                setSetPointCommand(DROP_FRONT);
                 break;
             case BACK:
             case HIGH_BACK:
-                setSetPoint(PivotPos.DROP_BACK);
+                setSetPointCommand(DROP_BACK);
                 break;
         }
     }
@@ -138,37 +156,38 @@ public class Pivot extends SubsystemBase {
         switch (pivotPos){
             case AUTO_HIGH_BACK:
             case AUTO_BACK:
-                setSetPoint(PivotPos.AUTO_DROP_BACK.pivotPosition, false);
+                setSetPoint(AUTO_DROP_BACK.pivotPosition, false);
                 break;
             case AUTO_HIGH_FRONT:
             case AUTO_FRONT:
-                setSetPoint(PivotPos.AUTO_INTAKE_FRONT.pivotPosition,false);
+                setSetPoint(AUTO_INTAKE_FRONT.pivotPosition,false);
                 break;
             case AUTO_INTAKE_FRONT:
-                setSetPoint(PivotPos.AUTO_INTAKE_FRONT.pivotPosition+25, true);
+                setSetPoint(AUTO_INTAKE_FRONT.pivotPosition+25, true);
                 break;
             case AUTO_INTAKE_BACK:
-                setSetPoint(PivotPos.AUTO_INTAKE_BACK.pivotPosition-25, true);
+                setSetPoint(AUTO_INTAKE_BACK.pivotPosition-25, true);
                 break;
         }
     }
 
-    public void setSetPoint(PivotPos pos) {
-        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
-            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-            armMotor.stop();
-            return;
-        }
-        controller.setSetPoint(pos.pivotPosition + encoderOffset);
-        pivotPos = pos;
-        this.shouldSensorWork = pos.shouldSensorWork;
-    }
+//    public void setSetPoint(PivotValue pos) {
+//        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
+//            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
+//            armMotor.stop();
+//            return;
+//        }
+//        controller.setSetPoint(pos.pivotPosition + encoderOffset);
+//        pivotPos = pos.getEnum();
+//        this.shouldSensorWork = pos.shouldSensorWork;
+//    }
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
         if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
             setPoint<NebulaConstants.Pivot.MIN_POSITION){
             armMotor.stop();
             return;
         }
+//        pivotPos = setPoint;
         controller.setSetPoint(setPoint + encoderOffset);
         this.shouldSensorWork = shouldSensorWork;
     }
@@ -177,8 +196,8 @@ public class Pivot extends SubsystemBase {
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
         return new InstantCommand(()->{setSetPoint(setPoint, shouldSensorWork);});
     }
-    public Command setSetPointCommand(PivotPos pos) {
-        return new InstantCommand(()->{setSetPoint(pos);});
+    public Command setSetPointCommand(PivotValue pos) {
+        return new InstantCommand(()->{setSetPoint(pos.pivotPosition, pos.shouldSensorWork);});
     }
 
     public void encoderReset() {
