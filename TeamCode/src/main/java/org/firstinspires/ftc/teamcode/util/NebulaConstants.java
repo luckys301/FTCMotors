@@ -114,7 +114,8 @@ public class NebulaConstants {
             shooterM2Name = "shooterM2";
         public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse,
             shooter2Direction = NebulaMotor.Direction.Reverse;
-//        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
+        public static int shooterDistancePerPulse = 1;
+        //        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
         public static NebulaMotor.IdleMode shooterIdleMode = NebulaMotor.IdleMode.Brake;
         public final static NebulaMotor.MotorType shooterType = NebulaMotor.MotorType.RPM_312;
         public static PIDFCoefficients shooterPID = new PIDFCoefficients(.005, 0.00, 0.0,0);
@@ -124,8 +125,8 @@ public class NebulaConstants {
             kv=0;
         public static double maxVelocity = 0,
             maxAcceleration = 0,
-            MIN_POSITION = -400,
-            MAX_POSITION = 400;
+            MIN_SPEED = -400,
+            MAX_SPEED = 400;
     }
     public static Hood hood;
     public static class Hood {
@@ -133,7 +134,7 @@ public class NebulaConstants {
             shooterM2Name = "shooterM2";
         public static NebulaMotor.Direction shooterDirection = NebulaMotor.Direction.Reverse,
             shooter2Direction = NebulaMotor.Direction.Reverse;
-//        public int pivotDistancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
+//        public int distancePerPulse = 360 / (gear_ratio * pulses_per_rev);// For Internal Encoder
 
         public static NebulaMotor.IdleMode hoodIdleMode = NebulaMotor.IdleMode.Brake;
         public final static NebulaMotor.MotorType hoodType = NebulaMotor.MotorType.RPM_312;
