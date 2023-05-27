@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaServo;
 
 @Config
-public class shooterHoodServo extends SubsystemBase
+public class ShooterHoodServo extends SubsystemBase
 {
     public enum ShooterPos {
         IN(0.51),
@@ -27,7 +27,7 @@ public class shooterHoodServo extends SubsystemBase
     Telemetry telemetry;
     private final NebulaServo clawS1;     //Claw
 
-    public shooterHoodServo(Telemetry tl, HardwareMap hw, boolean isEnabled) {
+    public ShooterHoodServo(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         clawS1 = new NebulaServo(hw,
             NebulaConstants.ServoHood.hoodSName,
             NebulaConstants.ServoHood.hoodDirection,
@@ -47,7 +47,7 @@ public class shooterHoodServo extends SubsystemBase
     public void setPosition(double pos) {
         clawS1.setPosition(pos);
     }
-    public Command setPositionCommand(shooterHoodServo.ShooterPos pos) {
+    public Command setPositionCommand(ShooterHoodServo.ShooterPos pos) {
         return new InstantCommand(()->{setPosition(pos.shooterPos);});
     }
 }

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
 @Config
-public class shooterHood extends SubsystemBase {
+public class ShooterHood extends SubsystemBase {
     public final PIDFController controller;
 
     public enum Position {
@@ -31,7 +31,7 @@ public class shooterHood extends SubsystemBase {
     public final NebulaMotor motor;
 //    private String posWriter = "NONE";
 
-    public shooterHood(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
+    public ShooterHood(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Hood.shooterMName,
             NebulaConstants.Hood.hoodType, NebulaConstants.Hood.shooterDirection,
             NebulaMotor.IdleMode.Coast, isEnabled);
