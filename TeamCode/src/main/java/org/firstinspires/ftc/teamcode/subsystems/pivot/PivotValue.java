@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
-import com.acmerobotics.dashboard.config.Config;
 
-@Config
 public class PivotValue {
     protected enum PivotEnum {
         RESET(123456),

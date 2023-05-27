@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,7 +11,6 @@ import org.firstinspires.ftc.teamcode.util.odoPod.Encoder;
 
 import java.util.logging.Level;
 
-@Config
 public class PivotFeedforwardThroughBore extends PivotFeedforward {
     protected final Encoder armEncoder;// Plugged into Motor
     public PivotFeedforwardThroughBore(Telemetry tl, HardwareMap hw, boolean isEnabled) {

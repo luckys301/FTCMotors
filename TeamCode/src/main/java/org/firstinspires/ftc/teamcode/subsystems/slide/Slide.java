@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.slide;
 import static org.firstinspires.ftc.teamcode.subsystems.slide.SlideValue.SlideEnum;
 import static org.firstinspires.ftc.teamcode.subsystems.slide.SlideValue.make;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
-//@Config
+@Config
 public class Slide extends SubsystemBase {
     protected Telemetry telemetry;
     protected NebulaMotor slideM1, slideM2;
@@ -22,18 +23,18 @@ public class Slide extends SubsystemBase {
     protected double output = 0;
     protected boolean dropBoolean = false;
 
-    protected static SlideValue REST = make(SlideEnum.REST,1, true);
-    protected static SlideValue GROUND = make(SlideEnum.GROUND,5,false);
-    protected static SlideValue LOW = make(SlideEnum.LOW,1, true);
-    protected static SlideValue MID = make(SlideEnum.MID,5,false);
-    protected static SlideValue HIGH = make(SlideEnum.HIGH,5,false);
-    protected static SlideValue AUTO_MID = make(SlideEnum.AUTO_MID,1, true);
-    protected static SlideValue AUTO_HIGH = make(SlideEnum.AUTO_HIGH,1, true);
-    protected static SlideValue FIVE = make(SlideEnum.FIVE,5,false);
-    protected static SlideValue FOUR = make(SlideEnum.FOUR,5,false);
-    protected static SlideValue THREE = make(SlideEnum.THREE,1, true);
-    protected static SlideValue TWO = make(SlideEnum.TWO,5,false);
-    protected static SlideValue ONE = make(SlideEnum.ONE,1, true);
+    public static SlideValue REST = make(SlideEnum.REST,1, true);
+    public static SlideValue GROUND = make(SlideEnum.GROUND,5,false);
+    public static SlideValue LOW = make(SlideEnum.LOW,1, true);
+    public static SlideValue MID = make(SlideEnum.MID,5,false);
+    public static SlideValue HIGH = make(SlideEnum.HIGH,5,false);
+    public static SlideValue AUTO_MID = make(SlideEnum.AUTO_MID,1, true);
+    public static SlideValue AUTO_HIGH = make(SlideEnum.AUTO_HIGH,1, true);
+    public static SlideValue FIVE = make(SlideEnum.FIVE,5,false);
+    public static SlideValue FOUR = make(SlideEnum.FOUR,5,false);
+    public static SlideValue THREE = make(SlideEnum.THREE,1, true);
+    public static SlideValue TWO = make(SlideEnum.TWO,5,false);
+    public static SlideValue ONE = make(SlideEnum.ONE,1, true);
 
 
 

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
-
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,7 +10,6 @@ import org.firstinspires.ftc.teamcode.util.misc.Util;
 
 import java.util.logging.Level;
 
-@Config
 public class PivotFeedforward extends Pivot {
     //Zero HAS TO be parallel to the ground and encoder needs to be in radians
     protected ArmFeedforward armFeedforward;

@@ -22,15 +22,14 @@ import java.util.logging.Level;
 public class Pivot extends SubsystemBase {
     protected static Double A = PivotEnum.RESET.value;
 
-    protected static PivotValue INTAKE_FRONT = make(PivotEnum.INTAKE_FRONT,1, true);
-    protected static PivotValue INTAKE_BACK = make(PivotEnum.INTAKE_BACK,5,false);
-    protected static PivotValue AUTO_INTAKE_BACK = make(PivotEnum.AUTO_INTAKE_BACK,1, true);
-    protected static PivotValue AUTO_INTAKE_FRONT= make(PivotEnum.AUTO_INTAKE_FRONT,5,false);
-    protected static PivotValue DROP_FRONT = make(PivotEnum.DROP_FRONT,1, true);
-    protected static PivotValue DROP_BACK = make(PivotEnum.DROP_FRONT,1, true);
-    protected static PivotValue AUTO_DROP_BACK = make(PivotEnum.AUTO_DROP_BACK,5,false);
+    public static PivotValue INTAKE_FRONT = make(PivotEnum.INTAKE_FRONT,1, true);
+    public static PivotValue INTAKE_BACK = make(PivotEnum.INTAKE_BACK,5,false);
+    public static PivotValue AUTO_INTAKE_BACK = make(PivotEnum.AUTO_INTAKE_BACK,1, true);
+    public static PivotValue AUTO_INTAKE_FRONT= make(PivotEnum.AUTO_INTAKE_FRONT,5,false);
+    public static PivotValue DROP_FRONT = make(PivotEnum.DROP_FRONT,1, true);
+    public static PivotValue DROP_BACK = make(PivotEnum.DROP_FRONT,1, true);
+    public static PivotValue AUTO_DROP_BACK = make(PivotEnum.AUTO_DROP_BACK,5,false);
     public static PivotValue RESET = make(PivotEnum.AUTO_DROP_BACK,5,false);
-    //TODO: Make protected after testing ^^^^^^
 
     protected final PIDFController controller;
     protected boolean armAutomatic;

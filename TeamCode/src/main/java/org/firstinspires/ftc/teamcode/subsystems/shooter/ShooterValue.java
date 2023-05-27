@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
-import com.acmerobotics.dashboard.config.Config;
 
-@Config
 public class ShooterValue {
     protected enum ShooterEnum {
         OUTTAKE(0.0),

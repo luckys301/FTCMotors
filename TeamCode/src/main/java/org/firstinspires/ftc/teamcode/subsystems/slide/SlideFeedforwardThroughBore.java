@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.odoPod.Encoder;
 
-//@Config
 public class SlideFeedforwardThroughBore extends SlideFeedforward {
     protected final Encoder slideEncoder;// Plugged into Motor
 

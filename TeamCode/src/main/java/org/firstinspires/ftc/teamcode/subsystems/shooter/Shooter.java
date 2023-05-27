@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems.shooter;
 
 
+import static org.firstinspires.ftc.teamcode.subsystems.shooter.ShooterValue.make;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -18,6 +20,10 @@ import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotorGroup;
 public class Shooter extends SubsystemBase {
     protected final PIDFController controller;
     protected final NebulaMotorGroup motorGroup;
+
+    public static ShooterValue INTAKE = make(ShooterEnum.INTAKE,1);
+    public static ShooterValue OUTTAKE = make(ShooterEnum.OUTTAKE,5);
+    public static ShooterValue STOP = make(ShooterEnum.STOP,1);
 
     protected ShooterEnum shooterRPM;
     protected Telemetry telemetry;
