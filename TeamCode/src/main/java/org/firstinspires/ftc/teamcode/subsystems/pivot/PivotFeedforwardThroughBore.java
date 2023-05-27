@@ -15,7 +15,7 @@ import java.util.logging.Level;
 @Config
 public class PivotFeedforwardThroughBore extends PivotFeedforward {
 //    private ElevatorFeedforward slideFeedforward;
-    private final Encoder armEncoder;// Plugged into Motor;
+    protected final Encoder armEncoder;// Plugged into Motor;
 //    private double encoderOffset;
 
 //    TrapezoidProfile.State start = new TrapezoidProfile.State(getEncoderDistance(), slideM1.getVelocity());

@@ -1,50 +1,57 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
+import com.acmerobotics.dashboard.config.Config;
 
+@Config
 public class PivotValue {
-    public volatile double pivotPosition;
-    public volatile boolean shouldSensorWork;
-    public volatile String string;
-    public enum PivotEnum {
-            RESET,
-        TRANSFER,
-        INTAKE_FRONT,
-        INTAKE_BACK,
-        AUTO_INTAKE_FRONT,
-        AUTO_INTAKE_BACK,
-        AUTO_FRONT,
-        AUTO_HIGH_FRONT,
-        AUTO_BACK,
-        AUTO_HIGH_BACK,
-        HIGH_BACK,
-        BACK,
-        HIGH_FRONT,
-        FRONT,
-        DROP_FRONT,
-        DROP_BACK,
-        AUTO_DROP_BACK, REST, GROUND,
-        MANUAL // To use when the subsytem is going Manually - No Need to make PivotValue
+    protected enum PivotEnum {
+        RESET(123456),
+        TRANSFER(0.0),
+        INTAKE_FRONT(0.0),
+        INTAKE_BACK(0.0),
+        AUTO_INTAKE_FRONT(0.0),
+        AUTO_INTAKE_BACK(0.0),
+        AUTO_FRONT(0.0),
+        AUTO_HIGH_FRONT(0.0),
+        AUTO_BACK(0.0),
+        AUTO_HIGH_BACK(0.0),
+        HIGH_BACK(0.0),
+        BACK(0.0),
+        HIGH_FRONT(0.0),
+        FRONT(0.0),
+        DROP_FRONT(0.0),
+        DROP_BACK(0.0),
+        AUTO_DROP_BACK(0.0), REST(0.0), GROUND(0.0),
+        MANUAL(0.0) // To use when the subsystem is going Manually - No Need to make PivotValue,
+        ;
+        public double value;
+        PivotEnum(double value) {
+            this.value = value;
+        }
     }
     public PivotEnum pivotEnum;
+    public volatile double pivotPosition;
+    public volatile boolean shouldSensorWork;
 
-    public PivotValue(PivotEnum pivotEnum, double pivotPosition, boolean shouldSensorWork) {
+
+    protected PivotValue(PivotEnum pivotEnum, double pivotPosition, boolean shouldSensorWork) {
         this.pivotEnum = pivotEnum;
         this.pivotPosition = pivotPosition;
         this.shouldSensorWork = shouldSensorWork;
-        this.string = pivotEnum.toString();
     }
-    public double getPivotPosition(){
-        return pivotPosition;
+    protected static PivotValue make(PivotEnum pivotEnum, double pivotPosition, boolean shouldSensorWork) {
+        return new PivotValue(pivotEnum, pivotPosition, shouldSensorWork);
     }
-    public boolean getShouldSensorWork(){
-        return shouldSensorWork;
-    }
-    public PivotEnum getEnum(){
-        return pivotEnum;
-    }
+
+//    protected double getPivotPosition(){
+//        return pivotPosition;
+//    }
+//    protected boolean getShouldSensorWork(){
+//        return shouldSensorWork;
+//    }
+//    protected PivotEnum getEnum(){
+//        return pivotEnum;
+//    }
     public final boolean equals(Object other) {
         return this==other;
-    }
-    public String getString(){
-        return string;
     }
 }

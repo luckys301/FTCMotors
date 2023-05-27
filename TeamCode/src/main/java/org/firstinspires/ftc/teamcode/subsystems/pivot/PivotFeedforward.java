@@ -15,13 +15,13 @@ import java.util.logging.Level;
 @Config
 public class PivotFeedforward extends Pivot {
     //Zero HAS TO be parallel to the ground and encoder needs to be in radians
-    public ArmFeedforward armFeedforward;
+    protected ArmFeedforward armFeedforward;
 
-    public TrapezoidProfile.State start;
-    public TrapezoidProfile.State goal;
-    public TrapezoidProfile.Constraints constraints;
-    public TrapezoidProfile trapezoidProfile;
-    public Telemetry telemetry;
+    protected TrapezoidProfile.State start;
+    protected TrapezoidProfile.State goal;
+    protected TrapezoidProfile.Constraints constraints;
+    protected TrapezoidProfile trapezoidProfile;
+    protected Telemetry telemetry;
 
     public PivotFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);

@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems.pivot;
 
+import static org.firstinspires.ftc.teamcode.subsystems.pivot.PivotValue.PivotEnum;
+import static org.firstinspires.ftc.teamcode.subsystems.pivot.PivotValue.make;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -14,76 +17,30 @@ import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
 import java.util.logging.Level;
 
+
 @Config
 public class Pivot extends SubsystemBase {
-//    public static class PivotValue {
-//        public volatile double pivotPosition;
-//        public volatile boolean shouldSensorWork;
-//        public volatile String string;
-//        public enum PivotEnum {
-//            RESET,
-//            TRANSFER,
-//            INTAKE_FRONT,
-//            INTAKE_BACK,
-//            AUTO_INTAKE_FRONT,
-//            AUTO_INTAKE_BACK,
-//            AUTO_FRONT,
-//            AUTO_HIGH_FRONT,
-//            AUTO_BACK,
-//            AUTO_HIGH_BACK,
-//            HIGH_BACK,
-//            BACK,
-//            HIGH_FRONT,
-//            FRONT,
-//            DROP_FRONT,
-//            DROP_BACK,
-//            AUTO_DROP_BACK, REST, GROUND,
-//        }
-//        public PivotEnum pivotEnum;
-//
-//        public PivotValue(PivotEnum pivotEnum, double pivotPosition, boolean shouldSensorWork) {
-//            this.pivotEnum = pivotEnum;
-//            this.pivotPosition = pivotPosition;
-//            this.shouldSensorWork = shouldSensorWork;
-//            this.string = pivotEnum.toString();
-//        }
-//        public double getPivotPosition(){
-//            return pivotPosition;
-//        }
-//        public boolean getShouldSensorWork(){
-//            return shouldSensorWork;
-//        }
-//        public PivotEnum getEnum(){
-//            return pivotEnum;
-//        }
-//        public final boolean equals(Object other) {
-//            return this==other;
-//        }
-//        public String getString(){
-//            return string;
-//        }
-//    }
-    public final PIDFController controller;
-    public boolean armAutomatic;
-    public boolean shouldSensorWork = true;
+    protected static Double A = PivotEnum.RESET.value;
 
-      PivotValue INTAKE_FRONT=new PivotValue(PivotValue.PivotEnum.INTAKE_FRONT,1, true);
-      PivotValue INTAKE_BACK=new PivotValue(PivotValue.PivotEnum.INTAKE_BACK,5,false);
-      PivotValue AUTO_INTAKE_BACK=new PivotValue(PivotValue.PivotEnum.AUTO_INTAKE_BACK,1, true);
-      PivotValue AUTO_INTAKE_FRONT=new PivotValue(PivotValue.PivotEnum.AUTO_INTAKE_FRONT,5,false);
-      PivotValue DROP_FRONT=new PivotValue(PivotValue.PivotEnum.DROP_FRONT,1, true);
-    PivotValue DROP_BACK=new PivotValue(PivotValue.PivotEnum.DROP_FRONT,1, true);
-    PivotValue AUTO_DROP_BACK=new PivotValue(PivotValue.PivotEnum.AUTO_DROP_BACK,5,false);
-    PivotValue RESET=new PivotValue(PivotValue.PivotEnum.AUTO_DROP_BACK,5,false);
+    protected static PivotValue INTAKE_FRONT = make(PivotEnum.INTAKE_FRONT,1, true);
+    protected static PivotValue INTAKE_BACK = make(PivotEnum.INTAKE_BACK,5,false);
+    protected static PivotValue AUTO_INTAKE_BACK = make(PivotEnum.AUTO_INTAKE_BACK,1, true);
+    protected static PivotValue AUTO_INTAKE_FRONT= make(PivotEnum.AUTO_INTAKE_FRONT,5,false);
+    protected static PivotValue DROP_FRONT = make(PivotEnum.DROP_FRONT,1, true);
+    protected static PivotValue DROP_BACK = make(PivotEnum.DROP_FRONT,1, true);
+    protected static PivotValue AUTO_DROP_BACK = make(PivotEnum.AUTO_DROP_BACK,5,false);
+    public static PivotValue RESET = make(PivotEnum.AUTO_DROP_BACK,5,false);
+    //TODO: Make protected after testing ^^^^^^
 
-    public static PivotValue.PivotEnum pivotPos = PivotValue.PivotEnum.RESET; // HOlds CUrrent Pivot Position
-//    public static String pivotPos = PivotValue.PivotEnum.RESET.toString(); // HOlds CUrrent Pivot Position
+    protected final PIDFController controller;
+    protected boolean armAutomatic;
+    protected boolean shouldSensorWork = true;
 
-
-    public final static double POWER = 0.93;
-    public double encoderOffset = 0;
-    Telemetry telemetry;
-    public final NebulaMotor armMotor;
+    protected static PivotEnum pivotPos = PivotEnum.RESET; // HOlds Current Pivot Position
+//    protected final static double POWER = 0.93;
+    protected double encoderOffset = 0;
+    protected Telemetry telemetry;
+    protected final NebulaMotor armMotor;
 
     public Pivot(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         armMotor = new NebulaMotor(hw, NebulaConstants.Pivot.pivotMName,
@@ -99,7 +56,8 @@ public class Pivot extends SubsystemBase {
             getEncoderDistance(),
             getEncoderDistance());
         controller.setTolerance(NebulaConstants.Pivot.pivotTolerance);
-        this.telemetry = tl;
+//        this.telemetry = tl;
+        //TODO: Does removing this make it still work?^^^
         armAutomatic = false;
     }
 
@@ -110,7 +68,7 @@ public class Pivot extends SubsystemBase {
             double output = (controller.calculate(getEncoderDistance()));
             telemetry.addData("CLaw Motor Output:", output);
 
-            armMotor.setPower(output * POWER);
+            armMotor.setPower(output);
         }
         Util.logger(this, telemetry, Level.INFO, "Arm Encoder Pos: ", armMotor.getPosition());
         Util.logger(this, telemetry, Level.INFO, "Arm Set Point: ", getSetPoint());
@@ -137,7 +95,7 @@ public class Pivot extends SubsystemBase {
     }
     public void moveIntakeBAuto() {
         armAutomatic = true;
-        setSetPointCommand(AUTO_INTAKE_BACK);
+        setSetPointCommand(this.AUTO_INTAKE_BACK);
     }
     public void dropArmTeleop(){
         switch (pivotPos){
@@ -171,32 +129,23 @@ public class Pivot extends SubsystemBase {
         }
     }
 
-//    public void setSetPoint(PivotValue pos) {
-//        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
-//            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-//            armMotor.stop();
-//            return;
-//        }
-//        controller.setSetPoint(pos.pivotPosition + encoderOffset);
-//        pivotPos = pos.getEnum();
-//        this.shouldSensorWork = pos.shouldSensorWork;
-//    }
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
         if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
             setPoint<NebulaConstants.Pivot.MIN_POSITION){
             armMotor.stop();
             return;
         }
-//        pivotPos = setPoint;
         controller.setSetPoint(setPoint + encoderOffset);
         this.shouldSensorWork = shouldSensorWork;
     }
 
     //TODO: Test!
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
+        pivotPos = PivotValue.PivotEnum.MANUAL;
         return new InstantCommand(()->{setSetPoint(setPoint, shouldSensorWork);});
     }
     public Command setSetPointCommand(PivotValue pos) {
+        pivotPos = pos.pivotEnum;
         return new InstantCommand(()->{setSetPoint(pos.pivotPosition, pos.shouldSensorWork);});
     }
 
