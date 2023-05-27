@@ -9,29 +9,19 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.subsystems.shooter.ShooterValue.ShooterEnum;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotorGroup;
 
 @Config
 public class Shooter extends SubsystemBase {
-    public final PIDFController controller;
-    public final NebulaMotorGroup motorGroup;
+    protected final PIDFController controller;
+    protected final NebulaMotorGroup motorGroup;
 
-
-    public enum ShooterRPM {
-        OUTTAKE(100),
-        INTAKE(-100),
-        STOP(0);
-
-        public final double pivotPosition;
-        ShooterRPM(double speed) {
-            this.pivotPosition = speed;
-        }
-    }
-    ShooterRPM shooterRPM = ShooterRPM.STOP;
-    Telemetry telemetry;
-    public final NebulaMotor motor, motor2;
+    protected ShooterEnum shooterRPM;
+    protected Telemetry telemetry;
+    protected final NebulaMotor motor, motor2;
 
     public Shooter(Telemetry tl, HardwareMap hw, Boolean isEnabled) {
         motor = new NebulaMotor(hw, NebulaConstants.Shooter.shooterMName,
@@ -41,7 +31,7 @@ public class Shooter extends SubsystemBase {
             NebulaConstants.Shooter.shooterType, NebulaConstants.Shooter.shooter2Direction,
             NebulaMotor.IdleMode.Coast, isEnabled);
         motorGroup = new NebulaMotorGroup(motor, motor2);
-//        motor.setDistancePerPulse(1);
+        motorGroup.setDistancePerPulse(NebulaConstants.Shooter.shooterDistancePerPulse);
         controller = new PIDFController(
             NebulaConstants.Shooter.shooterPID.p,
             NebulaConstants.Shooter.shooterPID.i,
@@ -51,6 +41,7 @@ public class Shooter extends SubsystemBase {
             getShooterRPM());
         controller.setTolerance(NebulaConstants.Shooter.shooterTolerance);
         this.telemetry = tl;
+        shooterRPM = ShooterEnum.STOP;
     }
 
     @Override
@@ -73,30 +64,23 @@ public class Shooter extends SubsystemBase {
     //    ang_velocity_right = rpm_right * rpm_to_radians;
     //    ang_velocity_right_deg = ang_velocity_right * rad_to_deg;
 
-    public void setSetPoint(ShooterRPM pos) {
-//        if(pos.pivotPosition>NebulaConstants.Pivot.MAX_POSITION ||
-//            pos.pivotPosition<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
-//            return;
-//        }
-        controller.setSetPoint(pos.pivotPosition);
-        shooterRPM = pos;
-    }
     public void setSetPoint(double setPoint) {
-//        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
-//            setPoint<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
-//            return;
-//        }
+        if(setPoint>NebulaConstants.Shooter.MAX_SPEED ||
+            setPoint<NebulaConstants.Shooter.MIN_SPEED){
+            motorGroup.stop();
+            return;
+        }
         controller.setSetPoint(setPoint);
     }
 
     //TODO: Test!
     public Command setSetPointCommand(double setPoint) {
+        shooterRPM = ShooterEnum.MANUAL;
         return new InstantCommand(()->{setSetPoint(setPoint);});
     }
-    public Command setSetPointCommand(ShooterRPM pos) {
-        return new InstantCommand(()->{setSetPoint(pos);});
+    public Command setSetPointCommand(ShooterValue pos) {
+        shooterRPM = pos.shooterEnum;
+        return new InstantCommand(()->{setSetPoint(pos.shooterRPM);});
     }
 
     public void encoderReset() {//Motors wouldn't need reset

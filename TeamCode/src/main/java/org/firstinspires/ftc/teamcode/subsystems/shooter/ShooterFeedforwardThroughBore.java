@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.util.odoPod.Encoder;
 
 @Config
 public class ShooterFeedforwardThroughBore extends ShooterFeedforward {
-    private final Encoder slideEncoder;// Plugged into Motor;
+    protected final Encoder slideEncoder;// Plugged into Motor;
     public ShooterFeedforwardThroughBore(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);
         slideEncoder = new Encoder(
@@ -22,21 +22,19 @@ public class ShooterFeedforwardThroughBore extends ShooterFeedforward {
 
     @Override
     public void periodic() {
-//            slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
-            constraints = new TrapezoidProfile.Constraints(
-                0,// radians per second
-                0);//radians per second per second
+//        slideController.setF(NebulaConstants.Slide.slidePID.f * Math.cos(Math.toRadians(slideController.getSetPoint())));
+        constraints = new TrapezoidProfile.Constraints(
+            0,// radians per second
+            0);//radians per second per second
 
-//            trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
-            start = trapezoidProfile.calculate(0.02);
-            double output = (controller.calculate(getShooterRPM()) +
-                (shooterFeedforward.calculate(start.position, start.velocity)));
-            motorGroup.setPower(output);//TODO: Probably shouldn't be like this
+//        trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
+        start = trapezoidProfile.calculate(0.02);
+        double output = (controller.calculate(getShooterRPM()) +
+            (shooterFeedforward.calculate(start.position, start.velocity)));
+        motorGroup.setPower(output);//TODO: Probably shouldn't be like this
 
         telemetry.addData("Shooter RPM:", getShooterRPM());
         telemetry.addData("Shooter Required RPM:", controller.getSetPoint());
-
-
     }
 
 //    @Override

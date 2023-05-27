@@ -10,13 +10,12 @@ import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
 @Config
 public class ShooterFeedforward extends Shooter {
-    public SimpleMotorFeedforward shooterFeedforward;
+    protected SimpleMotorFeedforward shooterFeedforward;
 
-    TrapezoidProfile.State start = new TrapezoidProfile.State(getShooterRPM(), getShooterRPM());
-    TrapezoidProfile.State goal;
-    TrapezoidProfile.Constraints constraints;
-    TrapezoidProfile trapezoidProfile;
-    Telemetry telemetry;
+    protected TrapezoidProfile.State start = new TrapezoidProfile.State(getShooterRPM(), getShooterRPM());
+    protected TrapezoidProfile.State goal;
+    protected TrapezoidProfile.Constraints constraints;
+    protected TrapezoidProfile trapezoidProfile;
     public ShooterFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);
         shooterFeedforward = new SimpleMotorFeedforward(
@@ -40,6 +39,5 @@ public class ShooterFeedforward extends Shooter {
         motorGroup.setPower(output);
         telemetry.addData("Shooter RPM:", getShooterRPM());
         telemetry.addData("Shooter Required RPM:", controller.getSetPoint());
-
     }
 }
