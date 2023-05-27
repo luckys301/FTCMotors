@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.slide;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,15 +7,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 
-@Config
+//@Config
 public class SlideFeedforward extends Slide {
-    public ElevatorFeedforward slideFeedforward;
-
-    TrapezoidProfile.State start = new TrapezoidProfile.State(getEncoderDistance(), slideM1.getVelocity());
-    TrapezoidProfile.State goal;
-    TrapezoidProfile.Constraints constraints;
-    TrapezoidProfile trapezoidProfile;
-    Telemetry telemetry;
+    protected ElevatorFeedforward slideFeedforward;
+    protected TrapezoidProfile.State start = new TrapezoidProfile.State(getEncoderDistance(), slideM1.getVelocity());
+    protected TrapezoidProfile.State goal;
+    protected TrapezoidProfile.Constraints constraints;
+    protected TrapezoidProfile trapezoidProfile;
     public SlideFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);
         slideFeedforward = new ElevatorFeedforward(
@@ -27,7 +24,6 @@ public class SlideFeedforward extends Slide {
         constraints = new TrapezoidProfile.Constraints(
             0,// radians per second
             0);//radians per second per second
-
         trapezoidProfile = new TrapezoidProfile(constraints, goal, start);
     }
 

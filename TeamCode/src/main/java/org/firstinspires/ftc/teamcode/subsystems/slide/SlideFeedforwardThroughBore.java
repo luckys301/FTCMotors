@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.slide;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,17 +8,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.odoPod.Encoder;
 
-@Config
+//@Config
 public class SlideFeedforwardThroughBore extends SlideFeedforward {
-//    private ElevatorFeedforward slideFeedforward;
-    private final Encoder slideEncoder;// Plugged into Motor;
-//    private double encoderOffset;
+    protected final Encoder slideEncoder;// Plugged into Motor
 
-//    TrapezoidProfile.State start = new TrapezoidProfile.State(getEncoderDistance(), slideM1.getVelocity());
-//    TrapezoidProfile.State goal;
-//    TrapezoidProfile.Constraints constraints;
-//    TrapezoidProfile trapezoidProfile;
-//    Telemetry telemetry;
     public SlideFeedforwardThroughBore(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);
         slideEncoder = new Encoder(

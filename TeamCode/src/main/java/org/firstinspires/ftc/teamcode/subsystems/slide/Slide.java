@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems.slide;
 
-import com.acmerobotics.dashboard.config.Config;
+import static org.firstinspires.ftc.teamcode.subsystems.slide.SlideValue.SlideEnum;
+import static org.firstinspires.ftc.teamcode.subsystems.slide.SlideValue.make;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -11,40 +13,33 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.nebulaHardware.NebulaMotor;
 
-@Config
+//@Config
 public class Slide extends SubsystemBase {
-    public final Telemetry telemetry;
-    public final NebulaMotor slideM1, slideM2;
+    protected Telemetry telemetry;
+    protected NebulaMotor slideM1, slideM2;
+    protected PIDFController slideController;
+    protected boolean slideAutomatic;
+    protected double output = 0;
+    protected boolean dropBoolean = false;
 
-    public PIDFController slideController;
-    public boolean slideAutomatic;
-
-    public static double CPR = 751.8;
-    public double output = 0;
-
-    public boolean lowBool = false;
-    public enum LiftPos{
-        REST(-14,true),
-        GROUND(30, true), LOW(315), MID(738), HIGH(1240),
-        AUTO_MID(995), AUTO_HIGH(1260),
-
-        FIVE(260), FOUR(210), THREE(150), TWO(100), ONE(0);
-
-        public final double liftPosition;
-        public final boolean lowBool;
-        LiftPos(double liftPosition) {
-            this.liftPosition = liftPosition;
-            this.lowBool = false;
-        }
-        LiftPos(double liftPosition, boolean lowBool) {
-            this.liftPosition = liftPosition;
-            this.lowBool = lowBool;
-        }
-    }
-    LiftPos liftPos;
+    protected static SlideValue REST = make(SlideEnum.REST,1, true);
+    protected static SlideValue GROUND = make(SlideEnum.GROUND,5,false);
+    protected static SlideValue LOW = make(SlideEnum.LOW,1, true);
+    protected static SlideValue MID = make(SlideEnum.MID,5,false);
+    protected static SlideValue HIGH = make(SlideEnum.HIGH,5,false);
+    protected static SlideValue AUTO_MID = make(SlideEnum.AUTO_MID,1, true);
+    protected static SlideValue AUTO_HIGH = make(SlideEnum.AUTO_HIGH,1, true);
+    protected static SlideValue FIVE = make(SlideEnum.FIVE,5,false);
+    protected static SlideValue FOUR = make(SlideEnum.FOUR,5,false);
+    protected static SlideValue THREE = make(SlideEnum.THREE,1, true);
+    protected static SlideValue TWO = make(SlideEnum.TWO,5,false);
+    protected static SlideValue ONE = make(SlideEnum.ONE,1, true);
 
 
-    public Slide( Telemetry tl, HardwareMap hw, boolean isEnabled) {
+
+    protected static SlideEnum slidePos;
+
+    public Slide(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         slideM1 = new NebulaMotor(hw,
             NebulaConstants.Slide.slideMName1,
             NebulaConstants.Slide.slideType,
@@ -57,9 +52,6 @@ public class Slide extends SubsystemBase {
             NebulaConstants.Slide.slideDirection2,
             NebulaConstants.Slide.slideIdleMode,
             isEnabled);
-
-//        slideM1 = new MotorEx(hw, NebulaConstants.Slide.slideMName1);
-//        slideM2 = new MotorEx(hw, NebulaConstants.Slide.slideMName2);
 
         slideM1.setDistancePerPulse(NebulaConstants.Slide.slideDistancePerPulse);
         slideM2.setDistancePerPulse(NebulaConstants.Slide.slideDistancePerPulse);
@@ -74,7 +66,7 @@ public class Slide extends SubsystemBase {
 
         this.telemetry = tl;
         slideAutomatic = false;
-        liftPos = LiftPos.REST;
+        slidePos = SlideValue.SlideEnum.REST;
     }
 
     @Override
@@ -97,9 +89,9 @@ public class Slide extends SubsystemBase {
 //            }
         }
         telemetry.addLine("Slide - ");
-        telemetry.addData("     Lift Motor Output:", output);
-        telemetry.addData("     Lift1 Encoder: ", slideM1.getPosition());
-        telemetry.addData("     List Pos:", getSetPoint());
+        telemetry.addData("     Slide Motor Output:", output);
+        telemetry.addData("     Slide1 Encoder: ", slideM1.getPosition());
+        telemetry.addData("     Slide Pos:", getSetPoint());
     }
 
     public double getEncoderDistance() {
@@ -123,8 +115,8 @@ public class Slide extends SubsystemBase {
 
     public void slideResting() {
         slideAutomatic = true;
-        slideController.setSetPoint(LiftPos.REST.liftPosition);
-        liftPos = LiftPos.REST;
+        slideController.setSetPoint(REST.slidePosition);
+        slidePos = SlideValue.SlideEnum.REST;
     }
 
     public void resetEncoder() {
@@ -137,7 +129,7 @@ public class Slide extends SubsystemBase {
     }
 
     public void dropSlide(){
-        switch (liftPos){
+        switch (slidePos){
 //            case LOW:
 //                upController.setSetPoint(LOW_POS+350);
 //                break;
@@ -145,26 +137,17 @@ public class Slide extends SubsystemBase {
 //                upController.setSetPoint(MID_POS+200);
 //                break;
             case HIGH:
-                slideController.setSetPoint(LiftPos.HIGH.liftPosition-740);
+                slideController.setSetPoint(HIGH.slidePosition-740);
                 break;
             case AUTO_MID:
-                slideController.setSetPoint(LiftPos.AUTO_MID.liftPosition-290);
+                slideController.setSetPoint(AUTO_MID.slidePosition-290);
                 break;
             case AUTO_HIGH:
-                slideController.setSetPoint(LiftPos.AUTO_HIGH.liftPosition-650);
+                slideController.setSetPoint(AUTO_HIGH.slidePosition-650);
                 break;
         }
     }
-    public void setSetPoint(LiftPos pos) {//Might want to make this function go into the 2 variable one
-        if(pos.liftPosition>NebulaConstants.Slide.MAX_POSITION ||
-            pos.liftPosition<NebulaConstants.Slide.MIN_POSITION){
-            slideM1.stop();
-            return;
-        }
-        slideController.setSetPoint(pos.liftPosition);
-        liftPos = pos;
-        this.lowBool = pos.lowBool;
-    }
+
     public void setSetPoint(double setPoint, boolean lowBool) {
         if(setPoint>NebulaConstants.Slide.MAX_POSITION ||
             setPoint<NebulaConstants.Slide.MIN_POSITION){
@@ -172,15 +155,17 @@ public class Slide extends SubsystemBase {
             return;
         }
         slideController.setSetPoint(setPoint);
-        this.lowBool = lowBool;
+        this.dropBoolean = lowBool;
     }
 
     //TODO: Test!
     public Command setSetPointCommand(double setPoint, boolean shouldSensorWork) {
+        slidePos = SlideEnum.MANUAL;
         return new InstantCommand(()->{this.setSetPoint(setPoint, shouldSensorWork);});
     }
-    public Command setSetPointCommand(LiftPos pos) {
-        return new InstantCommand(()->{this.setSetPoint(pos);});
+    public Command setSetPointCommand(SlideValue pos) {
+        slidePos = pos.slideEnum;
+        return new InstantCommand(()->{this.setSetPoint(pos.slidePosition, pos.shouldSlideDrop);});
     }
     public double getSetPoint() {
         return slideController.getSetPoint();
