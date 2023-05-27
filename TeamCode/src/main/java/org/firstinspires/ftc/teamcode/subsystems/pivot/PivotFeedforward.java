@@ -21,7 +21,6 @@ public class PivotFeedforward extends Pivot {
     protected TrapezoidProfile.State goal;
     protected TrapezoidProfile.Constraints constraints;
     protected TrapezoidProfile trapezoidProfile;
-    protected Telemetry telemetry;
 
     public PivotFeedforward(Telemetry tl, HardwareMap hw, boolean isEnabled) {
         super(tl, hw, isEnabled);

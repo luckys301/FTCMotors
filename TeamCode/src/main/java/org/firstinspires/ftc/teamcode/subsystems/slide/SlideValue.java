@@ -33,14 +33,14 @@ public class SlideValue {
         return new SlideValue(slideEnum, pivotPosition, shouldSlideDrop);
     }
 
-//    protected double getPivotPosition(){
-//        return pivotPosition;
+//    protected double getSlidePosition(){
+//        return slidePosition;
 //    }
-//    protected boolean getShouldSensorWork(){
-//        return shouldSensorWork;
+//    protected boolean getShouldSlideDrop(){
+//        return shouldSlideDrop;
 //    }
-//    protected PivotEnum getEnum(){
-//        return pivotEnum;
+//    protected SlideEnum getEnum(){
+//        return slideEnum;
 //    }
     public final boolean equals(Object other) {
         return this==other;
