@@ -36,13 +36,11 @@ public class MecDriveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         drive.update();
-//        drive.returnData();//TODO:What does this do?
     }
 
     public void init() {
-        new Pose2d(0,0,0);
         drive.setMotorPowers(0, 0, 0, 0);
-        setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+        setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0))); //SHOULD NOT BE DOING THIS, Autos never start in the center
         PoseStorage.currentPose = (new Pose2d(0, 0, Math.toRadians(0)));
     }
 
