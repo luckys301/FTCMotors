@@ -71,10 +71,12 @@ public class Shooter extends SubsystemBase {
     //    ang_velocity_right_deg = ang_velocity_right * rad_to_deg;
 
     public void setSetPoint(double setPoint) {
-        if(setPoint>NebulaConstants.Shooter.MAX_SPEED ||
-            setPoint<NebulaConstants.Shooter.MIN_SPEED){
-            motorGroup.stop();
-            return;
+        if(NebulaConstants.Gamepad.overrideSafety){
+            if(setPoint>NebulaConstants.Shooter.MAX_SPEED ||
+                setPoint<NebulaConstants.Shooter.MIN_SPEED){
+                motorGroup.stop();
+                return;
+            }
         }
         controller.setSetPoint(setPoint);
     }

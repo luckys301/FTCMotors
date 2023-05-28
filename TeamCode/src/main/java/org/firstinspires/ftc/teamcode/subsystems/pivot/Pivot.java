@@ -129,11 +129,14 @@ public class Pivot extends SubsystemBase {
     }
 
     public void setSetPoint(double setPoint, boolean shouldSensorWork) {
-        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
-            setPoint<NebulaConstants.Pivot.MIN_POSITION){
-            armMotor.stop();
-            return;
+        if(NebulaConstants.Gamepad.overrideSafety){
+            if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
+                setPoint<NebulaConstants.Pivot.MIN_POSITION){
+                armMotor.stop();
+                return;
+            }
         }
+
         controller.setSetPoint(setPoint + encoderOffset);
         this.shouldSensorWork = shouldSensorWork;
     }

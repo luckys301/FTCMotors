@@ -91,15 +91,13 @@ public class Intake extends SubsystemBase {
 //        }
 //    }
     public void setSetPoint(double setPoint, boolean reset) {
-//        if(setPoint>NebulaConstants.Pivot.MAX_POSITION ||
-//            setPoint<NebulaConstants.Pivot.MIN_POSITION){
-//            motor.stopMotor();
+//        if(setPoint>NebulaConstants.Intake.MAX_POSITION ||
+//            setPoint<NebulaConstants.Intake.MIN_POSITION){
+//            motor.stop();
 //            return;
 //        }
         controller.setSetPoint(setPoint);
-        if(reset){
-            NebulaConstants.Intake.intakeTime.reset();
-        }
+        if(reset){NebulaConstants.Intake.intakeTime.reset();}
     }
 
     //TODO: Test!

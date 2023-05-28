@@ -61,7 +61,8 @@ public class Claw extends SubsystemBase
 
     public boolean isClawOpen(){
 //        return clawS1.getPosition()==ClawPos.OPEN_POS_S1;
-        return (clawS1.getPosition()==ClawPos.CLOSE_POS_S1.clawPosition) || (clawS1.getPosition()==ClawPos.AUTO_CLOSE_S1.clawPosition);
+        return (clawS1.getPosition()==ClawPos.CLOSE_POS_S1.clawPosition) ||
+            (clawS1.getPosition()==ClawPos.AUTO_CLOSE_S1.clawPosition);
     };
 
 }

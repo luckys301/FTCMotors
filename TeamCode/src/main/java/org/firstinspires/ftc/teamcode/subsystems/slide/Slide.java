@@ -150,11 +150,14 @@ public class Slide extends SubsystemBase {
     }
 
     public void setSetPoint(double setPoint, boolean lowBool) {
-        if(setPoint>NebulaConstants.Slide.MAX_POSITION ||
-            setPoint<NebulaConstants.Slide.MIN_POSITION){
-            slideM1.stop();
-            return;
+        if(NebulaConstants.Gamepad.overrideSafety){
+            if(setPoint>NebulaConstants.Slide.MAX_POSITION ||
+                setPoint<NebulaConstants.Slide.MIN_POSITION){
+                slideM1.stop();
+                return;
+            }
         }
+
         slideController.setSetPoint(setPoint);
         this.dropBoolean = lowBool;
     }

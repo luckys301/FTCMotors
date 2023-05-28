@@ -89,6 +89,14 @@ public class TeleOpMain extends MatchOpMode {
 //            .whileHeld(new SlowMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
 //        new GamepadButton(driverGamepad, GamepadKeys.Button.LEFT_BUMPER).and().negate()
 //            .whileHeld(new SlowMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
+
+        (new GamepadButton(operatorGamepad, GamepadKeys.Button.A))  //TODO:TEST
+            .toggleWhenPressed(
+                new InstantCommand(()-> NebulaConstants.Gamepad.overrideSafety = false),
+                new InstantCommand(()-> NebulaConstants.Gamepad.overrideSafety = true));
+
+
+
         mecDriveSubsystem.setDefaultCommand(new DefaultMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
     }
 
