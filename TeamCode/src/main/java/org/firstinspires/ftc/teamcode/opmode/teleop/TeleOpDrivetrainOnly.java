@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.commands.drive.teleop.mec.DefaultMecDriveCommand;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.pivot.Pivot;
 import org.firstinspires.ftc.teamcode.util.teleop.MatchOpMode;
 
 @TeleOp(group = "Subsystem test")
@@ -34,7 +35,9 @@ public class TeleOpDrivetrainOnly extends MatchOpMode {
     public void matchLoop() {
     }
     @Override
-    public void disabledPeriodic() { }
+    public void disabledPeriodic() {
+        telemetry.addData("RESET", Pivot.RESET.pivotPosition);
+    }
     @Override
     public void matchStart() { }
     @Override
