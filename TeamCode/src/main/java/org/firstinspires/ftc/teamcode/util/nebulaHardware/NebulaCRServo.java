@@ -12,7 +12,17 @@ public class NebulaCRServo {// Continuous Rotation Servo
     private final CRServo servo;
     private final Boolean isEnabled;
 
-    public NebulaCRServo(HardwareMap hM, String deviceId, Direction direction, NebulaMotor.IdleMode behavior, Boolean isEnabled){
+    /**
+     * @param hM HardwareMap
+     * @param deviceId The Name in the Config File
+     * @param direction Direction of Servo Turning
+     * @param behavior Coast or Brake Mode
+     * @param isEnabled On or Off
+     */
+    public NebulaCRServo(HardwareMap hM, String deviceId,
+                         Direction direction,
+                         NebulaMotor.IdleMode behavior,
+                         Boolean isEnabled){
         servo = new CRServo(hM, deviceId);
         this.isEnabled = isEnabled;
         switch (direction){ //Initialization of Motor Direction
@@ -54,5 +64,10 @@ public class NebulaCRServo {// Continuous Rotation Servo
             case Brake: servo.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
                 break;
         }
+    }
+
+    public static NebulaCRServo create(HardwareMap hM, String deviceId, Direction direction,
+                                       NebulaMotor.IdleMode behavior, Boolean isEnabled){
+        return new NebulaCRServo(hM, deviceId, direction, behavior, isEnabled);
     }
 }

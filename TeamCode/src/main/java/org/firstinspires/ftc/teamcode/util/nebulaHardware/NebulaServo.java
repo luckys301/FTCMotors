@@ -15,7 +15,17 @@ public class NebulaServo {// Normal Servo
     private final ServoEx servo;
     private final Boolean isEnabled;
 
-    public NebulaServo(HardwareMap hM, String deviceId, Direction direction, double minAngle, double maxAngle, Boolean isEnabled){
+    /**
+     * @param hM HardwareMap
+     * @param deviceId The Name in the Config File
+     * @param direction Direction of Servo Turning
+     * @param minAngle Minimal Angle
+     * @param maxAngle Maximum Angle
+     * @param isEnabled On or Off
+     */
+    public NebulaServo(HardwareMap hM, String deviceId,
+                       Direction direction, double minAngle,
+                       double maxAngle, Boolean isEnabled){
         servo = new SimpleServo(hM, deviceId, minAngle, maxAngle, AngleUnit.DEGREES);
         this.isEnabled = isEnabled;
         switch (direction){ //Initialization of Motor Direction
@@ -55,5 +65,11 @@ public class NebulaServo {// Normal Servo
     public void turnToAngle(double angle) {
         servo.turnToAngle(angle, AngleUnit.DEGREES);
 //        servo.turnToAngle(angle);
+    }
+
+    public static NebulaServo create(HardwareMap hM, String deviceId,
+                                     Direction direction, double minAngle,
+                                     double maxAngle, Boolean isEnabled){
+        return new NebulaServo(hM, deviceId, direction, minAngle, maxAngle, isEnabled);
     }
 }

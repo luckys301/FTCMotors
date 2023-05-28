@@ -64,7 +64,14 @@ public class NebulaMotor{
 //    private final Motor.GoBILDA type;
 //    private static MotorType type;
 //    private int gearing;
-
+    /**
+     * @param hM HardwareMap
+     * @param type The MotorType or the Motor RPM
+     * @param deviceId The Name in the Config File
+     * @param direction Direction of Servo Turning
+     * @param behavior Coast or Brake Mode
+     * @param isEnabled On or Off
+     */
     public NebulaMotor(HardwareMap hM, String deviceId,
                        MotorType type, Direction direction,
                        IdleMode behavior, Boolean isEnabled){
@@ -171,4 +178,9 @@ public class NebulaMotor{
     public void getCurrent(){
         motor.motorEx.getCurrent(CurrentUnit.AMPS);
     }   //TODO: How is this?
+    public static NebulaMotor create(HardwareMap hM, String deviceId,
+                                     MotorType type, Direction direction,
+                                     IdleMode behavior, Boolean isEnabled){
+        return new NebulaMotor(hM, deviceId, type, direction, behavior, isEnabled);
+    }
 }
