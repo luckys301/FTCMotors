@@ -1,24 +1,17 @@
-package org.firstinspires.ftc.teamcode.util;
+package org.firstinspires.ftc.teamcode.util.CycleTracker;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.StatCalculator;
 
 import java.util.HashMap;
 
-
+//Make sure to write the time
 public class CycleTracker {//TODO:Remove Static
     protected StatCalculator stat = new StatCalculator();
     protected ElapsedTime timer = new ElapsedTime(0);
     private final Telemetry tl;
-//    private final File file = new File("/home/lvuser/Logs");
-//    private final PrintStream stream;
-
-//        try {
-//            stream = new PrintStream(file);
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
 
     private HashMap<String, Double> data;
     private double cycle =0,
@@ -37,15 +30,6 @@ public class CycleTracker {//TODO:Remove Static
         timer.reset();
     }
 
-    /*
-    public double getCycle(){ return cycle;}
-    public double getMean(){ return mean;}
-    public double getFastest(){ return fastest;}
-    public double getSlowest(){ return slowest;}
-    public double getHigh(){ return high;}
-    public double getLow(){ return low;}
-    public double getElapsedTime(){ return elapsedTime;}
-    */
 
 
 
@@ -77,7 +61,9 @@ public class CycleTracker {//TODO:Remove Static
 
 //    public  void printOut(String string, double num){
 //        data.put(string, num);
+//        data.put(String.valueOf(LocalTime.now()), 0);//TODO:TIME
 //    }
+
 //    public  void printAllData(){
 ////        printOut(DriverStation.getMatchType().toString(), DriverStation.getMatchNumber());
 //
@@ -98,16 +84,6 @@ public class CycleTracker {//TODO:Remove Static
 ////        data.put(string, num);
 //    }
     public void cyclePeriodic(){
-//        tl.addData("Elapsed Time", getElapsedTime());
-//        tl.addData("Mean", getMean());
-//        tl.addData("Cycle", getCycle());
-//
-//        tl.addData("high", getHigh());
-//        tl.addData("low", getLow());
-
-//        tl.addData("fast", getFastest());
-//        tl.addData("slow", getSlowest());
-
         tl.addData("Elapsed Time", elapsedTime);
         tl.addData("Mean", mean);
         tl.addData("Cycle", cycle);
