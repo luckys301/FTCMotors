@@ -16,7 +16,7 @@ public class SlideFeedforwardThroughBore extends SlideFeedforward {
         slideEncoder = new Encoder(
             hw.get(DcMotorEx.class, NebulaConstants.Slide.slideMName1));
         slideEncoder.getCurrentPosition();
-        slideEncoder.setDistancePerPulse(1);
+        slideEncoder.setDistancePerPulse(NebulaConstants.Slide.slideDistancePerPulse);
     }
 
     @Override

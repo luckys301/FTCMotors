@@ -13,10 +13,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Gabriel on 2018-01-03.
- * A simple way to log data to a file.
- */
+///**
+// * Created by Gabriel on 2018-01-03.
+// * A simple way to log data to a file.
+// */
 
 public class CycleLog {
     private static final String BASE_FOLDER_NAME = "LoggedDATA";
@@ -27,7 +27,7 @@ public class CycleLog {
 //    private Array dataMap;
     private List<String> dataMap;
     private boolean disabled = false;
-    Telemetry tl;
+    private Telemetry tl;
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Date date = new Date();

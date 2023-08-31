@@ -52,15 +52,16 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive imp
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(6, 0, 0);//0,0,0
 
     public static double LATERAL_MULTIPLIER = 1;
-
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
-    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MecDriveConstants.MAX_VEL, MecDriveConstants.MAX_ANG_VEL, MecDriveConstants.TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MecDriveConstants.MAX_ACCEL);
+    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT =
+        getVelocityConstraint(MecDriveConstants.MAX_VEL, MecDriveConstants.MAX_ANG_VEL, MecDriveConstants.TRACK_WIDTH);
+    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT =
+        getAccelerationConstraint(MecDriveConstants.MAX_ACCEL);
 
     private TrajectoryFollower follower;
 
@@ -197,7 +198,6 @@ public class MecDrive extends com.acmerobotics.roadrunner.drive.MecanumDrive imp
         waitForIdle();
     }
     @Override
-    // Break Following
     public void breakFollowing() {
         trajectorySequenceRunner.breakFollowing();
     }

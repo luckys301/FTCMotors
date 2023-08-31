@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive;
+import org.firstinspires.ftc.teamcode.util.NebulaConstants;
 import org.firstinspires.ftc.teamcode.util.PoseStorage;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.util.trajectorysequence.TrajectorySequenceBuilder;
@@ -20,7 +21,6 @@ import java.util.List;
 
 
 public class MecDriveSubsystem extends SubsystemBase implements AbstractMecDriveInterface {
-
     private final org.firstinspires.ftc.teamcode.subsystems.drive.mecDrive.MecDrive drive;
     private final int LFVal = 0,
             LRVal = 1,
@@ -68,37 +68,28 @@ public class MecDriveSubsystem extends SubsystemBase implements AbstractMecDrive
     }
 
     public void  fieldCentric(double y, double x, double rx){
-//        double theta = -imu.getAngularOrientation().firstAngle;
-        double theta = -drive.getExternalHeading();//Ok?
+        double theta = -drive.getExternalHeading();
 
         double rotX = x * Math.cos(theta) - y * Math.sin(theta);
         double rotY = x * Math.sin(theta) + y * Math.cos(theta);
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-
-        // ^^^^^^ Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio, but only when
-        // at least one is out of the range [-1, 1]
 
         powers [LFVal] = (rotY + rotX - rx) / denominator;
         powers [LRVal] = (rotY - rotX - rx) / denominator;
         powers [RFVal] = (rotY + rotX + rx) / denominator;
         powers [RRVal] = (rotY - rotX + rx) / denominator;
 
-
-        if(Math.abs(powers[LFVal])<0.25&Math.abs(powers[LRVal])<0.25&Math.abs(powers[RFVal])<0.25&Math.abs(powers[RRVal])<0.25){
+        //Cube Inputs @ only slow speeds
+        if(Math.abs(powers[LFVal])<0.25&
+            Math.abs(powers[LRVal])<0.25&
+            Math.abs(powers[RFVal])<0.25&
+            Math.abs(powers[RRVal])<0.25){
             for (int i = 0; i <= 3; i++) {
-//                powers[i] = squareInput(powers[i]);
-                powers[i] = cubeInput(powers[i]);
+//                powers[i] = NebulaConstants.squareInput(powers[i]);
+                powers[i] = NebulaConstants.cubeInput(powers[i]);
             }
         }
         drive.setMotorPowers(powers[LFVal], powers[LRVal], powers[RFVal], powers[RRVal]);
-    }
-
-    private double squareInput(double power) {
-        return power * Math.abs(power);
-    }
-    private double cubeInput(double power) {
-        return power*Math.abs(power)*Math.abs(power);
     }
 
     public double getHeading() {//TODO: Does this make a difference
@@ -109,40 +100,23 @@ public class MecDriveSubsystem extends SubsystemBase implements AbstractMecDrive
     public double getDegreeHeading() {//TODO: Does this make a difference
         return drive.getDegreeHeading();
     }
-
-
-
-
-
+    @Override
     public void setMode(DcMotor.RunMode mode) {
         drive.setMode(mode);
     }
-
     @Override
-    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
-
-    }
-
+    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior) {}
     @Override
-    public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
-
-    }
-
+    public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {}
     @Override
-    public void setWeightedDrivePower(Pose2d drivePower) {
-
-    }
-
-    @Override
-    public List<Double> getWheelPositions() {
+    public void setWeightedDrivePower(Pose2d drivePower) {}
+    @Override public List<Double> getWheelPositions() {
         return null;
     }
-
     public void setPoseEstimate(Pose2d pose) {
         drive.setPoseEstimate(pose);
     }
-
-    public void update() {
+    @Override public void update() {
         drive.update();
     }
 

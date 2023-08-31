@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.shooter;
+package org .firstinspires.ftc.teamcode.subsystems.shooter;
 
 public class ShooterValue {
     protected enum ShooterEnum {
@@ -7,7 +7,7 @@ public class ShooterValue {
         STOP(0.0),
         MANUAL(0.0) // To use when the subsystem is going Manually - No Need to make PivotValue,
         ;
-        public double value;
+        public final double value;
         ShooterEnum(double value) {
             this.value = value;
         }

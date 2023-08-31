@@ -22,59 +22,40 @@ interface AbstractMecDriveInterface {
     TrajectoryBuilder trajectoryBuilder(Pose2d startPose);
     TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed);
     TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading);
-
     TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose);
 
-    void turnAsync(double angle);
-
-    void turn(double angle);
-
+    void breakFollowing();// Break Following
     void followTrajectoryAsync(Trajectory trajectory);
-
-    void followTrajectory(Trajectory trajectory);
-
     void followTrajectorySequenceAsync(TrajectorySequence trajectorySequence);
-
     void followTrajectorySequence(TrajectorySequence trajectorySequence);
-
-    // Break Following
-    void breakFollowing();
+    void followTrajectory(Trajectory trajectory);
+    void resetImu();
+    void setMode(DcMotor.RunMode runMode);
+    void setMotorPowers(double lFP, double lRP, double rFP, double rRP);
+    void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients);
+    void setWeightedDrivePower(Pose2d drivePower);
+    void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior);
+    void turnAsync(double angle);
+    void turn(double angle);
+    void update();
+    void waitForIdle();
 
     Pose2d getLastError();
 
-    void update();
-
-    void waitForIdle();
     boolean isBusy();
 
-    void setMode(DcMotor.RunMode runMode);
-
-    void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior zeroPowerBehavior);
-
-    void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients);
-
-    void setWeightedDrivePower(Pose2d drivePower);
-
     List<Double> getWheelPositions();
-
     List<Double> getWheelVelocities();
-
-    void setMotorPowers(double lFP, double lRP, double rFP, double rRP);
-
-    double getRawExternalHeading();
-
+    Double getExternalHeadingVelocity();
     double getDegreeHeading();
     double getDegreePitch();
     double getDegreeRoll();
+    double getRawExternalHeading();
 
 //    @Override
 //    public Double getExternalHeadingVelocity() {
 //        return (double) imu.getRobotAngularVelocity(AngleUnit.RADIANS).zRotationRate;
 //    }
-
-    Double getExternalHeadingVelocity();
-
-    void resetImu();
 
     static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
         return new MinVelocityConstraint(Arrays.asList(
@@ -82,7 +63,6 @@ interface AbstractMecDriveInterface {
                 new MecanumVelocityConstraint(maxVel, trackWidth)
         ));
     }
-
     static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }
