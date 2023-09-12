@@ -23,6 +23,7 @@ public class TeleOpMain extends MatchOpMode {
     // Gamepad
     private GamepadEx driverGamepad;
     private GamepadEx operatorGamepad;
+
     private final CycleTracker cycleTracker = new CycleTracker(telemetry);
 
     // Subsystems
@@ -32,8 +33,9 @@ public class TeleOpMain extends MatchOpMode {
     private Slide slide;
 
     @Override
+
     public void robotInit() {
-          driverGamepad = new GamepadEx(gamepad1);
+        driverGamepad = new GamepadEx(gamepad1);
 //          driverGamepad.gamepad.type = Gamepad.Type.SONY_PS4;
 //          driverGamepad.gamepad.runRumbleEffect(Gamepad.RumbleEffect.Step);
         operatorGamepad = new GamepadEx(gamepad2);
@@ -47,13 +49,15 @@ public class TeleOpMain extends MatchOpMode {
         pivot.moveInitializationPosition();
     }
 
-
     @Override
     public void configureButtons() {
-        mecDriveSubsystem.setDefaultCommand(new DefaultMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
-        cycleTracker.resetTimer();
-        //Can Rumble Gamepads; If need to Rumble both Gamepads, might need to use queueEffect - Doesn't WORK
-        driverGamepad.gamepad.rumble(1,1, 100);
+        mecDriveSubsystem.setDefaultCommand(
+            new DefaultMecDriveCommand(mecDriveSubsystem, driverGamepad, true));
+
+
+//        cycleTracker.resetTimer();
+//        //Can Rumble Gamepads; If need to Rumble both Gamepads, might need to use queueEffect - Doesn't WORK
+//        driverGamepad.gamepad.rumble(1,1, 100);
 
         (new GamepadButton(driverGamepad, GamepadKeys.Button.A))
             .whenPressed(new InstantCommand(mecDriveSubsystem::reInitializeIMU));
@@ -103,6 +107,7 @@ public class TeleOpMain extends MatchOpMode {
     @Override
     public void matchLoop() {
         telemetry.addData("Override Safety", NebulaConstants.Gamepad.overrideSafety);//TODO:TEST
+//        telemetry.addLine("dfijfhjdehfhsejf");
         cycleTracker.cyclePeriodic();
     }
     @Override
