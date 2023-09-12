@@ -29,8 +29,8 @@ public class DefaultTankDriveCommand extends CommandBase {
         double y = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getLeftY()),
             rx = NebulaConstants.Gamepad.isDriverOneDeadband(driverGamepad.getRightX());
 
-        y = NebulaConstants.Gamepad.cubeInput(y);
-        rx = NebulaConstants.Gamepad.cubeInput(rx);
+        y = NebulaConstants.cubeInput(y);
+        rx = NebulaConstants.cubeInput(rx);
         //TODO:See if this works
         if(Math.abs(drive.getDegreeRoll())> NebulaConstants.Drive.tippingTolerance){
             y = yTipController.calculate(drive.getDegreePitch(), 0);//Make sure this is the right IMU
